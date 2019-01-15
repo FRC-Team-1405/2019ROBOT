@@ -24,12 +24,23 @@
 #include <Wire.h>
 #include <LIDARLite.h>
 
-LIDARLite myLidarLite;
+LIDARLite leftLidar, rightLidar;
 
 void setup()
 {
   Serial.begin(115200); // Initialize serial connection to display distance readings
-
+  // step 1: turn right LIDAR off
+  pinMode(22, OUTPUT);
+  digitalWrite(22, LOW);
+  // step 2: send left LIDAR commands to registers 0x18 and 0x19 to change I2C address
+  // Read from 0x16 and write that to 0x18, Read from 0x17 and write that to 0x19 to unlock
+  // Write 0x63 (new address) to 0x1a
+  leftLidar.write(0x18, 0x00, 0x62);
+  leftLidar.write(0x19, 0x63, 0x62);
+  // step 3: send left LIDAR command to register 0x1e to switch to non-standard address
+  leftLidar.write(0x1e, 0x08, 0x62);
+  // step 4: turn right LIDAR on
+  digitalWrite(22, HIGH);
   /*
     begin(int configuration, bool fasti2c, char lidarliteAddress)
 
@@ -43,8 +54,9 @@ void setup()
     lidarliteAddress: Default 0x62. Fill in new address here if changed. See
       operating manual for instructions.
   */
-  myLidarLite.begin(0, true); // Set configuration to default and I2C to 400 kHz
-
+  leftLidar.begin(0, true); // Set configuration to default and I2C to 400 kHz
+  rightLidar.begin(0, true); // Set configuration to default and I2C to 400 kHz
+  
   /*
     configure(int configuration, char lidarliteAddress)
 
@@ -66,7 +78,8 @@ void setup()
     lidarliteAddress: Default 0x62. Fill in new address here if changed. See
       operating manual for instructions.
   */
-  myLidarLite.configure(0); // Change this number to try out alternate configurations
+  leftLidar.configure(0); // Change this number to try out alternate configurations
+  rightLidar.configure(0); // Change this number to try out alternate configurations
 }
 
 void loop()
@@ -87,11 +100,11 @@ void loop()
   */
 
   // Take a measurement with receiver bias correction and print to serial terminal
-  Serial.println(myLidarLite.distance());
+  Serial.printf("L: %i R: %i", leftLidar.distance(), rightLidar.distance());
 
   // Take 99 measurements without receiver bias correction and print to serial terminal
   for(int i = 0; i < 99; i++)
   {
-    Serial.println(myLidarLite.distance(false));
+    Serial.printf("L: %i R: %i", leftLidar.distance(false), rightLidar.distance(false));
   }
 }
