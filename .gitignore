@@ -156,5 +156,7 @@ gradle-app.setting
 .settings/
 bin/
 
+# Local folders and items that we don't need to push
+vendordeps/
 
 # End of https://www.gitignore.io/api/c++,java,linux,macos,gradle,windows,visualstudiocode
