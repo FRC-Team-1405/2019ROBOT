@@ -28,5 +28,6 @@ public class RobotMap {
   public final static int talonDriveBaseRight = 2;
   public final static int talonDriveBaseLeftSlave = 3;
   public final static int talonDriveBaseRightSlave = 4;
+  public final static int clawTalon = 5;
   public final static int pilot = 0;
 }

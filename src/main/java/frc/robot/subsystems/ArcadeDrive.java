@@ -9,8 +9,11 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.RobotMap;
 import frc.robot.commands.*;
+import frc.robot.lib.TalonPID;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.*;
@@ -25,6 +28,8 @@ public class ArcadeDrive extends Subsystem {
   WPI_TalonSRX talonDriveBaseLeftSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseLeftSlave);
   WPI_TalonSRX talonDriveBaseRightSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseRightSlave);
   DifferentialDrive driveBase = new DifferentialDrive(talonDriveBaseLeft, talonDriveBaseRight); 
+  TalonPID leftTalonPID;
+  TalonPID rightTalonPID;
 
    public ArcadeDrive(){
       configCurrentLimit(talonDriveBaseLeft);
@@ -32,10 +37,28 @@ public class ArcadeDrive extends Subsystem {
       configCurrentLimit(talonDriveBaseLeftSlave);
       configCurrentLimit(talonDriveBaseRightSlave);
 
-      talonDriveBaseLeftSlave.set(ControlMode.Follower, RobotMap.talonDriveBaseLeft);
-      talonDriveBaseRightSlave.set(ControlMode.Follower, RobotMap.talonDriveBaseRight);
+      resetDistanceEncoder();
 
+      talonDriveBaseLeftSlave.follow(talonDriveBaseLeft);
+      talonDriveBaseRightSlave.follow(talonDriveBaseRight);
+
+      talonDriveBaseLeft.setName("Left");
+      talonDriveBaseRight.setName("Right");
+
+      this.addChild(driveBase);
+
+      leftTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);
+      leftTalonPID.setName("Left PID");
+      LiveWindow.add(leftTalonPID);
+      rightTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);
+      rightTalonPID.setName("Right PID");
+      LiveWindow.add(rightTalonPID);
    }
+
+  private void resetDistanceEncoder() {
+    talonDriveBaseLeft.setSelectedSensorPosition(0);
+    talonDriveBaseRight.setSelectedSensorPosition(0);
+  }
 
   @Override
   public void initDefaultCommand() {
@@ -52,5 +75,18 @@ public class ArcadeDrive extends Subsystem {
 
   public void driveRobot(double xSpeed, double zRotation){
     driveBase.arcadeDrive(xSpeed, zRotation);
+  }
+
+  public void setTargetPosition(double pos) {
+    leftTalonPID.setSetpoint(pos);
+    rightTalonPID.setSetpoint(pos);
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.addDoubleProperty("Left Pos", () -> { return talonDriveBaseLeft.getSelectedSensorPosition(); }, null );
+    builder.addDoubleProperty("Right Pos", () -> { return talonDriveBaseRight.getSelectedSensorPosition(); }, null );
+    builder.addDoubleProperty("Target Pos", null, this::setTargetPosition);
   }
 }
