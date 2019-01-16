@@ -24,21 +24,31 @@
 #include <Wire.h>
 #include <LIDARLite.h>
 
+#define DEFAULT_ADDRESS 0x62
+#define LEFT_ADDRESS    0x63
+#define RIGHT_ADDRESS   DEFAULT_ADDRESS
+
 LIDARLite leftLidar, rightLidar;
 
 void setup()
 {
+  byte regRead[2];
   Serial.begin(115200); // Initialize serial connection to display distance readings
+  rightLidar.begin(0, true, RIGHT_ADDRESS); // Set configuration to default and I2C to 400 kHz
   // step 1: turn right LIDAR off
   pinMode(22, OUTPUT);
   digitalWrite(22, LOW);
   // step 2: send left LIDAR commands to registers 0x18 and 0x19 to change I2C address
   // Read from 0x16 and write that to 0x18, Read from 0x17 and write that to 0x19 to unlock
-  // Write 0x63 (new address) to 0x1a
-  leftLidar.write(0x18, 0x00, 0x62);
-  leftLidar.write(0x19, 0x63, 0x62);
+  // Write DEFAULT_ADDRESS (new address) to 0x1a
+  leftLidar.read(0x16, 1, regRead, 0, DEFAULT_ADDRESS);
+  leftLidar.write(0x18, regRead[0], DEFAULT_ADDRESS);
+  leftLidar.read(0x17, 1, regRead, 0, DEFAULT_ADDRESS);
+  leftLidar.write(0x19, regRead[0], DEFAULT_ADDRESS);
+  leftLidar.write(0x1a, LEFT_ADDRESS, DEFAULT_ADDRESS);
   // step 3: send left LIDAR command to register 0x1e to switch to non-standard address
-  leftLidar.write(0x1e, 0x08, 0x62);
+  leftLidar.write(0x1e, 0x08, DEFAULT_ADDRESS);
+  
   // step 4: turn right LIDAR on
   digitalWrite(22, HIGH);
   /*
@@ -51,11 +61,10 @@ void setup()
     configuration: Default 0. Selects one of several preset configurations.
     fasti2c: Default 100 kHz. I2C base frequency.
       If true I2C frequency is set to 400kHz.
-    lidarliteAddress: Default 0x62. Fill in new address here if changed. See
+    lidarliteAddress: Default DEFAULT_ADDRESS. Fill in new address here if changed. See
       operating manual for instructions.
   */
-  leftLidar.begin(0, true); // Set configuration to default and I2C to 400 kHz
-  rightLidar.begin(0, true); // Set configuration to default and I2C to 400 kHz
+  //leftLidar.begin(0, true, LEFT_ADDRESS); // Set configuration to default and I2C to 400 kHz
   
   /*
     configure(int configuration, char lidarliteAddress)
@@ -75,11 +84,11 @@ void setup()
           algorithm, and uses a threshold value for high sensitivity and noise.
       5: Low sensitivity detection. Overrides default valid measurement detection
           algorithm, and uses a threshold value for low sensitivity and noise.
-    lidarliteAddress: Default 0x62. Fill in new address here if changed. See
+    lidarliteAddress: Default DEFAULT_ADDRESS. Fill in new address here if changed. See
       operating manual for instructions.
   */
-  leftLidar.configure(0); // Change this number to try out alternate configurations
-  rightLidar.configure(0); // Change this number to try out alternate configurations
+  leftLidar.configure(0, LEFT_ADDRESS); // Change this number to try out alternate configurations
+  //rightLidar.configure(0, RIGHT_ADDRESS); // Change this number to try out alternate configurations
 }
 
 void loop()
@@ -95,16 +104,19 @@ void loop()
       correction. If set to false measurements will be faster. Receiver bias
       correction must be performed periodically. (e.g. 1 out of every 100
       readings).
-    lidarliteAddress: Default 0x62. Fill in new address here if changed. See
+    lidarliteAddress: Default DEFAULT_ADDRESS. Fill in new address here if changed. See
       operating manual for instructions.
   */
 
   // Take a measurement with receiver bias correction and print to serial terminal
-  Serial.printf("L: %i R: %i", leftLidar.distance(), rightLidar.distance());
+  //Serial.printf("R: %i\n", rightLidar.distance(true, RIGHT_ADDRESS));
+  Serial.printf("L: %i\n", leftLidar.distance(true, LEFT_ADDRESS));
 
   // Take 99 measurements without receiver bias correction and print to serial terminal
   for(int i = 0; i < 99; i++)
   {
-    Serial.printf("L: %i R: %i", leftLidar.distance(false), rightLidar.distance(false));
+    //Serial.printf("L: %i R: %i", leftLidar.distance(false, LEFT_ADDRESS), rightLidar.distance(false, RIGHT_ADDRESS));
+    //Serial.printf("R: %i\n", rightLidar.distance(false, RIGHT_ADDRESS));
+    Serial.printf("L: %i\n", leftLidar.distance(false, LEFT_ADDRESS));
   }
 }
