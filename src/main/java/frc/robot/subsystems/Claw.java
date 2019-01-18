@@ -9,21 +9,38 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.RobotMap;
-import frc.robot.commands.Intake;
+import frc.robot.commands.ArmController;
 
 /**
  * Add your docs here.
  */
 public class Claw extends Subsystem {
-  WPI_TalonSRX talon = new WPI_TalonSRX(RobotMap.clawTalon);
+  
+  private WPI_TalonSRX talon = new WPI_TalonSRX(RobotMap.clawTalon);
+  private DoubleSolenoid solenoid = new DoubleSolenoid(3, 6);
+  
   public Claw(){
+    talon.setName("Intake");
+    this.addChild(talon);
+    solenoid.setName("Solenoid");
+    this.addChild(solenoid);
   }
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new Intake());
+    setDefaultCommand(new ArmController());
+  }
+
+  public void openClaw() {
+    solenoid.set(Value.kForward);
+  }
+
+  public void closeClaw() {
+    solenoid.set(Value.kReverse);
   }
 }
