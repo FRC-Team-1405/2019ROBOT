@@ -38,7 +38,7 @@ public class ArmController extends Command {
         isClawOpen = true;
       }
     }
-    if (Robot.m_oi.pilot.getBButton()) { 
+    if (Robot.m_oi.pivotArm()) { 
       Robot.claw.pivot(1);
     }
 

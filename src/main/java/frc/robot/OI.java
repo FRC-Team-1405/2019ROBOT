@@ -35,4 +35,8 @@ public class OI {
   public double driveX(){
     return pilot.getX(Hand.kRight);
   }
+
+  public boolean pivotArm(){
+    return pilot.getBButton();
+  }
 }
