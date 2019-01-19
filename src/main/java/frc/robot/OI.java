@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -15,4 +16,11 @@ import edu.wpi.first.wpilibj.XboxController;
  */
 public class OI {
   public XboxController pilot = new XboxController(RobotMap.pilot);
+
+  public boolean cargoIntakePressed() {
+    return pilot.getBumperPressed(Hand.kLeft);
+  }
+  public boolean cargoOutputPressed() {
+    return pilot.getBumperPressed(Hand.kRight);
+  }
 }

@@ -12,7 +12,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+//import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmController;
 
@@ -21,14 +22,20 @@ import frc.robot.commands.ArmController;
  */
 public class Claw extends Subsystem {
   
-  private WPI_TalonSRX talon = new WPI_TalonSRX(RobotMap.clawTalon);
+  private WPI_TalonSRX intakeTalonA = new WPI_TalonSRX(RobotMap.clawTalonA);
+  private WPI_TalonSRX intakeTalonB = new WPI_TalonSRX(RobotMap.clawTalonB);
   private DoubleSolenoid solenoid = new DoubleSolenoid(3, 6);
-  
+  private WPI_TalonSRX pivotTalon = new WPI_TalonSRX(RobotMap.pivotTalon);
+
   public Claw(){
-    talon.setName("Intake");
-    this.addChild(talon);
+    intakeTalonA.setName("Intake");
+    this.addChild(intakeTalonA);
+    intakeTalonB.setName("Intake 2"); 
+    this.addChild(intakeTalonB); 
     solenoid.setName("Solenoid");
     this.addChild(solenoid);
+    pivotTalon.setName("Pivot Arm"); 
+    this.addChild(pivotTalon); 
   }
 
   @Override
@@ -43,4 +50,20 @@ public class Claw extends Subsystem {
   public void closeClaw() {
     solenoid.set(Value.kReverse);
   }
+
+  public void pivot(int speed){
+    pivotTalon.set(speed); 
+  } 
+
+  public void intakeCargo(double speed) { 
+    intakeTalonA.set(speed); 
+    intakeTalonB.set(speed); 
+  }
+  
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.addDoubleProperty("Pivot Current", this.pivotTalon::getOutputCurrent, null );
+  }
+
 }

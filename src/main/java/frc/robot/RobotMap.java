@@ -24,10 +24,15 @@ public class RobotMap {
   // public static int rangefinderPort = 1;
   // public static int rangefinderModule = 1;
 
+  //Talon IDs
   public final static int talonDriveBaseLeft = 1;
   public final static int talonDriveBaseRight = 2;
   public final static int talonDriveBaseLeftSlave = 3;
   public final static int talonDriveBaseRightSlave = 4;
-  public final static int clawTalon = 5;
-  public final static int pilot = 0;
+  public final static int clawTalonA = 5; 
+  public final static int clawTalonB = 7;
+  public final static int pivotTalon = 6; 
+  //Joystick IDs
+  public final static int pilot = 0; 
+  
 }

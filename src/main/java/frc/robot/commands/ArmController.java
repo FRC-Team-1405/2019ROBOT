@@ -11,11 +11,16 @@ import frc.robot.Robot;
 
 public class ArmController extends Command {
   boolean isClawOpen = false;
+  final double intakeSpeed =  1.0;
+  final double outputSpeed = -1.0;
   
   public ArmController() {
     requires(Robot.claw);
   }
 
+  public void intake() {
+    
+  } 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -32,6 +37,16 @@ public class ArmController extends Command {
         Robot.claw.openClaw();
         isClawOpen = true;
       }
+    }
+    if (Robot.m_oi.pilot.getBButton()) { 
+      Robot.claw.pivot(1);
+    }
+
+    if (Robot.m_oi.cargoIntakePressed()) {
+      Robot.claw.intakeCargo(intakeSpeed);
+    }
+    if (Robot.m_oi.cargoOutputPressed()) {
+      Robot.claw.intakeCargo(outputSpeed);
     }
   }
 
@@ -51,4 +66,7 @@ public class ArmController extends Command {
   @Override
   protected void interrupted() {
   }
+  
+  // intake = set claw intakes speed to 1
+  
 }
