@@ -29,7 +29,7 @@ public class ArmController extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.m_oi.pilot.getAButtonPressed()){
+    if (Robot.m_oi.clawOpenPressed()){
       if (isClawOpen) {
         Robot.claw.closeClaw();
         isClawOpen = false;

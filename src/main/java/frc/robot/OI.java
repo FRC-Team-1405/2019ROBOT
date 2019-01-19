@@ -23,4 +23,16 @@ public class OI {
   public boolean cargoOutputPressed() {
     return pilot.getBumperPressed(Hand.kRight);
   }
+
+  public boolean clawOpenPressed(){
+    return pilot.getAButtonPressed();
+  }
+
+  public double driveY(){
+    return pilot.getY(Hand.kLeft);
+  }
+
+  public double driveX(){
+    return pilot.getX(Hand.kRight);
+  }
 }
