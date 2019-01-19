@@ -25,7 +25,7 @@
 #include <LIDARLite.h>
 
 #define DEFAULT_ADDRESS 0x62
-#define LEFT_ADDRESS    0x63
+#define LEFT_ADDRESS    0x64
 #define RIGHT_ADDRESS   DEFAULT_ADDRESS
 
 LIDARLite leftLidar, rightLidar;
@@ -39,17 +39,8 @@ void setup()
   pinMode(22, OUTPUT);
   digitalWrite(22, LOW);
   // step 2: send left LIDAR commands to registers 0x18 and 0x19 to change I2C address
-  // Read from 0x16 and write that to 0x18, Read from 0x17 and write that to 0x19 to unlock
-  // Write DEFAULT_ADDRESS (new address) to 0x1a
-  leftLidar.read(0x16, 1, regRead, 0, DEFAULT_ADDRESS);
-  leftLidar.write(0x18, regRead[0], DEFAULT_ADDRESS);
-  leftLidar.read(0x17, 1, regRead, 0, DEFAULT_ADDRESS);
-  leftLidar.write(0x19, regRead[0], DEFAULT_ADDRESS);
-  leftLidar.write(0x1a, LEFT_ADDRESS, DEFAULT_ADDRESS);
-  // step 3: send left LIDAR command to register 0x1e to switch to non-standard address
-  leftLidar.write(0x1e, 0x08, DEFAULT_ADDRESS);
-  
-  // step 4: turn right LIDAR on
+  leftLidar.changeAddress(LEFT_ADDRESS, true, DEFAULT_ADDRESS);
+  // step 3: turn right LIDAR on
   digitalWrite(22, HIGH);
   /*
     begin(int configuration, bool fasti2c, char lidarliteAddress)
