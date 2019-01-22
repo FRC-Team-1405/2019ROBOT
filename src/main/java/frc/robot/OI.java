@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  */
 public class OI {
   public XboxController pilot = new XboxController(RobotMap.pilot);
-
+  private Limelight limelight = new Limelight();
   public boolean cargoIntakePressed() {
     return pilot.getBumperPressed(Hand.kLeft);
   }
@@ -38,5 +38,10 @@ public class OI {
 
   public boolean pivotArm(){
     return pilot.getBButton();
+  }
+
+  public double visionTargetAngle(){ 
+    return limelight.getTX(); 
+
   }
 }

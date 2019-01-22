@@ -25,14 +25,11 @@ public class Limelight {
 	PIPE1, PIPE2, PIPE3, PIPE4, PIPE5,
 	PIPE6, PIPE7, PIPE8, PIPE9, PIPE10
     }
-    public Limelight(pipe inpipe) {
+    public Limelight() {
         NetworkTable table;
-	switch (inpipe) {
-	default: /* I know this block is pointless
-		    It'll be less pointless later. */
-	    table = NetworkTableInstance.getDefault().getTable("limelight");
-	}
-	tv     = table.getEntry("tv");
+    table = NetworkTableInstance.getDefault().getTable("limelight");
+
+    tv     = table.getEntry("tv");
 	tx     = table.getEntry("tx");
 	ty     = table.getEntry("ty");
 	ta     = table.getEntry("ta");

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.DriveToVisionTarget;
 import frc.robot.subsystems.ArcadeDrive;
 import frc.robot.subsystems.Claw;
 import edu.wpi.first.wpilibj.livewindow.*;
@@ -39,14 +40,13 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
     driveBase = new ArcadeDrive();
-    claw = new Claw();
-
+//    claw = new Claw();
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     SmartDashboard.putData("Drive Base", driveBase);
 
     LiveWindow.add(driveBase);
-    LiveWindow.add(claw);
+//    LiveWindow.add(claw);
   }
 
   /**
