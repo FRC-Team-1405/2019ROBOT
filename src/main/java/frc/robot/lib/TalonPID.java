@@ -134,5 +134,6 @@ public class TalonPID implements PIDInterface, Sendable {
         builder.addDoubleProperty("f", this::getF, this::setF);
         builder.addDoubleProperty("setpoint", this::getSetpoint, this::setSetpoint);
         builder.addBooleanProperty("enabled", this::isEnabled, this::setEnabled);
+        builder.addDoubleProperty("Error", this::getError, null);
     }
 }

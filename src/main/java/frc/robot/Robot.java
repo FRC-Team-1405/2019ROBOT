@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -16,6 +17,7 @@ import frc.robot.commands.DriveToVisionTarget;
 import frc.robot.subsystems.ArcadeDrive;
 import frc.robot.subsystems.Claw;
 import edu.wpi.first.wpilibj.livewindow.*;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -46,6 +48,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Drive Base", driveBase);
 
     LiveWindow.add(driveBase);
+    SmartDashboard.putData("DriveToVisionTarget", new DriveToVisionTarget());
 //    LiveWindow.add(claw);
   }
 

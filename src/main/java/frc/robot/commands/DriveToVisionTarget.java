@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.Robot;
 
 public class DriveToVisionTarget extends Command { 
   private PIDController pidController; 
-  private double rotation = 0.0;
   public DriveToVisionTarget() {
     requires(Robot.driveBase); 
     pidController=new PIDController(  0.0,  0.0,  0.0,  0.0, 
@@ -41,15 +41,17 @@ public class DriveToVisionTarget extends Command {
                                     
                                       @Override
                                       public void pidWrite(double output) {
-                                        rotation = output;
+                                        Robot.driveBase.driveRobot(-Robot.m_oi.driveY(), -output);
                                       }
                                     });
 
   pidController.setName("Vision Target PID"); 
   pidController.setInputRange(-27.0, 27.0); 
   pidController.setOutputRange(-1.0, 1.0); 
+  pidController.setAbsoluteTolerance(1.0);
+  pidController.setSetpoint(0.0);
   pidController.setEnabled(false);
-  this.addChild(pidController);
+  LiveWindow.add(pidController);
 }
 
   // Called just before this Command runs the first time
@@ -60,7 +62,6 @@ public class DriveToVisionTarget extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.driveBase.driveRobot(-Robot.m_oi.driveY(), rotation);
   }
 
   // Make this return true when this Command no longer needs to run execute()

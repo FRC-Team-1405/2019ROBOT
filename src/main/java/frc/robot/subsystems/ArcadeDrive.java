@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.RobotMap;
 import frc.robot.commands.*;
+import frc.robot.lib.ExtendedTalon;
 import frc.robot.lib.TalonPID;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
@@ -37,6 +38,10 @@ public class ArcadeDrive extends Subsystem {
       configCurrentLimit(talonDriveBaseLeftSlave);
       configCurrentLimit(talonDriveBaseRightSlave);
 
+      // limit Talon deadband
+      talonDriveBaseLeft.configNeutralDeadband(0.001, 10);
+      talonDriveBaseRight.configNeutralDeadband(0.001, 10);
+
       resetDistanceEncoder();
 
       talonDriveBaseLeftSlave.follow(talonDriveBaseLeft);
@@ -50,7 +55,7 @@ public class ArcadeDrive extends Subsystem {
       leftTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);
       leftTalonPID.setName("Left PID");
       LiveWindow.add(leftTalonPID);
-      rightTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);
+      rightTalonPID = new TalonPID(talonDriveBaseRight, ControlMode.Position);
       rightTalonPID.setName("Right PID");
       LiveWindow.add(rightTalonPID);
    }
