@@ -67,7 +67,6 @@ public class ArcadeDrive extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new DriveBaseController());
   }
 
   public void configCurrentLimit(WPI_TalonSRX talonSRX){

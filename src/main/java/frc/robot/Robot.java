@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.DriveBaseController;
 import frc.robot.commands.DriveToVisionTarget;
 import frc.robot.subsystems.ArcadeDrive;
 import frc.robot.subsystems.Claw;
@@ -31,8 +32,8 @@ public class Robot extends TimedRobot {
   public static ArcadeDrive driveBase;
   public static Claw claw;
 
-  Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  Command autonomousCommand;
+  Command teleopCommand;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -44,12 +45,14 @@ public class Robot extends TimedRobot {
     driveBase = new ArcadeDrive();
 //    claw = new Claw();
     // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
     SmartDashboard.putData("Drive Base", driveBase);
 
     LiveWindow.add(driveBase);
     SmartDashboard.putData("DriveToVisionTarget", new DriveToVisionTarget());
 //    LiveWindow.add(claw);
+
+    autonomousCommand = new DriveBaseController();
+    teleopCommand = autonomousCommand;
   }
 
   /**
@@ -91,19 +94,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_chooser.getSelected();
-
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
-
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
-    }
+    autonomousCommand.start();
   }
 
   /**
@@ -116,13 +107,11 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    // This makes sure that the autonomous stops running when
-    // teleop starts running. If you want the autonomous to
-    // continue until interrupted by another command, remove
-    // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
     }
+
+    teleopCommand.start();
   }
 
   /**
@@ -132,6 +121,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
   }
+
 
   /**
    * This function is called periodically during test mode.

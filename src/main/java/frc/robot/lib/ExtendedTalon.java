@@ -6,17 +6,39 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.lib;
+import java.io.Console;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.Preferences;
 
 
 /**
  * Wrapper for TalonSRX, makes talon current based, not percentvoltage
  */
 public class ExtendedTalon extends WPI_TalonSRX { 
-  
+    
+   
+
     public ExtendedTalon(int deviceNumber) {
-		super(deviceNumber);
+        super(deviceNumber);
+        
+        String keyMin = String.format("Talon_%d_Current_Min", deviceNumber); 
+        String keyMax = String.format("Talon_%d_Current_Max", deviceNumber); 
+        
+        Preferences prefs = Preferences.getInstance(); 
+        if (!prefs.containsKey(keyMin)) {
+            prefs.putDouble(keyMin, currentMin);
+        }
+        if (!prefs.containsKey(keyMax)) {
+            prefs.putDouble(keyMax, currentMax);
+        }
+
+        currentMin = prefs.getDouble(keyMin, currentMin);
+        currentMax = prefs.getDouble(keyMax, currentMax); 
+
+        System.out.printf("%s %f %s %f\n", keyMin, currentMin, keyMax, currentMax);
 	}
 
     private static double currentMin = -40.0;
