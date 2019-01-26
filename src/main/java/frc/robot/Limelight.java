@@ -9,7 +9,6 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-
 public class Limelight {
     private NetworkTableEntry tv;
     private NetworkTableEntry tx;
@@ -21,15 +20,19 @@ public class Limelight {
     private NetworkTableEntry tlong;
     private NetworkTableEntry thoriz;
     private NetworkTableEntry tvert;
-    public enum pipe {
+    private NetworkTableEntry getpipe;
+    //public byte pipeline;
+    /* public enum pipe {
 	PIPE1, PIPE2, PIPE3, PIPE4, PIPE5,
 	PIPE6, PIPE7, PIPE8, PIPE9, PIPE10
-    }
+	} 
+    We only need ints for this (I'm using chars for the 
+byte's memory savings)*/
     public Limelight() {
-        NetworkTable table;
-    table = NetworkTableInstance.getDefault().getTable("limelight");
-
-    tv     = table.getEntry("tv");
+	NetworkTable table =
+	    NetworkTableInstance.getDefault()
+	    .getTable("limelight");
+	tv     = table.getEntry("tv");
 	tx     = table.getEntry("tx");
 	ty     = table.getEntry("ty");
 	ta     = table.getEntry("ta");
@@ -39,6 +42,34 @@ public class Limelight {
 	tlong  = table.getEntry("tlong");
 	thoriz = table.getEntry("thoriz");
 	tvert  = table.getEntry("tvert");
+	getpipe= table.getEntry("getpipe");
+    }
+    public void setPipeline(byte id) {
+	//pipeline = id;
+	table.getEntry("pipeline").setNumber(id);
+    }
+    public void setLED(byte mode) {
+	/* 0: Pipeline default (probably should just use this)
+	   1: Off
+	   2: Blink
+	   3: On */
+	table.getEntry("ledMode").setNumber(mode);
+    }
+    public void setStream(byte mode) {
+	/* 0: Standard - Side-by-side streams if a webcam is attached to Limelight
+	   1: The secondary camera stream is placed in the lower-right corner of the primary camera stream
+	   2: The primary camera stream is placed in the lower-right corner of the secondary camera stream */
+	table.getEntry("stream").setNumber(mode);
+    } /* At the time of writing this every other site
+	 I visit had either had its domain expire,
+	 had some sort of DB error or just said OOPS
+	 AN ERROR OCCURED 
+         Including FIRST's docs.
+         REEEEEEEEEEEEEEEEEEEEEE */
+    public double getPipeline() {
+	/* This would have been a byte but, eh
+	   I don't feel like casting */
+	return (getpipe.getDouble(0));
     }
     public boolean hasTarget() {
 	return (tv.getDouble(0.0) == 1);
@@ -63,23 +94,29 @@ public class Limelight {
     }
     public double getTLONG() {
         return tlong.getDouble(0.0);
-    }
+    } /* Monks used to write their thoughts and 
+	 feelings in the margins of books they copied
+	 As you can see I've adopted that practise. */
     public double getTHORIZ() {
         return thoriz.getDouble(0.0);
     }
     public double getTVERT() {
         return tvert.getDouble(0.0);
-    } /* Thank goodness for ELISP, I'd go nuts writing all that boilerplate */
-    //public double fixedAngleDist(double h1, double h2, double a1) {
-	/* TODO: finish this
-	   If the camera never changes its angle, we know its height and the
-	   target's height, we can very accurately calculate the X distance
+    } 
+    /* public double fixedAngleDist(double h1, double h2,
+				 double a1) {
+	
+	 TODO: finish this
+	   If the camera never changes its angle, 
+	   we know its height and the
+	   target's height, we can very accurately 
+	   calculate the X distance
 	   to said object
 	   
 	   double h1: Our height
 	   double h2: Target height
 	   double a1: Our mounting angle
-	   We can figure out the angle to the target using the camera... somehow */
-	   
-    //}
+	   We can figure out the angle to the target using 
+	   the camera 	   
+	   } */
 }
