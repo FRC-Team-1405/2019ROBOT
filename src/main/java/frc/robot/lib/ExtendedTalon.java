@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.lib;
-import java.io.Console;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -37,7 +36,7 @@ public class ExtendedTalon extends WPI_TalonSRX {
 
         currentMin = prefs.getDouble(keyMin, currentMin);
         currentMax = prefs.getDouble(keyMax, currentMax); 
-
+ 
         System.out.printf("%s %f %s %f\n", keyMin, currentMin, keyMax, currentMax);
 	}
 
