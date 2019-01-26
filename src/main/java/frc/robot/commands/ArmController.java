@@ -12,7 +12,7 @@ import frc.robot.Robot;
 public class ArmController extends Command {
   boolean isClawOpen = false;
   final double intakeSpeed =  1.0;
-  final double outputSpeed = -1.0;
+  final double outputSpeed =  1.0;
   
   public ArmController() {
     requires(Robot.claw);
@@ -46,7 +46,7 @@ public class ArmController extends Command {
       Robot.claw.intakeCargo(intakeSpeed);
     }
     if (Robot.m_oi.cargoOutputPressed()) {
-      Robot.claw.intakeCargo(outputSpeed);
+      Robot.claw.releaseCargo(outputSpeed);
     }
   }
 
@@ -68,5 +68,6 @@ public class ArmController extends Command {
   }
   
   // intake = set claw intakes speed to 1
+  
   
 }

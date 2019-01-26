@@ -7,18 +7,19 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+//import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+//import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveBaseController;
 import frc.robot.commands.DriveToVisionTarget;
 import frc.robot.subsystems.ArcadeDrive;
 import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Vision;
 import edu.wpi.first.wpilibj.livewindow.*;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+//import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
   public static ArcadeDrive driveBase;
   public static Claw claw;
+  public static Vision vision;
 
   Command autonomousCommand;
   Command teleopCommand;
@@ -43,12 +45,13 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_oi = new OI();
     driveBase = new ArcadeDrive();
+    vision = new Vision();
 //    claw = new Claw();
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Drive Base", driveBase);
 
-    LiveWindow.add(driveBase);
     SmartDashboard.putData("DriveToVisionTarget", new DriveToVisionTarget());
+    SmartDashboard.putData("VisionCamera", vision);
 //    LiveWindow.add(claw);
 
     autonomousCommand = new DriveBaseController();

@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.RobotMap;
-import frc.robot.commands.*;
-import frc.robot.lib.ExtendedTalon;
+//import frc.robot.commands.*;
+//import frc.robot.lib.ExtendedTalon;
 import frc.robot.lib.TalonPID;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
@@ -50,6 +50,7 @@ public class ArcadeDrive extends Subsystem {
       talonDriveBaseLeft.setName("Left");
       talonDriveBaseRight.setName("Right");
 
+      driveBase.setDeadband(0.0);
       this.addChild(driveBase);
 
       leftTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);
