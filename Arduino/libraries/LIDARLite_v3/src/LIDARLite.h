@@ -40,6 +40,7 @@ class LIDARLite
       void write(char, char, char = LIDARLITE_ADDR_DEFAULT);
       void read(char, int, byte*, bool, char);
       void correlationRecordToSerial(char = '\n', int = 256, char = LIDARLITE_ADDR_DEFAULT);
+      unsigned char changeAddress(char, bool = false, char = 0x62);
 };
 
 #endif

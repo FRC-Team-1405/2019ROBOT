@@ -352,3 +352,74 @@ void LIDARLite::correlationRecordToSerial(char separator, int numberOfReadings, 
   // test mode disable
   write(0x40,0x00,lidarliteAddress);
 } /* LIDARLite::correlationRecordToSerial */
+
+
+/* =============================================================================
+  Change I2C Address for Single Sensor
+  LIDAR-Lite now has the ability to change the I2C address of the sensor and
+  continue to use the default address or disable it. This function only works
+  for single sensors. When the sensor powers off and restarts this value will
+  be lost and will need to be configured again.
+  There are only certain address that will work with LIDAR-Lite so be sure to
+  review the "Notes" section below
+  Process
+  ------------------------------------------------------------------------------
+  1.  Read the two byte serial number from register 0x96
+  2.  Write the low byte of the serial number to 0x18
+  3.  Write the high byte of the serial number to 0x19
+  4.  Write the new address you want to use to 0x1a
+  5.  Choose wheather to user the default address or not (you must to one of the
+      following to commit the new address):
+      1.  If you want to keep the default address, write 0x00 to register 0x1e
+      2.  If you do not want to keep the default address write 0x08 to 0x1e
+  Parameters
+  ------------------------------------------------------------------------------
+  - newI2cAddress: the hex value of the I2C address you want the sensor to have
+  - disablePrimaryAddress (optional): true/false value to disable the primary
+    address, default is false (i.e. leave primary active)
+  - currentLidarLiteAddress (optional): the default is 0x62, but can also be any
+    value you have previously set (ex. if you set the address to 0x66 and dis-
+    abled the default address then needed to change it, you would use 0x66 here)
+  Example Usage
+  ------------------------------------------------------------------------------
+  1.  //  Set the value to 0x66 with primary address active and starting with
+      //  0x62 as the current address
+      myLidarLiteInstance.changeAddress(0x66);
+  Notes
+  ------------------------------------------------------------------------------
+    Possible Address for LIDAR-Lite
+    7-bit address in binary form need to end in "0". Example: 0x62 = 01100010 so
+    that works well for us. Essentially any even numbered hex value will work
+    for 7-bit address.
+    8-bit read address in binary form need to end in "00". Example: the default
+    8-bit read address for LIDAR-Lite is 0xc4 = 011000100. Essentially any hex
+    value evenly divisable by "4" will work.
+  =========================================================================== */
+unsigned char LIDARLite::changeAddress(char newI2cAddress,  bool disablePrimaryAddress, char currentLidarLiteAddress){
+  //  Array to save the serial number
+  unsigned char serialNumber[2];
+  unsigned char newI2cAddressArray[1];
+
+  //  Read two bytes from 0x96 to get the serial number
+  read(0x96,2,serialNumber,false,currentLidarLiteAddress);
+  //  Write the low byte of the serial number to 0x18
+  write(0x18,serialNumber[0],currentLidarLiteAddress);
+  //  Write the high byte of the serial number of 0x19
+  write(0x19,serialNumber[1],currentLidarLiteAddress);
+  //  Write the new address to 0x1a
+  write(0x1a,newI2cAddress,currentLidarLiteAddress);
+
+
+  while(newI2cAddress != newI2cAddressArray[0]){
+    read(0x1a,1,newI2cAddressArray,false,currentLidarLiteAddress);
+  }
+  Serial.print("WIN!");
+  //  Choose whether or not to use the default address of 0x62
+  if(disablePrimaryAddress){
+    write(0x1e,0x08,currentLidarLiteAddress);
+  }else{
+    write(0x1e,0x00,currentLidarLiteAddress);
+  }
+
+  return newI2cAddress;
+}
