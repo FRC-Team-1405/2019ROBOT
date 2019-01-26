@@ -50,6 +50,7 @@ public class ArcadeDrive extends Subsystem {
       talonDriveBaseLeft.setName("Left");
       talonDriveBaseRight.setName("Right");
 
+      driveBase.setDeadband(0.0);
       this.addChild(driveBase);
 
       leftTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);

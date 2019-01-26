@@ -19,6 +19,8 @@ public class DriveToVisionTarget extends Command {
   private PIDController pidController; 
   public DriveToVisionTarget() {
     requires(Robot.driveBase); 
+    requires(Robot.vision);
+    Robot.vision.setLineTarget();
     pidController=new PIDController(  0.0,  0.0,  0.0,  0.0, 
                                     new PIDSource(){
                                       private PIDSourceType pidSourceType = PIDSourceType.kDisplacement;
@@ -29,7 +31,7 @@ public class DriveToVisionTarget extends Command {
                                     
                                       @Override
                                       public double pidGet() {
-                                        return Robot.m_oi.visionTargetAngle(); 
+                                        return Robot.vision.getLineTarget();
                                       }
                                     
                                       @Override

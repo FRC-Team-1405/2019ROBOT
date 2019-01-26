@@ -21,10 +21,8 @@ public class Limelight {
     private NetworkTableEntry tlong;
     private NetworkTableEntry thoriz;
     private NetworkTableEntry tvert;
-    public enum pipe {
-	PIPE1, PIPE2, PIPE3, PIPE4, PIPE5,
-	PIPE6, PIPE7, PIPE8, PIPE9, PIPE10
-    }
+    private NetworkTableEntry pipeline;
+
     public Limelight() {
         NetworkTable table;
     table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -38,7 +36,8 @@ public class Limelight {
 	tshort = table.getEntry("tshort");
 	tlong  = table.getEntry("tlong");
 	thoriz = table.getEntry("thoriz");
-	tvert  = table.getEntry("tvert");
+    tvert  = table.getEntry("tvert");
+    pipeline = table.getEntry("pipeline");
     }
     public boolean hasTarget() {
 	return (tv.getDouble(0.0) == 1);
@@ -69,7 +68,12 @@ public class Limelight {
     }
     public double getTVERT() {
         return tvert.getDouble(0.0);
-    } /* Thank goodness for ELISP, I'd go nuts writing all that boilerplate */
+    } 
+    
+    public void setPipeline(double value){
+        pipeline.setDouble(value);
+    }
+    /* Thank goodness for ELISP, I'd go nuts writing all that boilerplate */
     //public double fixedAngleDist(double h1, double h2, double a1) {
 	/* TODO: finish this
 	   If the camera never changes its angle, we know its height and the
