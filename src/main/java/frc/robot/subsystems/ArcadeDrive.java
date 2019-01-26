@@ -14,6 +14,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.*;
 import frc.robot.lib.ExtendedTalon;
 import frc.robot.lib.TalonPID;
+import frc.robot.lib.TalonSpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -26,17 +27,20 @@ public class ArcadeDrive extends Subsystem {
   // here. Call these from Commands.
   WPI_TalonSRX talonDriveBaseLeft = new WPI_TalonSRX(RobotMap.talonDriveBaseLeft);
   WPI_TalonSRX talonDriveBaseRight = new WPI_TalonSRX(RobotMap.talonDriveBaseRight);
-  WPI_TalonSRX talonDriveBaseLeftSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseLeftSlave);
-  WPI_TalonSRX talonDriveBaseRightSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseRightSlave);
-  DifferentialDrive driveBase = new DifferentialDrive(talonDriveBaseLeft, talonDriveBaseRight); 
+
+  TalonSpeedController speedControllerRight = new TalonSpeedController(talonDriveBaseRight)
+                                                    .setMode(ControlMode.Current, -40.0, 40.0);
+  TalonSpeedController speedControllerLeft = new TalonSpeedController(talonDriveBaseLeft)
+                                                    .setMode(ControlMode.Current, -40.0, 40.0);
+
+  DifferentialDrive driveBase = new DifferentialDrive(speedControllerLeft, speedControllerRight); 
+
   TalonPID leftTalonPID;
   TalonPID rightTalonPID;
 
    public ArcadeDrive(){
       configCurrentLimit(talonDriveBaseLeft);
       configCurrentLimit(talonDriveBaseRight);
-      configCurrentLimit(talonDriveBaseLeftSlave);
-      configCurrentLimit(talonDriveBaseRightSlave);
 
       // limit Talon deadband
       talonDriveBaseLeft.configNeutralDeadband(0.001, 10);
@@ -44,18 +48,26 @@ public class ArcadeDrive extends Subsystem {
 
       resetDistanceEncoder();
 
+      WPI_TalonSRX talonDriveBaseLeftSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseLeftSlave);
       talonDriveBaseLeftSlave.follow(talonDriveBaseLeft);
+      configCurrentLimit(talonDriveBaseLeftSlave);
+
+      WPI_TalonSRX talonDriveBaseRightSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseRightSlave);
       talonDriveBaseRightSlave.follow(talonDriveBaseRight);
+      configCurrentLimit(talonDriveBaseRightSlave);
 
       talonDriveBaseLeft.setName("Left");
+      LiveWindow.add(talonDriveBaseLeft);
       talonDriveBaseRight.setName("Right");
+      LiveWindow.add(talonDriveBaseRight);
 
       this.addChild(driveBase);
 
-      leftTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);
+      leftTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Current);
       leftTalonPID.setName("Left PID");
       LiveWindow.add(leftTalonPID);
-      rightTalonPID = new TalonPID(talonDriveBaseRight, ControlMode.Position);
+
+      rightTalonPID = new TalonPID(talonDriveBaseRight, ControlMode.Current);
       rightTalonPID.setName("Right PID");
       LiveWindow.add(rightTalonPID);
    }
