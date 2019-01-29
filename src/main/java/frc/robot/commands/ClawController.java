@@ -6,28 +6,44 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot.commands;
-
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ArmController extends Command {
-  public ArmController() {
-    requires(Robot.arm);
+public class ClawController extends Command {
+  boolean isClawOpen = false;
+  final double intakeSpeed =  1.0;
+  final double outputSpeed =  1.0;
+  
+  public ClawController() {
+    requires(Robot.claw);
   }
 
+  public void intake() {
+    
+  } 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.arm.enable();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.m_oi.armFloorPressed()) {
-      Robot.arm.floor();
-    } else if(Robot.m_oi.armLowPressed()){
-      Robot.arm.low();
+    if (Robot.m_oi.clawOpenPressed()){
+      if (isClawOpen) {
+        Robot.claw.closeClaw();
+        isClawOpen = false;
+      } else {
+        Robot.claw.openClaw();
+        isClawOpen = true;
+      }
+    }
+
+    if (Robot.m_oi.cargoIntakePressed()) {
+      Robot.claw.intakeCargo(intakeSpeed);
+    }
+    if (Robot.m_oi.cargoOutputPressed()) {
+      Robot.claw.releaseCargo(outputSpeed);
     }
   }
 
@@ -40,13 +56,15 @@ public class ArmController extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.arm.disable();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.arm.disable();
   }
+  
+  // intake = set claw intakes speed to 1
+  
+  
 }
