@@ -11,15 +11,41 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.PIDSource;
 import edu.wpi.first.wpilibj.PIDSourceType;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.Robot;
 
 public class DriveToVisionTarget extends Command { 
+
+  private static double kP = 0.0; 
+  private static double kI = 0.0; 
+  private static double kD = 0.0; 
+  private static final String keyP = "DriveToVisionTarget_P"; 
+  private static final String keyI = "DriveToVisionTarget_I"; 
+  private static final String keyD = "DriveToVisionTarget_D"; 
+
   private PIDController pidController; 
   public DriveToVisionTarget() {
     requires(Robot.driveBase); 
-    requires(Robot.vision);
+    requires(Robot.vision);  
+
+ 
+    Preferences prefs = Preferences.getInstance();  
+    if(!prefs.containsKey(keyP)) { 
+      prefs.putDouble(keyP, 0.0); 
+    } 
+    if(!prefs.containsKey(keyI)) { 
+      prefs.putDouble(keyI, 0.0); 
+    }  
+    if(!prefs.containsKey(keyD)){ 
+      prefs.putDouble(keyD, 0.0);        
+    }
+    
+    kP = prefs.getDouble(keyP, kP); 
+    kI = prefs.getDouble(keyI, kI); 
+    kD = prefs.getDouble(keyD, kD);  
+
     Robot.vision.setLineTarget();
     pidController=new PIDController(  0.0,  0.0,  0.0,  0.0, 
                                     new PIDSource(){
