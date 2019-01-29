@@ -36,8 +36,12 @@ public class OI {
     return pilot.getX(Hand.kRight);
   }
 
-  public boolean pivotArm(){
-    return pilot.getBButton();
+  public boolean armFloorPressed(){
+    return false; // button tbd
+  }
+
+  public boolean armLowPressed(){
+    return false; // button tbd
   }
 
   public double visionTargetAngle(){ 
