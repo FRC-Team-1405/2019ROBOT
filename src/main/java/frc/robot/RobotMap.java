@@ -30,8 +30,9 @@ public class RobotMap {
   public final static int talonDriveBaseLeftSlave = 3;
   public final static int talonDriveBaseRightSlave = 4;
   public final static int clawTalonA = 5; 
-  public final static int clawTalonB = 7;
-  public final static int pivotTalon = 6; 
+  public final static int clawTalonB = 6;
+  public final static int pivotTalon = 7;
+  public final static int pivotTalonSlave = 8; 
   //Joystick IDs
   public final static int pilot = 0; 
   

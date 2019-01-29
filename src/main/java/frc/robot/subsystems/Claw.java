@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 //import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.RobotMap;
-import frc.robot.commands.ArmController;
+import frc.robot.commands.ClawController;
 
 /**
  * Add your docs here.
@@ -26,12 +26,11 @@ public class Claw extends Subsystem {
   private WPI_TalonSRX intakeTalonA = new WPI_TalonSRX(RobotMap.clawTalonA);
   private WPI_TalonSRX intakeTalonB = new WPI_TalonSRX(RobotMap.clawTalonB);
   private DoubleSolenoid solenoid = new DoubleSolenoid(3, 6);
-  private WPI_TalonSRX pivotTalon = new WPI_TalonSRX(RobotMap.pivotTalon);
   
   private static double intakeSpeed = 1.0;
   private static double outputSpeed = 1.0;
-  private static String keyIntake;
-  private static String keyOutput;
+  private static final String keyIntake = "Claw_Intake_Speed";
+  private static final String keyOutput = "Claw_Output_Speed";
 
   public Claw(){
     intakeTalonA.setName("Intake A");
@@ -40,11 +39,7 @@ public class Claw extends Subsystem {
     this.addChild(intakeTalonB); 
     solenoid.setName("Solenoid");
     this.addChild(solenoid);
-    pivotTalon.setName("Pivot Arm"); 
-    this.addChild(pivotTalon); 
 
-    keyIntake = "Claw_Intake_Speed"; 
-    keyOutput = "Claw_Output_Speed";
     
     Preferences prefs = Preferences.getInstance(); 
     if (!prefs.containsKey(keyIntake)) {
@@ -63,7 +58,7 @@ public class Claw extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
-    setDefaultCommand(new ArmController());
+    setDefaultCommand(new ClawController());
   }
 
   public void openClaw() {
@@ -73,10 +68,6 @@ public class Claw extends Subsystem {
   public void closeClaw() {
     solenoid.set(Value.kReverse);
   }
-
-  public void pivot(int speed){
-    pivotTalon.set(speed); 
-  } 
 
   public void intakeCargo(double speed) { 
     intakeTalonA.set(speed); 
@@ -88,17 +79,10 @@ public class Claw extends Subsystem {
     intakeTalonB.set(-speed);
 
   }
-  public void clawPrefs(){
-
-    }
-	
-
-
-
+  
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
-    builder.addDoubleProperty("Pivot Current", this.pivotTalon::getOutputCurrent, null );
   }
 
 }

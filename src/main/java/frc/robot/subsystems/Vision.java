@@ -7,12 +7,12 @@
 
 package frc.robot.subsystems;
 
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
+//import org.opencv.core.Mat;
+//import org.opencv.imgproc.Imgproc;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
+//import edu.wpi.cscore.CvSink;
+//import edu.wpi.cscore.CvSource;
+//import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 // import edu.wpi.first.wpilibj.CameraServer;
@@ -25,8 +25,10 @@ public class Vision extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
+  /* // Add these variables back in when it's time.
   private static final int WIDTH = 640;
   private static final int HEIGHT = 480;
+  */
   Limelight limelight = new Limelight();  
   @Override
   public void initDefaultCommand() {

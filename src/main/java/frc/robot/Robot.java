@@ -16,9 +16,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveBaseController;
 import frc.robot.commands.DriveToVisionTarget;
 import frc.robot.subsystems.ArcadeDrive;
+import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Vision;
-import edu.wpi.first.wpilibj.livewindow.*;
+//import edu.wpi.first.wpilibj.livewindow.*;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 /**
@@ -32,6 +33,7 @@ public class Robot extends TimedRobot {
   public static OI m_oi;
   public static ArcadeDrive driveBase;
   public static Claw claw;
+  public static Arm arm;
   public static Vision vision;
 
   Command autonomousCommand;
@@ -46,7 +48,8 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
     driveBase = new ArcadeDrive();
     vision = new Vision();
-//    claw = new Claw();
+    claw = new Claw();
+    arm = new Arm();
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Drive Base", driveBase);
 
