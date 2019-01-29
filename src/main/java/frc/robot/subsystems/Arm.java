@@ -20,7 +20,8 @@ import frc.robot.commands.ArmController;
 public class Arm extends PIDSubsystem {
   
   private WPI_TalonSRX pivotTalon = new WPI_TalonSRX(RobotMap.pivotTalon);
-
+  private WPI_TalonSRX pivotTalonSlave = new WPI_TalonSRX(RobotMap.pivotTalonSlave);
+  
   private static double kP = 0.0;
   private static double kI = 0.0;
   private static double kD = 0.0;
@@ -41,6 +42,9 @@ public class Arm extends PIDSubsystem {
     // to
     // enable() - Enables the PID controller.
 
+    configureTalon(pivotTalon);
+    configureTalon(pivotTalonSlave);
+    pivotTalonSlave.follow(pivotTalon);
     pivotTalon.setName("Pivot Arm"); 
     this.addChild(pivotTalon); 
 
@@ -82,6 +86,14 @@ public class Arm extends PIDSubsystem {
 
   public void low(){
     setSetpoint(lowPos);
+  }
+
+  public void configureTalon(WPI_TalonSRX talonSRX){
+    talonSRX.configPeakCurrentDuration(50, 10);
+    talonSRX.configPeakCurrentLimit(40, 10);
+    talonSRX.configContinuousCurrentLimit(35, 10);
+    talonSRX.enableCurrentLimit(true);
+    talonSRX.configNeutralDeadband(0.001, 10);
   }
 
   @Override
