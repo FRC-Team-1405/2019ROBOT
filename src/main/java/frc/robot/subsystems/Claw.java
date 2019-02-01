@@ -79,13 +79,7 @@ public class Claw extends Subsystem {
     intakeTalonB.set(-speed);
 
   }
-  public void clawPrefs(){
-
-  }
-	
-
-
-
+  
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);

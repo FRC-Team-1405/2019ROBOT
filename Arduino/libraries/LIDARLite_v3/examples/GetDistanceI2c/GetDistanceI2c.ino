@@ -1,3 +1,7 @@
+#include <LIDARLite.h>
+
+#include <LIDARLite.h>
+
 /*------------------------------------------------------------------------------
 
   LIDARLite Arduino Library
@@ -20,6 +24,7 @@
   http://static.garmin.com/pumac/LIDAR_Lite_v3_Operation_Manual_and_Technical_Specifications.pdf
 
 ------------------------------------------------------------------------------*/
+
 
 #include <Wire.h>
 #include <LIDARLite.h>
@@ -84,6 +89,7 @@ void setup()
 
 void loop()
 {
+  char output_string[128];
   /*
     distance(bool biasCorrection, char lidarliteAddress)
 
@@ -101,13 +107,15 @@ void loop()
 
   // Take a measurement with receiver bias correction and print to serial terminal
   //Serial.printf("R: %i\n", rightLidar.distance(true, RIGHT_ADDRESS));
-  Serial.printf("L: %i\n", leftLidar.distance(true, LEFT_ADDRESS));
+  sprintf(output_string, "L: %i\n", leftLidar.distance(true, LEFT_ADDRESS));
+  Serial.print(output_string);
 
   // Take 99 measurements without receiver bias correction and print to serial terminal
   for(int i = 0; i < 99; i++)
   {
     //Serial.printf("L: %i R: %i", leftLidar.distance(false, LEFT_ADDRESS), rightLidar.distance(false, RIGHT_ADDRESS));
     //Serial.printf("R: %i\n", rightLidar.distance(false, RIGHT_ADDRESS));
-    Serial.printf("L: %i\n", leftLidar.distance(false, LEFT_ADDRESS));
+    sprintf(output_string, "L: %i\n", leftLidar.distance(true, LEFT_ADDRESS));
+    Serial.print(output_string);
   }
 }
