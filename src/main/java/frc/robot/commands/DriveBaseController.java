@@ -27,6 +27,9 @@ public class DriveBaseController extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if(Robot.m_oi.isDriveToLineEnabled()){
+       new DriveToVisionTarget().start();
+    }
     Robot.driveBase.driveRobot(-Robot.m_oi.driveY(), Robot.m_oi.driveX());
   }
 

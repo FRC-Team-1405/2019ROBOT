@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.RobotMap;
+import frc.robot.commands.DriveBaseController;
 //import frc.robot.commands.*;
 //import frc.robot.lib.ExtendedTalon;
 import frc.robot.lib.TalonPID;
@@ -68,6 +69,7 @@ public class ArcadeDrive extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new DriveBaseController());
   }
 
   public void configCurrentLimit(WPI_TalonSRX talonSRX){

@@ -36,6 +36,10 @@ public class OI {
     return pilot.getX(Hand.kRight);
   }
 
+  public boolean isDriveToLineEnabled(){
+    return pilot.getBumper(Hand.kRight);
+  }
+
   public boolean armFloorPressed(){
     return false; // button tbd
   }
@@ -46,6 +50,6 @@ public class OI {
 
   public double visionTargetAngle(){ 
     return limelight.getTX(); 
-
   }
+
 }

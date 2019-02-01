@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Drive Base", driveBase);
 
-    SmartDashboard.putData("DriveToVisionTarget", new DriveToVisionTarget());
+    // SmartDashboard.putData("DriveToVisionTarget", new DriveToVisionTarget());
     SmartDashboard.putData("VisionCamera", vision);
 //    LiveWindow.add(claw);
 
