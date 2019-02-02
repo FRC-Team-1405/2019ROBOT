@@ -27,8 +27,10 @@ public class ArcadeDrive extends Subsystem {
   // here. Call these from Commands.
   WPI_TalonSRX talonDriveBaseLeft = new WPI_TalonSRX(RobotMap.talonDriveBaseLeft);
   WPI_TalonSRX talonDriveBaseRight = new WPI_TalonSRX(RobotMap.talonDriveBaseRight);
-  TalonSRX talonDriveBaseLeftSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseLeftSlave);
-  TalonSRX talonDriveBaseRightSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseRightSlave);
+  TalonSRX talonDriveBaseLeftSlave1 = new TalonSRX(RobotMap.talonDriveBaseLeftSlave1);
+  TalonSRX talonDriveBaseRightSlave1 = new TalonSRX(RobotMap.talonDriveBaseRightSlave1);
+  TalonSRX talonDriveBaseLeftSlave2 = new TalonSRX(RobotMap.talonDriveBaseLeftSlave2);
+  TalonSRX talonDriveBaseRightSlave2 = new TalonSRX(RobotMap.talonDriveBaseRightSlave2);
   DifferentialDrive driveBase = new DifferentialDrive(talonDriveBaseLeft, talonDriveBaseRight); 
   TalonPID leftTalonPID;
   TalonPID rightTalonPID;
@@ -36,8 +38,10 @@ public class ArcadeDrive extends Subsystem {
    public ArcadeDrive(){
       configCurrentLimit(talonDriveBaseLeft);
       configCurrentLimit(talonDriveBaseRight);
-      configCurrentLimit(talonDriveBaseLeftSlave);
-      configCurrentLimit(talonDriveBaseRightSlave);
+      configCurrentLimit(talonDriveBaseLeftSlave1);
+      configCurrentLimit(talonDriveBaseRightSlave1);
+      configCurrentLimit(talonDriveBaseLeftSlave2);
+      configCurrentLimit(talonDriveBaseRightSlave2);
 
       // limit Talon deadband
       talonDriveBaseLeft.configNeutralDeadband(0.001, 10);
@@ -47,8 +51,10 @@ public class ArcadeDrive extends Subsystem {
       
       talonDriveBaseLeft.set(ControlMode.PercentOutput, 0);
       talonDriveBaseRight.set(ControlMode.PercentOutput, 0);
-      talonDriveBaseLeftSlave.set(ControlMode.Follower, RobotMap.talonDriveBaseLeft);
-      talonDriveBaseRightSlave.set(ControlMode.Follower, RobotMap.talonDriveBaseRight);
+      talonDriveBaseLeftSlave1.set(ControlMode.Follower, RobotMap.talonDriveBaseLeft);
+      talonDriveBaseRightSlave1.set(ControlMode.Follower, RobotMap.talonDriveBaseRight);
+      talonDriveBaseLeftSlave2.set(ControlMode.Follower, RobotMap.talonDriveBaseLeft);
+      talonDriveBaseRightSlave2.set(ControlMode.Follower, RobotMap.talonDriveBaseRight);
 
       talonDriveBaseLeft.setName("Left");
       talonDriveBaseRight.setName("Right");
