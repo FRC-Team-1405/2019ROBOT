@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 //import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -49,7 +50,7 @@ public class Robot extends TimedRobot {
     driveBase = new ArcadeDrive();
     vision = new Vision();
     claw = new Claw();
-    arm = new Arm();
+    arm = new Arm();  
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Drive Base", driveBase);
 
@@ -57,7 +58,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("VisionCamera", vision);
 //    LiveWindow.add(claw);
 
-    autonomousCommand = new DriveBaseController();
+    SmartDashboard.putData( new PowerDistributionPanel() );
+
+  autonomousCommand = new DriveBaseController();
     teleopCommand = autonomousCommand;
   }
 
