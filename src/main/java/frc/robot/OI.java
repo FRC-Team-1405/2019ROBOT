@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -16,7 +17,6 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
  */
 public class OI {
   public XboxController pilot = new XboxController(RobotMap.pilot);
-  private Limelight limelight = new Limelight();
   public boolean cargoIntakePressed() {
     return pilot.getBumperPressed(Hand.kLeft);
   }
@@ -36,6 +36,10 @@ public class OI {
     return pilot.getX(Hand.kRight);
   }
 
+  public boolean isDriveToLineEnabled(){
+    return pilot.getBumper(Hand.kRight);
+  }
+
   public boolean armFloorPressed(){
     return false; // button tbd
   }
@@ -44,8 +48,8 @@ public class OI {
     return false; // button tbd
   }
 
-  public double visionTargetAngle(){ 
-    return limelight.getTX(); 
-
+  public boolean isCameraSwitchPressed(){
+    return pilot.getBumper(Hand.kLeft); // button tbd
   }
+
 }

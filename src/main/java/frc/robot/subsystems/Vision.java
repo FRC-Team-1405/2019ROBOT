@@ -29,7 +29,9 @@ public class Vision extends Subsystem {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 480;
   */
-  Limelight limelight = new Limelight();  
+  Limelight front = new Limelight("front"); 
+  Limelight back = new Limelight("back");
+  Limelight selected = front;
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -42,13 +44,29 @@ public class Vision extends Subsystem {
 
   public void setLineTarget(){
     // setup Limelight pipeline
-  limelight.setPipeline((byte)0);  
+  front.setPipeline((byte)0);  
   }
 
   public double getLineTarget(){
     // return the x offset of the target 
-  return limelight.getTX(); 
+  return front.getTX(); 
      
+  }
+
+  public boolean isTargetAcquired(){
+    return front.hasTarget();
+  }
+
+  public void setFront(){
+    selected = front;
+  }
+
+  public void setBack(){
+    selected = back;
+  }
+
+  public void toggleCamera(){
+    selected = (selected == front) ? back : front;
   }
 
 }

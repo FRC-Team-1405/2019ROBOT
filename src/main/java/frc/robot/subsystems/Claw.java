@@ -25,7 +25,7 @@ public class Claw extends Subsystem {
   
   private WPI_TalonSRX intakeTalonA = new WPI_TalonSRX(RobotMap.clawTalonA);
   private WPI_TalonSRX intakeTalonB = new WPI_TalonSRX(RobotMap.clawTalonB);
-  private DoubleSolenoid solenoid = new DoubleSolenoid(3, 6);
+  private DoubleSolenoid solenoid ;//= new DoubleSolenoid(3, 6);
   
   private static double intakeSpeed = 1.0;
   private static double outputSpeed = 1.0;
@@ -37,8 +37,8 @@ public class Claw extends Subsystem {
     this.addChild(intakeTalonA);
     intakeTalonB.setName("Intake B"); 
     this.addChild(intakeTalonB); 
-    solenoid.setName("Solenoid");
-    this.addChild(solenoid);
+//    solenoid.setName("Solenoid");
+//    this.addChild(solenoid);
 
     
     Preferences prefs = Preferences.getInstance(); 

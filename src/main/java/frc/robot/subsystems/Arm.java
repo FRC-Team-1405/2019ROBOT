@@ -7,10 +7,13 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmController;
 
@@ -20,7 +23,7 @@ import frc.robot.commands.ArmController;
 public class Arm extends PIDSubsystem {
   
   private WPI_TalonSRX pivotTalon = new WPI_TalonSRX(RobotMap.pivotTalon);
-  private WPI_TalonSRX pivotTalonSlave = new WPI_TalonSRX(RobotMap.pivotTalonSlave);
+  private TalonSRX pivotTalonSlave = new TalonSRX(RobotMap.pivotTalonSlave);
   
   private static double kP = 0.0;
   private static double kI = 0.0;
@@ -44,7 +47,8 @@ public class Arm extends PIDSubsystem {
 
     configureTalon(pivotTalon);
     configureTalon(pivotTalonSlave);
-    pivotTalonSlave.follow(pivotTalon);
+    pivotTalon.set(ControlMode.PercentOutput, 0);
+    pivotTalonSlave.set(ControlMode.Follower, RobotMap.pivotTalon);
     pivotTalon.setName("Pivot Arm"); 
     this.addChild(pivotTalon); 
 
@@ -88,7 +92,7 @@ public class Arm extends PIDSubsystem {
     setSetpoint(lowPos);
   }
 
-  public void configureTalon(WPI_TalonSRX talonSRX){
+  public void configureTalon(TalonSRX talonSRX){
     talonSRX.configPeakCurrentDuration(50, 10);
     talonSRX.configPeakCurrentLimit(40, 10);
     talonSRX.configContinuousCurrentLimit(35, 10);
@@ -109,5 +113,12 @@ public class Arm extends PIDSubsystem {
     // Use output to drive your system, like a motor
     // e.g. yourMotor.set(output);
     pivotTalon.set(output); 
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.addDoubleProperty("Current A", () -> { return pivotTalon.getOutputCurrent(); }, null );
+    builder.addDoubleProperty("Current B", () -> { return pivotTalonSlave.getOutputCurrent(); }, null );
   }
 }

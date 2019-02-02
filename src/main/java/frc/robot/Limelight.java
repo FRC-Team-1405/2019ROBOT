@@ -29,8 +29,17 @@
        } 
        We only need ints for this (I'm using chars for the 
    byte's memory savings)*/
-       public Limelight() {
-       table = NetworkTableInstance.getDefault().getTable("limelight");
+        public Limelight() {
+            this("");
+        }
+
+        public Limelight(String name) {
+        if(name.isBlank()){
+            table = NetworkTableInstance.getDefault().getTable("limelight");
+        } else {
+            table = NetworkTableInstance.getDefault().getTable("limelight-"+name);
+
+        }
        tv     = table.getEntry("tv");
        tx     = table.getEntry("tx");
        ty     = table.getEntry("ty");
@@ -43,6 +52,8 @@
        tvert  = table.getEntry("tvert");
        getpipe= table.getEntry("getpipe");
        }
+
+
        public void setPipeline(byte id) {
        //pipeline = id;
        table.getEntry("pipeline").setNumber(id);

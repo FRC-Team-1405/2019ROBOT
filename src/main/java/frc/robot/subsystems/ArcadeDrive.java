@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.RobotMap;
+import frc.robot.commands.DriveBaseController;
 //import frc.robot.commands.*;
 //import frc.robot.lib.ExtendedTalon;
 import frc.robot.lib.TalonPID;
@@ -26,8 +27,8 @@ public class ArcadeDrive extends Subsystem {
   // here. Call these from Commands.
   WPI_TalonSRX talonDriveBaseLeft = new WPI_TalonSRX(RobotMap.talonDriveBaseLeft);
   WPI_TalonSRX talonDriveBaseRight = new WPI_TalonSRX(RobotMap.talonDriveBaseRight);
-  WPI_TalonSRX talonDriveBaseLeftSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseLeftSlave);
-  WPI_TalonSRX talonDriveBaseRightSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseRightSlave);
+  TalonSRX talonDriveBaseLeftSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseLeftSlave);
+  TalonSRX talonDriveBaseRightSlave = new WPI_TalonSRX(RobotMap.talonDriveBaseRightSlave);
   DifferentialDrive driveBase = new DifferentialDrive(talonDriveBaseLeft, talonDriveBaseRight); 
   TalonPID leftTalonPID;
   TalonPID rightTalonPID;
@@ -43,9 +44,11 @@ public class ArcadeDrive extends Subsystem {
       talonDriveBaseRight.configNeutralDeadband(0.001, 10);
 
       resetDistanceEncoder();
-
-      talonDriveBaseLeftSlave.follow(talonDriveBaseLeft);
-      talonDriveBaseRightSlave.follow(talonDriveBaseRight);
+      
+      talonDriveBaseLeft.set(ControlMode.PercentOutput, 0);
+      talonDriveBaseRight.set(ControlMode.PercentOutput, 0);
+      talonDriveBaseLeftSlave.set(ControlMode.Follower, RobotMap.talonDriveBaseLeft);
+      talonDriveBaseRightSlave.set(ControlMode.Follower, RobotMap.talonDriveBaseRight);
 
       talonDriveBaseLeft.setName("Left");
       talonDriveBaseRight.setName("Right");
@@ -68,9 +71,10 @@ public class ArcadeDrive extends Subsystem {
 
   @Override
   public void initDefaultCommand() {
+    setDefaultCommand(new DriveBaseController());
   }
 
-  public void configCurrentLimit(WPI_TalonSRX talonSRX){
+  public void configCurrentLimit(TalonSRX talonSRX){
     talonSRX.configPeakCurrentDuration(50, 10);
     talonSRX.configPeakCurrentLimit(40, 10);
     talonSRX.configContinuousCurrentLimit(35, 10);
