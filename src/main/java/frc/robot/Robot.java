@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+
 //import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -20,6 +21,7 @@ import frc.robot.commands.DriveToVisionTarget;
 import frc.robot.subsystems.ArcadeDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.GyroSystem;
 import frc.robot.subsystems.Vision;
 //import edu.wpi.first.wpilibj.livewindow.*;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -37,6 +39,7 @@ public class Robot extends TimedRobot {
   public static Claw claw;
   public static Arm arm;
   public static Vision vision;
+  public static GyroSystem gyro;
 
   Command autonomousCommand;
   Command teleopCommand;
@@ -53,10 +56,16 @@ public class Robot extends TimedRobot {
     vision = new Vision();
     claw = new Claw();
     arm = new Arm();  
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Drive Base", driveBase);
+    gyro = new GyroSystem();
 
     LiveWindow.add(new DriveToVisionTarget());
+
+    //claw = new Claw();
+    // chooser.addOption("My Auto", new MyAutoCommand());
+    SmartDashboard.putData("Drive Base", driveBase);
+    SmartDashboard.putData("DriveToVisionTarget", new DriveToVisionTarget());
+    SmartDashboard.putData("Gyro System", gyro);
+    SmartDashboard.putData("Vision System", vision);
 //    LiveWindow.add(claw);
 
     SmartDashboard.putData( new PowerDistributionPanel() );
