@@ -51,4 +51,8 @@ public class Vision extends Subsystem {
      
   }
 
+  public boolean isTargetAcquired(){
+    return limelight.hasTarget();
+  }
+
 }

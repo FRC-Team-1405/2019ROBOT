@@ -69,7 +69,12 @@ public class DriveToVisionTarget extends Command {
                                     
                                       @Override
                                       public void pidWrite(double output) {
-                                        Robot.driveBase.driveRobot(-Robot.m_oi.driveY(), -output);
+                                        if(Robot.vision.isTargetAcquired()){
+                                          Robot.driveBase.driveRobot(-Robot.m_oi.driveY(), -output);
+                                        } else{
+                                          Robot.driveBase.driveRobot(-Robot.m_oi.driveY(), Robot.m_oi.driveX());
+                                        }
+                                       
                                       }
                                     });
 
@@ -85,7 +90,8 @@ public class DriveToVisionTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-  }  
+    pidController.enable();
+  }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
@@ -95,12 +101,17 @@ public class DriveToVisionTarget extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    if(!Robot.m_oi.isDriveToLineEnabled()){
+      return true;
+    }else {
+      return false;
+    }
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    pidController.disable();
   }
 
   // Called when another command which requires one or more of the same
