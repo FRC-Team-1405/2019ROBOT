@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Preferences;
@@ -94,6 +95,7 @@ public class Arm extends PIDSubsystem {
     talonSRX.configContinuousCurrentLimit(35, 10);
     talonSRX.enableCurrentLimit(true);
     talonSRX.configNeutralDeadband(0.001, 10);
+    talonSRX.set(ControlMode.PercentOutput, 0);
   }
 
   @Override
