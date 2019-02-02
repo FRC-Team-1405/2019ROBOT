@@ -30,23 +30,47 @@
 #include <LIDARLite.h>
 
 #define DEFAULT_ADDRESS 0x62
-#define LEFT_ADDRESS    0x64
-#define RIGHT_ADDRESS   DEFAULT_ADDRESS
+#define LIDAR_1_ADDRESS   DEFAULT_ADDRESS
+#define LIDAR_2_ADDRESS    0x64
+#define LIDAR_3_ADDRESS    0x66
+#define LIDAR_4_ADDRESS    0x68
+#define LIDAR_1_ENABLE_PIN 20
+#define LIDAR_2_ENABLE_PIN 21
+#define LIDAR_3_ENABLE_PIN 22
+#define LIDAR_4_ENABLE_PIN 23
 
-LIDARLite leftLidar, rightLidar;
+LIDARLite Lidar_1, Lidar_2;
 
 void setup()
 {
-  byte regRead[2];
   Serial.begin(115200); // Initialize serial connection to display distance readings
-  rightLidar.begin(0, true, RIGHT_ADDRESS); // Set configuration to default and I2C to 400 kHz
-  // step 1: turn right LIDAR off
-  pinMode(22, OUTPUT);
-  digitalWrite(22, LOW);
-  // step 2: send left LIDAR commands to registers 0x18 and 0x19 to change I2C address
-  leftLidar.changeAddress(LEFT_ADDRESS, true, DEFAULT_ADDRESS);
-  // step 3: turn right LIDAR on
-  digitalWrite(22, HIGH);
+  Serial.print("starting lidar app");
+  pinMode(LIDAR_1_ENABLE_PIN, OUTPUT);
+  pinMode(LIDAR_2_ENABLE_PIN, OUTPUT);
+  pinMode(LIDAR_3_ENABLE_PIN, OUTPUT);
+  pinMode(LIDAR_4_ENABLE_PIN, OUTPUT);
+  digitalWrite(LIDAR_1_ENABLE_PIN, LOW);
+  digitalWrite(LIDAR_2_ENABLE_PIN, LOW);
+  digitalWrite(LIDAR_3_ENABLE_PIN, LOW);
+  digitalWrite(LIDAR_4_ENABLE_PIN, LOW);
+  // Configure Lidar_1
+  digitalWrite(LIDAR_1_ENABLE_PIN, HIGH);
+  Lidar_1.begin(0, true, DEFAULT_ADDRESS); // Set configuration to default and I2C to 400 kHz
+  Lidar_1.changeAddress(LIDAR_1_ADDRESS, true, DEFAULT_ADDRESS);
+  Lidar_1.configure(0, LIDAR_1_ADDRESS); // Change this number to try out alternate configurations
+  digitalWrite(LIDAR_1_ENABLE_PIN, LOW);
+  //Configure Lidar_2
+  digitalWrite(LIDAR_2_ENABLE_PIN, HIGH);
+  //Lidar_2.begin(0, true, LIDAR_2_ADDRESS); // Set configuration to default and I2C to 400 kHz
+  //Lidar_2.changeAddress(LIDAR_2_ADDRESS, true, DEFAULT_ADDRESS);
+  //Lidar_2.configure(0, LIDAR_2_ADDRESS); // Change this number to try out alternate configurations
+  digitalWrite(LIDAR_2_ENABLE_PIN, LOW);
+  //Enable all Lidars
+  digitalWrite(LIDAR_1_ENABLE_PIN, HIGH);
+  digitalWrite(LIDAR_2_ENABLE_PIN, HIGH);
+  digitalWrite(LIDAR_3_ENABLE_PIN, HIGH);
+  digitalWrite(LIDAR_4_ENABLE_PIN, HIGH);
+  
   /*
     begin(int configuration, bool fasti2c, char lidarliteAddress)
 
@@ -60,7 +84,6 @@ void setup()
     lidarliteAddress: Default DEFAULT_ADDRESS. Fill in new address here if changed. See
       operating manual for instructions.
   */
-  //leftLidar.begin(0, true, LEFT_ADDRESS); // Set configuration to default and I2C to 400 kHz
   
   /*
     configure(int configuration, char lidarliteAddress)
@@ -83,8 +106,6 @@ void setup()
     lidarliteAddress: Default DEFAULT_ADDRESS. Fill in new address here if changed. See
       operating manual for instructions.
   */
-  leftLidar.configure(0, LEFT_ADDRESS); // Change this number to try out alternate configurations
-  //rightLidar.configure(0, RIGHT_ADDRESS); // Change this number to try out alternate configurations
 }
 
 void loop()
@@ -107,7 +128,7 @@ void loop()
 
   // Take a measurement with receiver bias correction and print to serial terminal
   //Serial.printf("R: %i\n", rightLidar.distance(true, RIGHT_ADDRESS));
-  sprintf(output_string, "L: %i\n", leftLidar.distance(true, LEFT_ADDRESS));
+  sprintf(output_string, "1: %i\n", Lidar_1.distance(true, LIDAR_1_ADDRESS));
   Serial.print(output_string);
 
   // Take 99 measurements without receiver bias correction and print to serial terminal
@@ -115,7 +136,7 @@ void loop()
   {
     //Serial.printf("L: %i R: %i", leftLidar.distance(false, LEFT_ADDRESS), rightLidar.distance(false, RIGHT_ADDRESS));
     //Serial.printf("R: %i\n", rightLidar.distance(false, RIGHT_ADDRESS));
-    sprintf(output_string, "L: %i\n", leftLidar.distance(true, LEFT_ADDRESS));
+    sprintf(output_string, "1: %i\n", Lidar_1.distance(true, LIDAR_1_ADDRESS));
     Serial.print(output_string);
   }
 }
