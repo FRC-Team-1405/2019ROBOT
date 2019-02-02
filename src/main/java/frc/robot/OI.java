@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -46,4 +47,9 @@ public class OI {
   public boolean armLowPressed(){
     return false; // button tbd
   }
+
+  public boolean isCameraSwitchPressed(){
+    return pilot.getBumper(Hand.kLeft); // button tbd
+  }
+
 }

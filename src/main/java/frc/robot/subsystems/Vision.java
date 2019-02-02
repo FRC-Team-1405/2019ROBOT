@@ -29,7 +29,9 @@ public class Vision extends Subsystem {
   private static final int WIDTH = 640;
   private static final int HEIGHT = 480;
   */
-  Limelight front = new Limelight("front");  
+  Limelight front = new Limelight("front"); 
+  Limelight back = new Limelight("back");
+  Limelight selected = front;
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -53,6 +55,18 @@ public class Vision extends Subsystem {
 
   public boolean isTargetAcquired(){
     return front.hasTarget();
+  }
+
+  public void setFront(){
+    selected = front;
+  }
+
+  public void setBack(){
+    selected = back;
+  }
+
+  public void toggleCamera(){
+    selected = (selected == front) ? back : front;
   }
 
 }

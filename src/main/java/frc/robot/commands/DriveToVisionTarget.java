@@ -47,7 +47,7 @@ public class DriveToVisionTarget extends Command {
     kD = prefs.getDouble(keyD, kD);  
 
     Robot.vision.setLineTarget();
-    pidController=new PIDController(  0.0,  0.0,  0.0,  0.0, 
+    pidController=new PIDController( kP,  kI,  kD,  0.0, 
                                     new PIDSource(){
                                       private PIDSourceType pidSourceType = PIDSourceType.kDisplacement;
                                       @Override

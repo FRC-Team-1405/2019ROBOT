@@ -11,6 +11,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 //import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveBaseController;
@@ -38,6 +39,7 @@ public class Robot extends TimedRobot {
 
   Command autonomousCommand;
   Command teleopCommand;
+  public static Command driveToVisionTarget;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -53,12 +55,12 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Drive Base", driveBase);
 
-    // SmartDashboard.putData("DriveToVisionTarget", new DriveToVisionTarget());
-    SmartDashboard.putData("VisionCamera", vision);
+    LiveWindow.add(new DriveToVisionTarget());
 //    LiveWindow.add(claw);
 
     autonomousCommand = new DriveBaseController();
     teleopCommand = autonomousCommand;
+    driveToVisionTarget = new DriveToVisionTarget();
   }
 
   /**
