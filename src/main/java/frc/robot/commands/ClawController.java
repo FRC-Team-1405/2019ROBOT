@@ -41,9 +41,10 @@ public class ClawController extends Command {
 
     if (Robot.m_oi.cargoIntakePressed()) {
       Robot.claw.intakeCargo(intakeSpeed);
-    }
-    if (Robot.m_oi.cargoOutputPressed()) {
+    } else if (Robot.m_oi.cargoOutputPressed()) {
       Robot.claw.releaseCargo(outputSpeed);
+    } else{
+      Robot.claw.stopCargo();
     }
   }
 

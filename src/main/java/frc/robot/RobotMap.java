@@ -37,5 +37,6 @@ public class RobotMap {
   public final static int clawTalonB = 10;
   //Joystick IDs
   public final static int pilot = 0; 
+  public final static int operator = 1;
   
 }
