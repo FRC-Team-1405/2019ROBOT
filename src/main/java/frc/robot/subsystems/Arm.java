@@ -120,5 +120,7 @@ public class Arm extends PIDSubsystem {
     super.initSendable(builder);
     builder.addDoubleProperty("Current A", () -> { return pivotTalon.getOutputCurrent(); }, null );
     builder.addDoubleProperty("Current B", () -> { return pivotTalonSlave.getOutputCurrent(); }, null );
+    builder.addDoubleProperty("Arm T P", () -> { return pivotTalon.getActiveTrajectoryPosition();}, null);
+    builder.addDoubleProperty("Arm T V", () -> { return pivotTalon.getActiveTrajectoryVelocity();}, null);
   }
 }
