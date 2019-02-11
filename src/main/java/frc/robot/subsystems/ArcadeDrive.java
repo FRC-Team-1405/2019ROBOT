@@ -34,6 +34,7 @@ public class ArcadeDrive extends Subsystem {
   DifferentialDrive driveBase = new DifferentialDrive(talonDriveBaseLeft, talonDriveBaseRight); 
   TalonPID leftTalonPID;
   TalonPID rightTalonPID;
+  boolean driveForward = true;
 
    public ArcadeDrive(){
       configCurrentLimit(talonDriveBaseLeft);
@@ -88,8 +89,16 @@ public class ArcadeDrive extends Subsystem {
 
   }
 
+  public void toggleDriveDirection(){
+    driveForward = !driveForward;
+  }
+
   public void driveRobot(double xSpeed, double zRotation){
-    driveBase.arcadeDrive(xSpeed, zRotation);
+    if(driveForward){
+      driveBase.arcadeDrive(xSpeed, zRotation);
+    } else{
+      driveBase.arcadeDrive(-xSpeed, zRotation);
+    }
   }
 
   public void setTargetPosition(double pos) {

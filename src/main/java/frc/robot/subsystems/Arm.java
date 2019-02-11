@@ -8,11 +8,13 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmController;
@@ -35,7 +37,7 @@ public class Arm extends PIDSubsystem {
   private static double floorPos = 0.0;
   private static double lowPos = 0.0;
   private static final String keyFloorPos = "Arm_FloorPosition";
-  private static final String keyLowPos = "Arm_EjectPositionLow";
+  private static final String keyLowPos = "Arm_EjectPositionLow"; 
 
   public Arm() {
     // Intert a subsystem name and PID values here
@@ -46,11 +48,16 @@ public class Arm extends PIDSubsystem {
     // enable() - Enables the PID controller.
 
     configureTalon(pivotTalon);
+    pivotTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 10);
+    pivotTalon.configNeutralDeadband(0.001, 10);
     configureTalon(pivotTalonSlave);
+
     pivotTalon.set(ControlMode.PercentOutput, 0);
     pivotTalonSlave.set(ControlMode.Follower, RobotMap.pivotTalon);
+    
     pivotTalon.setName("Pivot Arm"); 
     this.addChild(pivotTalon); 
+    LiveWindow.add(pivotTalon);
 
     Preferences prefs = Preferences.getInstance(); 
     if (!prefs.containsKey(keyP)) {
@@ -100,6 +107,10 @@ public class Arm extends PIDSubsystem {
     talonSRX.configNeutralDeadband(0.001, 10);
   }
 
+  public double getArmPosition(){
+   return pivotTalon.getSensorCollection().getAnalogInRaw();
+  }
+
   @Override
   protected double returnPIDInput() {
     // Return your input value for the PID loop
@@ -117,8 +128,15 @@ public class Arm extends PIDSubsystem {
 
   @Override
   public void initSendable(SendableBuilder builder) {
+
+    // pivotTalon.configNeutralDeadband(percentDeadband)
+    
     super.initSendable(builder);
     builder.addDoubleProperty("Current A", () -> { return pivotTalon.getOutputCurrent(); }, null );
     builder.addDoubleProperty("Current B", () -> { return pivotTalonSlave.getOutputCurrent(); }, null );
+    builder.addDoubleProperty("Arm Position", this::getArmPosition, null);
+
+
+    
   }
 }

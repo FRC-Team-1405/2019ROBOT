@@ -79,6 +79,10 @@ public class Claw extends Subsystem {
     intakeTalonB.set(-speed);
 
   }
+  public void stopCargo(){
+    intakeTalonA.set(0);
+    intakeTalonB.set(0);
+  }
   
   @Override
   public void initSendable(SendableBuilder builder) {

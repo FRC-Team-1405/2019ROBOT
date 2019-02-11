@@ -30,10 +30,14 @@ public class DriveBaseController extends Command {
     if(Robot.m_oi.isDriveToLineEnabled()){
       Robot.driveToVisionTarget.start();
     }else 
-    Robot.driveBase.driveRobot(-Robot.m_oi.driveY(), Robot.m_oi.driveX());
+      Robot.driveBase.driveRobot(-Robot.m_oi.driveY(), Robot.m_oi.driveX());
 
     if(Robot.m_oi.isCameraSwitchPressed()){
       Robot.vision.toggleCamera();
+    }
+
+    if(Robot.m_oi.driveReverse()){
+      Robot.driveBase.toggleDriveDirection();
     }
   }
 

@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.SerialPort;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -37,5 +39,13 @@ public class RobotMap {
   public final static int clawTalonB = 10;
   //Joystick IDs
   public final static int pilot = 0; 
-  
+  public final static int operator = 1;
+  // Serial/LidarReader config info
+  public static final int BAUD_RATE = 2400;
+  public static final SerialPort.Port PORT = SerialPort.Port.kUSB1;
+  public static final int DATA_BITS = 8;
+  public static final SerialPort.Parity PARITY = SerialPort.Parity.kNone;
+  public static final SerialPort.StopBits STOP_BITS = SerialPort.StopBits.kOne;
+  public static final String LIDAR_KEY = "LIDAR VALUES";
+
 }

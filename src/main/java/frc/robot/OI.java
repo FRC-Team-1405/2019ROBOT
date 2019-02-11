@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
   public XboxController pilot = new XboxController(RobotMap.pilot);
+  public XboxController operator = new XboxController(RobotMap.operator);
   public boolean cargoIntakePressed() {
     return pilot.getBumper(Hand.kLeft);
   }
@@ -36,8 +37,12 @@ public class OI {
     return pilot.getX(Hand.kRight);
   }
 
+  public boolean driveReverse(){
+    return pilot.getBButtonPressed();
+  }
+
   public boolean isDriveToLineEnabled(){
-    return pilot.getBumper(Hand.kRight);
+    return operator.getBumper(Hand.kRight);
   }
 
   public boolean armFloorPressed(){
