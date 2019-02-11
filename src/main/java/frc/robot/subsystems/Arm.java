@@ -128,9 +128,15 @@ public class Arm extends PIDSubsystem {
 
   @Override
   public void initSendable(SendableBuilder builder) {
+
+    // pivotTalon.configNeutralDeadband(percentDeadband)
+    
     super.initSendable(builder);
     builder.addDoubleProperty("Current A", () -> { return pivotTalon.getOutputCurrent(); }, null );
     builder.addDoubleProperty("Current B", () -> { return pivotTalonSlave.getOutputCurrent(); }, null );
     builder.addDoubleProperty("Arm Position", this::getArmPosition, null);
+
+
+    
   }
 }

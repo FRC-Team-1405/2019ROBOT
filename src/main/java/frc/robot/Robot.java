@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveBaseController;
 import frc.robot.commands.DriveToVisionTarget;
+import frc.robot.lib.LidarReader;
 import frc.robot.subsystems.ArcadeDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
@@ -45,6 +46,8 @@ public class Robot extends TimedRobot {
   Command teleopCommand;
   public static Command driveToVisionTarget;
 
+  LidarReader lidarReader;
+
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -59,6 +62,9 @@ public class Robot extends TimedRobot {
     gyro = new GyroSystem();
 
     LiveWindow.add(new DriveToVisionTarget());
+
+    lidarReader = new LidarReader();
+    lidarReader.start();
 
     //claw = new Claw();
     // chooser.addOption("My Auto", new MyAutoCommand());
@@ -94,6 +100,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    // lidarReader.killThread();
   }
 
   @Override
