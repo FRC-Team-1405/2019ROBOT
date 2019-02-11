@@ -18,10 +18,10 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
   public XboxController pilot = new XboxController(RobotMap.pilot);
   public boolean cargoIntakePressed() {
-    return pilot.getBumperPressed(Hand.kLeft);
+    return pilot.getBumper(Hand.kLeft);
   }
   public boolean cargoOutputPressed() {
-    return pilot.getBumperPressed(Hand.kRight);
+    return pilot.getBumper(Hand.kRight);
   }
 
   public boolean clawOpenPressed(){
