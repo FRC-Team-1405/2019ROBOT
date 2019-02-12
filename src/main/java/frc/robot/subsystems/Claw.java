@@ -29,6 +29,7 @@ public class Claw extends Subsystem {
   
   private static double intakeSpeed = 1.0;
   private static double outputSpeed = 1.0;
+  private static final double cargoAcquiredCurrent = 1.0; //TBD
   private static final String keyIntake = "Claw_Intake_Speed";
   private static final String keyOutput = "Claw_Output_Speed";
 
@@ -72,16 +73,20 @@ public class Claw extends Subsystem {
   public void intakeCargo(double speed) { 
     intakeTalonA.set(speed); 
     intakeTalonB.set(speed); 
-
   }
+
   public void releaseCargo(double speed){
     intakeTalonA.set(-speed);
     intakeTalonB.set(-speed);
-
   }
+
   public void stopCargo(){
     intakeTalonA.set(0);
     intakeTalonB.set(0);
+  }
+
+  public boolean isCargoAcquired(){
+    return ((intakeTalonA.getOutputCurrent()+intakeTalonB.getOutputCurrent())/2>cargoAcquiredCurrent);
   }
   
   @Override

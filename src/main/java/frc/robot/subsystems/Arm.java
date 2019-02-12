@@ -51,7 +51,7 @@ public class Arm extends PIDSubsystem {
     // to
     // enable() - Enables the PID controller.
 
-    configureTalon(pivotTalon);
+        configureTalon(pivotTalon);
     pivotTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 10);
     pivotTalon.configNeutralDeadband(0.001, 10);
     configureTalon(pivotTalonSlave);
@@ -156,6 +156,8 @@ public class Arm extends PIDSubsystem {
     super.initSendable(builder);
     builder.addDoubleProperty("Current A", () -> { return pivotTalon.getOutputCurrent(); }, null );
     builder.addDoubleProperty("Current B", () -> { return pivotTalonSlave.getOutputCurrent(); }, null );
+    builder.addDoubleProperty("Arm T P", () -> { return pivotTalon.getActiveTrajectoryPosition();}, null);
+    builder.addDoubleProperty("Arm T V", () -> { return pivotTalon.getActiveTrajectoryVelocity();}, null);
     builder.addDoubleProperty("Arm Position", this::getArmPosition, null);
 
 
