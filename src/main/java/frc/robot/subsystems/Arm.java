@@ -34,10 +34,14 @@ public class Arm extends PIDSubsystem {
   private static final String keyI = "Arm_I";
   private static final String keyD = "Arm_D";
 
-  private static double floorPos = 0.0;
-  private static double lowPos = 0.0;
-  private static final String keyFloorPos = "Arm_FloorPosition";
-  private static final String keyLowPos = "Arm_EjectPositionLow"; 
+  private static double floorPickup = 0.0;
+  private static double lowScoring = 0.0;
+  private static double rocketCenterCargo = 0.0;
+  private static double cargoShipCargo = 0.0;
+  private static final String keyFloorPickup = "Arm_FloorPosition";
+  private static final String keyLowScoring = "Arm_EjectPositionLow"; 
+  private static final String keyRocketCenterCargo = "Arm_EjectCenterRocket";
+  private static final String keyCargoShipCargo = "Arm_EjectCargoShipCargo";
 
   public Arm() {
     // Intert a subsystem name and PID values here
@@ -70,11 +74,19 @@ public class Arm extends PIDSubsystem {
       prefs.putDouble("Arm D", kD);
     }
 
-    if (!prefs.containsKey(keyFloorPos)) {
-      prefs.putDouble("Floor Position", floorPos);
+    if (!prefs.containsKey(keyFloorPickup)) {
+      prefs.putDouble("Floor Position", floorPickup);
     }
-    if (!prefs.containsKey(keyLowPos)) {
-      prefs.putDouble("Eject Position Low", floorPos);
+    if (!prefs.containsKey(keyLowScoring)) {
+      prefs.putDouble("Eject Position Low", lowScoring);
+    }
+
+    if (!prefs.containsKey(keyRocketCenterCargo)){
+      prefs.putDouble("Eject Center Rocket", rocketCenterCargo);
+    }
+
+    if(!prefs.containsKey(keyCargoShipCargo)){
+      prefs.putDouble("Eject Cargo Ship Cargo", cargoShipCargo);
     }
     
 
@@ -82,8 +94,10 @@ public class Arm extends PIDSubsystem {
     kI = prefs.getDouble(keyI, kI); 
     kD = prefs.getDouble(keyD, kD); 
 
-    floorPos = prefs.getDouble(keyFloorPos, floorPos);
-    lowPos = prefs.getDouble(keyLowPos, lowPos);
+    floorPickup = prefs.getDouble(keyFloorPickup, floorPickup);
+    lowScoring = prefs.getDouble(keyLowScoring, lowScoring);
+    rocketCenterCargo = prefs.getDouble(keyRocketCenterCargo, rocketCenterCargo);
+    cargoShipCargo = prefs.getDouble(keyCargoShipCargo, cargoShipCargo);
   }
 
   @Override
@@ -92,11 +106,19 @@ public class Arm extends PIDSubsystem {
   }
 
   public void floor(){
-    setSetpoint(floorPos);
+    setSetpoint(floorPickup);
   }
 
   public void low(){
-    setSetpoint(lowPos);
+    setSetpoint(lowScoring);
+  }
+
+  public void rocketCenter(){
+    setSetpoint(rocketCenterCargo);
+  }
+
+  public void cargoShipTop(){
+    setSetpoint(cargoShipCargo);
   }
 
   public void configureTalon(TalonSRX talonSRX){
@@ -128,11 +150,17 @@ public class Arm extends PIDSubsystem {
 
   @Override
   public void initSendable(SendableBuilder builder) {
+
+    // pivotTalon.configNeutralDeadband(percentDeadband)
+    
     super.initSendable(builder);
     builder.addDoubleProperty("Current A", () -> { return pivotTalon.getOutputCurrent(); }, null );
     builder.addDoubleProperty("Current B", () -> { return pivotTalonSlave.getOutputCurrent(); }, null );
     builder.addDoubleProperty("Arm T P", () -> { return pivotTalon.getActiveTrajectoryPosition();}, null);
     builder.addDoubleProperty("Arm T V", () -> { return pivotTalon.getActiveTrajectoryVelocity();}, null);
     builder.addDoubleProperty("Arm Position", this::getArmPosition, null);
+
+
+    
   }
 }
