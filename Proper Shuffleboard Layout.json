@@ -1,0 +1,512 @@
+{
+  "tabPane": [
+    {
+      "title": "SmartDashboard",
+      "autoPopulate": true,
+      "autoPopulatePrefix": "SmartDashboard/",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Basic Subsystem",
+              "_source0": "network_table:///SmartDashboard/Drive Base",
+              "_title": "Drive Base"
+            }
+          },
+          "2,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Basic Subsystem",
+              "_source0": "network_table:///SmartDashboard/Gyro System",
+              "_title": "Gyro System"
+            }
+          },
+          "4,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Basic Subsystem",
+              "_source0": "network_table:///SmartDashboard/Vision System",
+              "_title": "Vision System"
+            }
+          },
+          "6,0": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Gyro",
+              "_source0": "network_table:///SmartDashboard/NavX",
+              "_title": "NavX",
+              "Visuals/Major tick spacing": 45.0,
+              "Visuals/Starting angle": 180.0,
+              "Visuals/Show tick mark ring": true
+            }
+          },
+          "8,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/DriveToVisionTarget",
+              "_title": "DriveToVisionTarget"
+            }
+          },
+          "0,1": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "PDP",
+              "_source0": "network_table:///SmartDashboard/PowerDistributionPanel[0]",
+              "_title": "PowerDistributionPanel[0]",
+              "Visuals/Show voltage and current values": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "LiveWindow",
+      "autoPopulate": true,
+      "autoPopulatePrefix": "LiveWindow/",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Ungrouped",
+              "_title": "Ungrouped",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "PDP",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistributionPanel[0]",
+                  "_title": "PowerDistributionPanel[0]",
+                  "Visuals/Show voltage and current values": true
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/Vision Target PID",
+                  "_title": "Vision Target PID"
+                },
+                {
+                  "_type": "Command",
+                  "_source0": "network_table:///LiveWindow/Ungrouped/DriveToVisionTarget",
+                  "_title": "DriveToVisionTarget"
+                }
+              ]
+            }
+          },
+          "2,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Arm",
+              "_title": "Arm",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Speed Controller",
+                  "_source0": "network_table:///LiveWindow/Arm/Pivot Arm",
+                  "_title": "Pivot Arm",
+                  "Visuals/Orientation": "HORIZONTAL"
+                },
+                {
+                  "_type": "PID Controller",
+                  "_source0": "network_table:///LiveWindow/Arm/PIDController",
+                  "_title": "PIDController"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Arm/Current A",
+                  "_title": "Current A"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Arm/Current B",
+                  "_title": "Current B"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Arm/Arm Position",
+                  "_title": "Arm Position"
+                }
+              ]
+            }
+          },
+          "4,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/Vision",
+              "_title": "Vision",
+              "Layout/Label position": "BOTTOM",
+              "_children": []
+            }
+          },
+          "6,0": {
+            "size": [
+              2,
+              4
+            ],
+            "content": {
+              "_type": "Subsystem Layout",
+              "_source0": "network_table:///LiveWindow/GyroSystem",
+              "_title": "GyroSystem",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Boolean Box",
+                  "_source0": "network_table:///LiveWindow/GyroSystem/Ready",
+                  "_title": "Ready",
+                  "Colors/Color when true": "#7CFC00FF",
+                  "Colors/Color when false": "#8B0000FF"
+                }
+              ]
+            }
+          },
+          "8,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/ArcadeDrive/Left Pos",
+              "_title": "ArcadeDrive/Left Pos"
+            }
+          },
+          "8,1": {
+            "size": [
+              1,
+              2
+            ],
+            "content": {
+              "_type": "PID Controller",
+              "_source0": "network_table:///LiveWindow/null/Right PID",
+              "_title": "null/Right PID"
+            }
+          },
+          "8,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/ArcadeDrive/DifferentialDrive[1]/Left Motor Speed",
+              "_title": "ArcadeDrive/DifferentialDrive[1]/Left Motor Speed"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Arcade Drive",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "0,0": {
+            "size": [
+              4,
+              3
+            ],
+            "content": {
+              "_type": "Differential Drivebase",
+              "_source0": "network_table:///LiveWindow/ArcadeDrive/DifferentialDrive[1]",
+              "_title": "/LiveWindow/ArcadeDrive/DifferentialDrive[1]",
+              "Wheels/Number of wheels": 4,
+              "Wheels/Wheel diameter": 80.0,
+              "Visuals/Show velocity vectors": true
+            }
+          },
+          "4,0": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/ArcadeDrive/DifferentialDrive[1]/Left Motor Speed",
+              "_title": "/LiveWindow/ArcadeDrive/DifferentialDrive[1]/Left Motor Speed"
+            }
+          },
+          "6,0": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/ArcadeDrive/DifferentialDrive[1]/Right Motor Speed",
+              "_title": "/LiveWindow/ArcadeDrive/DifferentialDrive[1]/Right Motor Speed"
+            }
+          },
+          "4,2": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/ArcadeDrive/Left Pos",
+              "_title": "/LiveWindow/ArcadeDrive/Left Pos"
+            }
+          },
+          "6,2": {
+            "size": [
+              2,
+              2
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/ArcadeDrive/Right Pos",
+              "_title": "/LiveWindow/ArcadeDrive/Right Pos"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Arm",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "3,0": {
+            "size": [
+              1,
+              2
+            ],
+            "content": {
+              "_type": "PID Controller",
+              "_source0": "network_table:///LiveWindow/Arm/PIDController",
+              "_title": "/LiveWindow/Arm/PIDController"
+            }
+          },
+          "4,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Speed Controller",
+              "_source0": "network_table:///LiveWindow/Arm/Pivot Arm",
+              "_title": "/LiveWindow/Arm/Pivot Arm",
+              "Visuals/Orientation": "HORIZONTAL"
+            }
+          },
+          "6,0": {
+            "size": [
+              1,
+              2
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "List Layout",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Arm/Pivot Arm/Value",
+                  "_title": "/LiveWindow/Arm/Pivot Arm/Value"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Arm/Current A",
+                  "_title": "/LiveWindow/Arm/Current A"
+                }
+              ]
+            }
+          },
+          "3,2": {
+            "size": [
+              5,
+              2
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///LiveWindow/Arm/Arm Position",
+              "_title": "LiveWindow/Arm/Arm Position",
+              "Graph/Visible time": 30.0,
+              "Visible data/LiveWindow/Arm/Arm Position": true
+            }
+          },
+          "8,0": {
+            "size": [
+              1,
+              3
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "List Layout",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///Preferences/Eject Center Rocket",
+                  "_title": "/Preferences/Eject Center Rocket"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///Preferences/Eject Cargo Ship Cargo",
+                  "_title": "/Preferences/Eject Cargo Ship Cargo"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///Preferences/Eject Center Rocket",
+                  "_title": "/Preferences/Eject Center Rocket"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///Preferences/Eject Position Low",
+                  "_title": "/Preferences/Eject Position Low"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///Preferences/Floor Position",
+                  "_title": "/Preferences/Floor Position"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Claw",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "3,0": {
+            "size": [
+              1,
+              2
+            ],
+            "content": {
+              "_type": "List Layout",
+              "_title": "List Layout",
+              "Layout/Label position": "BOTTOM",
+              "_children": [
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Claw/Intake A/Value",
+                  "_title": "/LiveWindow/Claw/Intake A/Value"
+                },
+                {
+                  "_type": "Text View",
+                  "_source0": "network_table:///LiveWindow/Claw/Intake B/Value",
+                  "_title": "/LiveWindow/Claw/Intake B/Value"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "navX",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "3,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///LiveWindow/GyroSystem/Ready",
+              "_title": "/LiveWindow/GyroSystem/Ready",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Vision",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "3,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///LiveWindow/Ungrouped/DriveToVisionTarget/running",
+              "_title": "/LiveWindow/Ungrouped/DriveToVisionTarget/running",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "windowGeometry": {
+    "x": -8.0,
+    "y": -8.0,
+    "width": 1382.0,
+    "height": 744.0
+  }
+}
