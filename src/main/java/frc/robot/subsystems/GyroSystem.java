@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -21,6 +22,7 @@ public class GyroSystem extends Subsystem {
   
   public GyroSystem(){
     addChild(gyro);
+    SmartDashboard.putData("NavX", gyro);
   }
 
   @Override
@@ -38,6 +40,12 @@ public class GyroSystem extends Subsystem {
 
   private boolean isReady(){
     return !gyro.isCalibrating();
+  }
+
+  @Override
+  public void initSendable(SendableBuilder builder) {
+    super.initSendable(builder);
+    builder.addBooleanProperty("Ready", this::isReady, null);
   }
 
 

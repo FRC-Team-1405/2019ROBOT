@@ -74,7 +74,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Vision System", vision);
 //    LiveWindow.add(claw);
 
-    SmartDashboard.putData( new PowerDistributionPanel() );
+    // SmartDashboard.putData( new PowerDistributionPanel() );
 
   autonomousCommand = new DriveBaseController();
     teleopCommand = autonomousCommand;

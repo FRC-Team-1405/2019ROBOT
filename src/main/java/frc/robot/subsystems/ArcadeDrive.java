@@ -14,7 +14,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.DriveBaseController;
 //import frc.robot.commands.*;
 //import frc.robot.lib.ExtendedTalon;
-import frc.robot.lib.TalonPID;
+// import frc.robot.lib.TalonPID;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -32,8 +32,8 @@ public class ArcadeDrive extends Subsystem {
   TalonSRX talonDriveBaseLeftSlave2 = new TalonSRX(RobotMap.talonDriveBaseLeftSlave2);
   TalonSRX talonDriveBaseRightSlave2 = new TalonSRX(RobotMap.talonDriveBaseRightSlave2);
   DifferentialDrive driveBase = new DifferentialDrive(talonDriveBaseLeft, talonDriveBaseRight); 
-  TalonPID leftTalonPID;
-  TalonPID rightTalonPID;
+  // TalonPID leftTalonPID;
+  // TalonPID rightTalonPID;
   boolean driveForward = true;
 
    public ArcadeDrive(){
@@ -63,12 +63,12 @@ public class ArcadeDrive extends Subsystem {
       driveBase.setDeadband(0.0);
       this.addChild(driveBase);
 
-      leftTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);
-      leftTalonPID.setName("Left PID");
-      LiveWindow.add(leftTalonPID);
-      rightTalonPID = new TalonPID(talonDriveBaseRight, ControlMode.Position);
-      rightTalonPID.setName("Right PID");
-      LiveWindow.add(rightTalonPID);
+      // leftTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);
+      // leftTalonPID.setName("Left PID");
+      // LiveWindow.add(leftTalonPID);
+      // rightTalonPID = new TalonPID(talonDriveBaseRight, ControlMode.Position);
+      // rightTalonPID.setName("Right PID");
+      // LiveWindow.add(rightTalonPID);
    }
 
   private void resetDistanceEncoder() {
@@ -101,16 +101,16 @@ public class ArcadeDrive extends Subsystem {
     }
   }
 
-  public void setTargetPosition(double pos) {
-    leftTalonPID.setSetpoint(pos);
-    rightTalonPID.setSetpoint(pos);
-  }
+  // public void setTargetPosition(double pos) {
+  //   leftTalonPID.setSetpoint(pos);
+  //   rightTalonPID.setSetpoint(pos);
+  // }
 
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
-    builder.addDoubleProperty("Left Pos", () -> { return talonDriveBaseLeft.getSelectedSensorPosition(); }, null );
-    builder.addDoubleProperty("Right Pos", () -> { return talonDriveBaseRight.getSelectedSensorPosition(); }, null );
-    builder.addDoubleProperty("Target Pos", null, this::setTargetPosition);
+    // builder.addDoubleProperty("Left Pos", () -> { return talonDriveBaseLeft.getSelectedSensorPosition(); }, null );
+    // builder.addDoubleProperty("Right Pos", () -> { return talonDriveBaseRight.getSelectedSensorPosition(); }, null );
+    // builder.addDoubleProperty("Target Pos", null, this::setTargetPosition);
   }
 }
