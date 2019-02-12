@@ -20,8 +20,9 @@ import frc.robot.RobotMap;
  * value, <int2> the second value, and so on with the '\n' indicating the end
  * of the packet.
  */
-public class LidarReader extends Thread {
 
+ 
+public class LidarReader extends Thread {
     SerialPort serialPort;
     RobotMap map;
     boolean keepRunning;
@@ -30,9 +31,6 @@ public class LidarReader extends Thread {
         map = new RobotMap();
         serialPort = new SerialPort(map.BAUD_RATE, map.PORT, map.DATA_BITS, map.PARITY, map.STOP_BITS);
         keepRunning = true;
-        for(int i = 0; i < 5; i++)
-            System.err.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                
     }
 
     /**
