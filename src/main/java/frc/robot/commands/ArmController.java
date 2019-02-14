@@ -24,10 +24,22 @@ public class ArmController extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.m_oi.armFloorPressed()) {
+    if(Robot.m_oi.rocketCenter()){
+      Robot.arm.rocketCenter();
+    } else if(Robot.m_oi.cargoShipTop()){
+      Robot.arm.cargoShipTop();
+    } else if(Robot.m_oi.backRocketCenter()){
+      Robot.arm.rocketCenter();//change this
+    } else if(Robot.m_oi.backCargoShipTop()){
+      Robot.arm.cargoShipTop();//change this
+    }else if(Robot.m_oi.armFloorPressed()) {
       Robot.arm.floor();
     } else if(Robot.m_oi.armLowPressed()){
       Robot.arm.low();
+    } else if(Robot.m_oi.backArmFloorPressed()) {
+      Robot.arm.floor();//change this
+    } else if(Robot.m_oi.backArmLowPressed()){
+      Robot.arm.low();//change this
     }
   }
 
