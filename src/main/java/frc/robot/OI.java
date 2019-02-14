@@ -46,11 +46,35 @@ public class OI {
   }
 
   public boolean armFloorPressed(){
-    return false; // button tbd
+    return (operator.getPOV() == 90);
   }
 
   public boolean armLowPressed(){
-    return false; // button tbd
+    return (operator.getPOV() == 0);
+  }
+
+  public boolean rocketCenter(){
+    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 0);
+  }
+
+  public boolean cargoShipTop(){
+    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 0);
+  }
+
+  public boolean backArmFloorPressed(){
+    return (operator.getPOV() == 270);
+  }
+
+  public boolean backArmLowPressed(){
+    return (operator.getPOV() == 180);
+  }
+
+  public boolean backRocketCenter(){
+    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 180);
+  }
+
+  public boolean backCargoShipTop(){
+    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 180);
   }
 
   public boolean isCameraSwitchPressed(){
