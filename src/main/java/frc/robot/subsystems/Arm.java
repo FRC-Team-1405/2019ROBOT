@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.RobotMap;
@@ -22,7 +23,7 @@ import frc.robot.commands.ArmController;
 /**
  * Add your docs here.
  */
-public class Arm extends PIDSubsystem {
+public class Arm extends Subsystem {
   
   private WPI_TalonSRX pivotTalon = new WPI_TalonSRX(RobotMap.pivotTalon);
   private TalonSRX pivotTalonSlave = new TalonSRX(RobotMap.pivotTalonSlave);
@@ -44,14 +45,7 @@ public class Arm extends PIDSubsystem {
   private static final String keyCargoShipCargo = "Arm_EjectCargoShipCargo";
 
   public Arm() {
-    // Intert a subsystem name and PID values here
-    super("Arm", kP, kI, kD);
-    // Use these to get going:
-    // setSetpoint() - Sets where the PID controller should move the system
-    // to
-    // enable() - Enables the PID controller.
-
-        configureTalon(pivotTalon);
+    configureTalon(pivotTalon);
     pivotTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 10);
     pivotTalon.configNeutralDeadband(0.001, 10);
     configureTalon(pivotTalonSlave);
@@ -94,6 +88,12 @@ public class Arm extends PIDSubsystem {
     kI = prefs.getDouble(keyI, kI); 
     kD = prefs.getDouble(keyD, kD); 
 
+    pivotTalon.config_kP(0, kP);
+    pivotTalon.config_kI(0, kI);
+    pivotTalon.config_kD(0, kD);
+    pivotTalon.set(ControlMode.Position, pivotTalon.getSelectedSensorPosition());
+
+
     floorPickup = prefs.getDouble(keyFloorPickup, floorPickup);
     lowScoring = prefs.getDouble(keyLowScoring, lowScoring);
     rocketCenterCargo = prefs.getDouble(keyRocketCenterCargo, rocketCenterCargo);
@@ -106,21 +106,25 @@ public class Arm extends PIDSubsystem {
   }
 
   public void floor(){
-    setSetpoint(floorPickup);
+    pivotTalon.set(ControlMode.Position, floorPickup);
   }
 
   public void low(){
-    setSetpoint(lowScoring);
+    pivotTalon.set(ControlMode.Position, lowScoring);
   }
 
   public void rocketCenter(){
-    setSetpoint(rocketCenterCargo);
+    pivotTalon.set(ControlMode.Position, rocketCenterCargo);
   }
 
   public void cargoShipTop(){
-    setSetpoint(cargoShipCargo);
+    pivotTalon.set(ControlMode.Position, cargoShipCargo);
   }
 
+  public void adjustArmPosition(double position){
+    position = pivotTalon.getSelectedSensorPosition() + (position * 10.0) ;
+  }
+  
   public void configureTalon(TalonSRX talonSRX){
     talonSRX.configPeakCurrentDuration(50, 10);
     talonSRX.configPeakCurrentLimit(40, 10);
@@ -133,26 +137,12 @@ public class Arm extends PIDSubsystem {
    return pivotTalon.getSensorCollection().getAnalogInRaw();
   }
 
-  @Override
-  protected double returnPIDInput() {
-    // Return your input value for the PID loop
-    // e.g. a sensor, like a potentiometer:
-    // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    return pivotTalon.getSelectedSensorPosition();
-  }
-
-  @Override
-  protected void usePIDOutput(double output) {
-    // Use output to drive your system, like a motor
-    // e.g. yourMotor.set(output);
-    pivotTalon.set(output); 
+  public void setArmPosition(double speed){
+    pivotTalon.set(speed);
   }
 
   @Override
   public void initSendable(SendableBuilder builder) {
-
-    // pivotTalon.configNeutralDeadband(percentDeadband)
-    
     super.initSendable(builder);
     builder.addDoubleProperty("Current A", () -> { return pivotTalon.getOutputCurrent(); }, null );
     builder.addDoubleProperty("Current B", () -> { return pivotTalonSlave.getOutputCurrent(); }, null );
