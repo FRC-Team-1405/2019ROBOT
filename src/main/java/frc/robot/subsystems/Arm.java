@@ -124,21 +124,18 @@ public class Arm extends Subsystem {
   public void adjustArmPosition(double position){
     position = pivotTalon.getSelectedSensorPosition() + (position * 10.0) ;
   }
-  
+
   public void configureTalon(TalonSRX talonSRX){
     talonSRX.configPeakCurrentDuration(50, 10);
     talonSRX.configPeakCurrentLimit(40, 10);
     talonSRX.configContinuousCurrentLimit(35, 10);
     talonSRX.enableCurrentLimit(true);
     talonSRX.configNeutralDeadband(0.001, 10);
+    talonSRX.setSensorPhase(true);
   }
 
   public double getArmPosition(){
    return pivotTalon.getSensorCollection().getAnalogInRaw();
-  }
-
-  public void setArmPosition(double speed){
-    pivotTalon.set(speed);
   }
 
   @Override

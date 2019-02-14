@@ -63,8 +63,9 @@ public class Robot extends TimedRobot {
 
     LiveWindow.add(new DriveToVisionTarget());
 
-    lidarReader = new LidarReader();
-    lidarReader.start();
+    // removed until lidar is finished
+    // lidarReader = new LidarReader();
+    // lidarReader.start();
 
     //claw = new Claw();
     // chooser.addOption("My Auto", new MyAutoCommand());
