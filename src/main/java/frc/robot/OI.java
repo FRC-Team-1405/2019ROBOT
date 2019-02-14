@@ -81,4 +81,8 @@ public class OI {
     return pilot.getBumper(Hand.kLeft); // button tbd
   }
 
+  public double moveArm(){
+    return operator.getY(Hand.kLeft);
+  }
+
 }
