@@ -25,8 +25,12 @@ public class OI {
     return pilot.getBumper(Hand.kRight);
   }
 
-  public boolean clawOpenPressed(){
+  public boolean  frontClawOpenPressed(){
     return pilot.getAButtonPressed();
+  }
+
+  public boolean backClawOpenPressed(){
+    return pilot.getXButtonPressed();
   }
 
   public double driveY(){

@@ -27,14 +27,14 @@ public class RobotMap {
   // public static int rangefinderModule = 1;
 
   //Talon IDs
+  //8 is not being used
   public final static int talonDriveBaseLeft = 1;
   public final static int talonDriveBaseRight = 2;
   public final static int talonDriveBaseLeftSlave1 = 3;
   public final static int talonDriveBaseRightSlave1 = 4;
   public final static int talonDriveBaseLeftSlave2 = 5;
   public final static int talonDriveBaseRightSlave2 = 6;
-  public final static int pivotTalon = 7;
-  public final static int pivotTalonSlave = 8; 
+  public final static int pivotTalon = 8;
   public final static int clawTalonA = 9;  
   public final static int clawTalonB = 10; 
   public final static int soloStiltTalon = 11;

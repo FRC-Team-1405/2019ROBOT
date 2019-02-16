@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class ClawController extends Command {
-  boolean isClawOpen = false;
+  boolean isFrontClawOpen = false;
+  boolean isBackClawOpen = false;
   final double intakeSpeed =  1.0;
   final double outputSpeed =  1.0;
   
@@ -29,13 +30,22 @@ public class ClawController extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.m_oi.clawOpenPressed()){
-      if (isClawOpen) {
-        Robot.claw.closeClaw();
-        isClawOpen = false;
+    if (Robot.m_oi.frontClawOpenPressed()){
+      if (isFrontClawOpen) {
+        Robot.claw.closeClawFront();
+        isFrontClawOpen = false;
       } else {
-        Robot.claw.openClaw();
-        isClawOpen = true;
+        Robot.claw.openClawFront();
+        isFrontClawOpen = true;
+      } 
+    }
+    if(Robot.m_oi.backClawOpenPressed()){
+      if(isBackClawOpen){
+        Robot.claw.closeClawBack();
+        isBackClawOpen = false;
+      } else{
+        Robot.claw.openClawBack();
+        isBackClawOpen = true;
       }
     }
 

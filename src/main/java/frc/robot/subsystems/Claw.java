@@ -26,7 +26,8 @@ public class Claw extends Subsystem {
   
   private WPI_TalonSRX intakeTalonA = new WPI_TalonSRX(RobotMap.clawTalonA);
   private WPI_TalonSRX intakeTalonB = new WPI_TalonSRX(RobotMap.clawTalonB);
-  private DoubleSolenoid solenoid ;//= new DoubleSolenoid(3, 6);
+  private DoubleSolenoid solenoidFront = new DoubleSolenoid(2, 1);
+  private DoubleSolenoid solenoidBack = new DoubleSolenoid(3, 4);
   
   private static double intakeSpeed = 1.0;
   private static double outputSpeed = 1.0;
@@ -41,8 +42,10 @@ public class Claw extends Subsystem {
     ExtendedTalon.configCurrentLimit(intakeTalonB);
     intakeTalonB.setName("Intake B"); 
     this.addChild(intakeTalonB); 
-//    solenoid.setName("Solenoid");
-//    this.addChild(solenoid);
+    solenoidFront.setName("Solenoid Front");
+    this.addChild(solenoidFront);
+    solenoidBack.setName("Solenoid Back");
+    this.addChild(solenoidBack);
 
     
     Preferences prefs = Preferences.getInstance(); 
@@ -58,6 +61,8 @@ public class Claw extends Subsystem {
 
     System.out.printf("%s %f %s %f\n", keyIntake, intakeSpeed, keyOutput, outputSpeed);
 
+    this.openClawFront();
+    this.openClawBack();
   }
 
   @Override
@@ -65,12 +70,24 @@ public class Claw extends Subsystem {
     setDefaultCommand(new ClawController());
   }
 
-  public void openClaw() {
-    solenoid.set(Value.kForward);
+  public void openClawFront() {
+    solenoidFront.set(Value.kForward);
+    System.err.println("Open Claw Front");
   }
 
-  public void closeClaw() {
-    solenoid.set(Value.kReverse);
+  public void closeClawFront() {
+    solenoidFront.set(Value.kReverse);
+    System.err.println("Close Claw Front");
+  }
+
+  public void openClawBack(){
+    solenoidBack.set(Value.kForward);
+    System.err.println("Open Claw Back");
+  }
+
+  public void closeClawBack(){
+    solenoidBack.set(Value.kReverse);
+    System.err.println("Close Claw Back");
   }
 
   public void intakeCargo(double speed) { 
