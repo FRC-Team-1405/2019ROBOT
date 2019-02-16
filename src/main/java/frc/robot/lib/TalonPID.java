@@ -65,7 +65,7 @@ public class TalonPID implements PIDInterface, Sendable {
     }
 
     public void enable() {
-        talon.set(controlMode, talon.getClosedLoopTarget(0));
+        talon.set(controlMode, talon.getSelectedSensorPosition());
     }
     public void disable() {
         talon.set(ControlMode.Velocity, 0.0);
@@ -82,11 +82,15 @@ public class TalonPID implements PIDInterface, Sendable {
     }
 
     @Override
-    public void reset() { }
+    public void reset() { 
+        disable();
+    }
 
     @Override
     public void setSetpoint(double setPoint) {
-        talon.set(controlMode, setPoint);
+        if (isEnabled()) {
+            talon.set(controlMode, setPoint);
+        }
     }
     @Override
     public double getSetpoint() {

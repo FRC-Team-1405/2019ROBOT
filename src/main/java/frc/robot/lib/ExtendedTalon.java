@@ -8,6 +8,7 @@
 package frc.robot.lib;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Preferences;
@@ -17,9 +18,6 @@ import edu.wpi.first.wpilibj.Preferences;
  * Wrapper for TalonSRX, makes talon current based, not percentvoltage
  */
 public class ExtendedTalon extends WPI_TalonSRX { 
-    
-   
-
     public ExtendedTalon(int deviceNumber) {
         super(deviceNumber);
         
@@ -49,5 +47,14 @@ public class ExtendedTalon extends WPI_TalonSRX {
     public void set(double speed) {
         double output = currentMin + slope * (speed - inputMin);
         super.set(ControlMode.Current, output);
+    }
+
+
+    public static void configCurrentLimit(TalonSRX talonSRX)
+    {
+        talonSRX.configPeakCurrentDuration(50, 10);
+        talonSRX.configPeakCurrentLimit(40, 10);
+        talonSRX.configContinuousCurrentLimit(35, 10);
+        talonSRX.enableCurrentLimit(true);
     }
 }

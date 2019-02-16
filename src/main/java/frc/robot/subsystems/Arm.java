@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmController;
+import frc.robot.lib.ExtendedTalon;
+import frc.robot.lib.TalonPID;
 
 /**
  * Add your docs here.
@@ -27,7 +29,8 @@ public class Arm extends Subsystem {
   
   private WPI_TalonSRX pivotTalon = new WPI_TalonSRX(RobotMap.pivotTalon);
   private TalonSRX pivotTalonSlave = new TalonSRX(RobotMap.pivotTalonSlave);
-  
+  private TalonPID armPID = new TalonPID(pivotTalon, ControlMode.Position);
+
   private static double kP = 0.0;
   private static double kI = 0.0;
   private static double kD = 0.0;
@@ -53,9 +56,13 @@ public class Arm extends Subsystem {
     pivotTalon.set(ControlMode.PercentOutput, 0);
     pivotTalonSlave.set(ControlMode.Follower, RobotMap.pivotTalon);
     
-    pivotTalon.setName("Pivot Arm"); 
+    pivotTalon.setName("Pivot Arm");
     this.addChild(pivotTalon); 
     LiveWindow.add(pivotTalon);
+
+    armPID.setName("Pivot PID");
+    this.addChild(armPID);
+    LiveWindow.add(armPID);
 
     Preferences prefs = Preferences.getInstance(); 
     if (!prefs.containsKey(keyP)) {
@@ -126,10 +133,7 @@ public class Arm extends Subsystem {
   }
 
   public void configureTalon(TalonSRX talonSRX){
-    talonSRX.configPeakCurrentDuration(50, 10);
-    talonSRX.configPeakCurrentLimit(40, 10);
-    talonSRX.configContinuousCurrentLimit(35, 10);
-    talonSRX.enableCurrentLimit(true);
+    ExtendedTalon.configCurrentLimit(talonSRX);
     talonSRX.configNeutralDeadband(0.001, 10);
     talonSRX.setSensorPhase(true);
   }
@@ -146,6 +150,9 @@ public class Arm extends Subsystem {
     builder.addDoubleProperty("Arm T P", () -> { return pivotTalon.getActiveTrajectoryPosition();}, null);
     builder.addDoubleProperty("Arm T V", () -> { return pivotTalon.getActiveTrajectoryVelocity();}, null);
     builder.addDoubleProperty("Arm Position", this::getArmPosition, null);
+    builder.addDoubleProperty("PID Target", () -> { return pivotTalon.getClosedLoopTarget(0);}, null);
+    builder.addDoubleProperty("PID Error", () -> { return pivotTalon.getClosedLoopError(0);}, null);
+    builder.addDoubleProperty("PID Position", () -> { return pivotTalon.getSelectedSensorPosition(0);}, null);
 
 
     

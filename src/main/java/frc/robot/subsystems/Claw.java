@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.RobotMap;
 import frc.robot.commands.ClawController;
+import frc.robot.lib.ExtendedTalon;
 
 /**
  * Add your docs here.
@@ -34,8 +35,10 @@ public class Claw extends Subsystem {
   private static final String keyOutput = "Claw_Output_Speed";
 
   public Claw(){
+    ExtendedTalon.configCurrentLimit(intakeTalonA);
     intakeTalonA.setName("Intake A");
     this.addChild(intakeTalonA);
+    ExtendedTalon.configCurrentLimit(intakeTalonB);
     intakeTalonB.setName("Intake B"); 
     this.addChild(intakeTalonB); 
 //    solenoid.setName("Solenoid");

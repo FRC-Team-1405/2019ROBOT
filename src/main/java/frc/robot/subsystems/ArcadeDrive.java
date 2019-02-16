@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveBaseController;
+import frc.robot.lib.ExtendedTalon;
 //import frc.robot.commands.*;
 //import frc.robot.lib.ExtendedTalon;
 // import frc.robot.lib.TalonPID;
@@ -37,12 +38,12 @@ public class ArcadeDrive extends Subsystem {
   boolean driveForward = true;
 
    public ArcadeDrive(){
-      configCurrentLimit(talonDriveBaseLeft);
-      configCurrentLimit(talonDriveBaseRight);
-      configCurrentLimit(talonDriveBaseLeftSlave1);
-      configCurrentLimit(talonDriveBaseRightSlave1);
-      configCurrentLimit(talonDriveBaseLeftSlave2);
-      configCurrentLimit(talonDriveBaseRightSlave2);
+     ExtendedTalon.configCurrentLimit(talonDriveBaseLeft);
+     ExtendedTalon.configCurrentLimit(talonDriveBaseRight);
+     ExtendedTalon.configCurrentLimit(talonDriveBaseLeftSlave1);
+     ExtendedTalon.configCurrentLimit(talonDriveBaseRightSlave1);
+     ExtendedTalon.configCurrentLimit(talonDriveBaseLeftSlave2);
+     ExtendedTalon.configCurrentLimit(talonDriveBaseRightSlave2); 
 
       // limit Talon deadband
       talonDriveBaseLeft.configNeutralDeadband(0.001, 10);
@@ -79,14 +80,6 @@ public class ArcadeDrive extends Subsystem {
   @Override
   public void initDefaultCommand() {
     setDefaultCommand(new DriveBaseController());
-  }
-
-  public void configCurrentLimit(TalonSRX talonSRX){
-    talonSRX.configPeakCurrentDuration(50, 10);
-    talonSRX.configPeakCurrentLimit(40, 10);
-    talonSRX.configContinuousCurrentLimit(35, 10);
-    talonSRX.enableCurrentLimit(true);
-
   }
 
   public void toggleDriveDirection(){
