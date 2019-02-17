@@ -28,7 +28,7 @@ import frc.robot.lib.TalonPID;
 public class Arm extends Subsystem {
   
   private WPI_TalonSRX pivotTalon = new WPI_TalonSRX(RobotMap.pivotTalon);
-  private TalonPID armPID ;//= new TalonPID(pivotTalon, ControlMode.Position);
+  private TalonPID armPID =  new TalonPID(pivotTalon, ControlMode.Position);
 
   // private static double kP = 0.0;
   // private static double kI = 0.0;
@@ -58,20 +58,11 @@ public class Arm extends Subsystem {
     this.addChild(pivotTalon); 
     LiveWindow.add(pivotTalon);
 
-    // armPID.setName("Pivot PID");
-    // this.addChild(armPID);
-    // LiveWindow.add(armPID);
+    armPID.setName("Pivot PID");
+    this.addChild(armPID);
+    LiveWindow.add(armPID);
 
     Preferences prefs = Preferences.getInstance(); 
-    // if (!prefs.containsKey(keyP)) {
-    //     prefs.putDouble("Arm P", kP);
-    // }
-    // if (!prefs.containsKey(keyI)) {
-    //     prefs.putDouble("Arm I", kI);
-    // }
-    // if (!prefs.containsKey(keyD)) {
-    //   prefs.putDouble("Arm D", kD);
-    // }
 
     if (!prefs.containsKey(keyFloorPickup)) {
       prefs.putDouble(keyFloorPickup, floorPickup);
@@ -87,16 +78,6 @@ public class Arm extends Subsystem {
     if(!prefs.containsKey(keyCargoShipCargo)){
       prefs.putDouble(keyCargoShipCargo, cargoShipCargo);
     }
-    
-    // kP = prefs.getDouble(keyP, kP);
-    // kI = prefs.getDouble(keyI, kI); 
-    // kD = prefs.getDouble(keyD, kD); 
-
-    // pivotTalon.config_kP(0, kP);
-    // pivotTalon.config_kI(0, kI);
-    // pivotTalon.config_kD(0, kD);
-//    pivotTalon.set(ControlMode.Position, pivotTalon.getSelectedSensorPosition());
-
 
     floorPickup = prefs.getDouble(keyFloorPickup, floorPickup);
     lowScoring = prefs.getDouble(keyLowScoring, lowScoring);
@@ -143,11 +124,9 @@ public class Arm extends Subsystem {
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
     builder.addDoubleProperty("Current A", () -> { return pivotTalon.getOutputCurrent(); }, null );
-    // builder.addDoubleProperty("Arm T P", () -> { return pivotTalon.getActiveTrajectoryPosition();}, null);
-    // builder.addDoubleProperty("Arm T V", () -> { return pivotTalon.getActiveTrajectoryVelocity();}, null);
     builder.addDoubleProperty("Arm Position", this::getArmPosition, null);
-    // builder.addDoubleProperty("PID Target", () -> { return pivotTalon.getClosedLoopTarget(0);}, null);
-    // builder.addDoubleProperty("PID Error", () -> { return pivotTalon.getClosedLoopError(0);}, null);
+    builder.addDoubleProperty("PID Target", () -> { return pivotTalon.getClosedLoopTarget(0);}, null);
+    builder.addDoubleProperty("PID Error", () -> { return pivotTalon.getClosedLoopError(0);}, null);
     builder.addDoubleProperty("PID Position", () -> { return pivotTalon.getSelectedSensorPosition(0);}, null);
 
 
