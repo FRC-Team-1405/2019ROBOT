@@ -28,7 +28,7 @@ import frc.robot.lib.TalonPID;
 public class Arm extends Subsystem {
   
   private WPI_TalonSRX pivotTalon = new WPI_TalonSRX(RobotMap.pivotTalon);
-  private TalonPID armPID =  new TalonPID(pivotTalon, ControlMode.Position);
+  private TalonPID armPID;
 
   // private static double kP = 0.0;
   // private static double kI = 0.0;
@@ -62,6 +62,8 @@ public class Arm extends Subsystem {
 
     pivotTalon.set(ControlMode.PercentOutput, 0);
     
+    armPID =  new TalonPID(pivotTalon, ControlMode.Position);
+    armPID.disable();
     pivotTalon.setName("Pivot Arm");
     this.addChild(pivotTalon); 
     LiveWindow.add(pivotTalon);
@@ -150,7 +152,7 @@ public class Arm extends Subsystem {
   }
 
   public void adjustArmPosition(double position){
-    pivotTalon.set(ControlMode.PercentOutput, position);
+    pivotTalon.set(position);
   }
 
   public void configureTalon(TalonSRX talonSRX){
@@ -171,8 +173,5 @@ public class Arm extends Subsystem {
     builder.addDoubleProperty("PID Target", () -> { return pivotTalon.getClosedLoopTarget(0);}, null);
     builder.addDoubleProperty("PID Error", () -> { return pivotTalon.getClosedLoopError(0);}, null);
     builder.addDoubleProperty("PID Position", () -> { return pivotTalon.getSelectedSensorPosition(0);}, null);
-
-
-    
   }
 }

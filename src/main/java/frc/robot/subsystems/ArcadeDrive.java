@@ -100,9 +100,9 @@ public class ArcadeDrive extends Subsystem {
 
   public void driveRobot(double xSpeed, double zRotation){
     if(driveForward){
-      driveBase.arcadeDrive(xSpeed*speedLimit, zRotation);
+      driveBase.arcadeDrive(xSpeed*speedLimit, zRotation*speedLimit);
     } else{
-      driveBase.arcadeDrive(-xSpeed*speedLimit, zRotation);
+      driveBase.arcadeDrive(-xSpeed*speedLimit, zRotation*speedLimit);
     }
   }
 

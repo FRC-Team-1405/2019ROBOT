@@ -54,7 +54,7 @@ public class OI {
   }
 
   public boolean armLowPressed(){
-    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 90);
+    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 45);
   }
 
   public boolean rocketCenter(){
@@ -66,7 +66,7 @@ public class OI {
   }
 
   public boolean backArmFloorPressed(){
-    return (operator.getPOV() == 270);
+    return (operator.getPOV() == 315);
   }
 
   public boolean backArmLowPressed(){
@@ -86,10 +86,10 @@ public class OI {
   }
 
   public double moveArm(){
-    if (Math.abs(operator.getY(Hand.kLeft)) < 0.20)
+    if (!operator.getAButton()){
       return 0;
-    else
-      return operator.getY(Hand.kLeft);
   }
 
+    return operator.getY(Hand.kLeft);
+  }
 }
