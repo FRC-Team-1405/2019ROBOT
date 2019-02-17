@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -26,6 +27,9 @@ import com.ctre.phoenix.motorcontrol.can.*;
 public class ArcadeDrive extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  private static double speedLimit = 1.0;
+  private static final String keySpeedLimit = "ArcadeDrive_SpeedLimit";
+
   WPI_TalonSRX talonDriveBaseLeft = new WPI_TalonSRX(RobotMap.talonDriveBaseLeft);
   WPI_TalonSRX talonDriveBaseRight = new WPI_TalonSRX(RobotMap.talonDriveBaseRight);
   TalonSRX talonDriveBaseLeftSlave1 = new TalonSRX(RobotMap.talonDriveBaseLeftSlave1);
@@ -64,6 +68,14 @@ public class ArcadeDrive extends Subsystem {
       driveBase.setDeadband(0.0);
       this.addChild(driveBase);
 
+      Preferences prefs = Preferences.getInstance();
+
+      if(!prefs.containsKey(keySpeedLimit)) {
+        prefs.putDouble(keySpeedLimit, speedLimit);
+      }
+
+      speedLimit = prefs.getDouble(keySpeedLimit, speedLimit);
+
       // leftTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);
       // leftTalonPID.setName("Left PID");
       // LiveWindow.add(leftTalonPID);
@@ -88,9 +100,9 @@ public class ArcadeDrive extends Subsystem {
 
   public void driveRobot(double xSpeed, double zRotation){
     if(driveForward){
-      driveBase.arcadeDrive(xSpeed, zRotation);
+      driveBase.arcadeDrive(xSpeed*speedLimit, zRotation);
     } else{
-      driveBase.arcadeDrive(-xSpeed, zRotation);
+      driveBase.arcadeDrive(-xSpeed*speedLimit, zRotation);
     }
   }
 
