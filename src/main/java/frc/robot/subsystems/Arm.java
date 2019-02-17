@@ -42,10 +42,18 @@ public class Arm extends Subsystem {
   private static double lowScoring = 0.0;
   private static double rocketCenterCargo = 0.0;
   private static double cargoShipCargo = 0.0;
+  private static double backFloorPickup = 0.0;
+  private static double backLowScoring = 0.0;
+  private static double backRocketCenterCargo = 0.0;
+  private static double backCargoShipCargo = 0.0;
   private static final String keyFloorPickup = "Arm_FloorPosition";
   private static final String keyLowScoring = "Arm_EjectPositionLow"; 
   private static final String keyRocketCenterCargo = "Arm_EjectCenterRocket";
   private static final String keyCargoShipCargo = "Arm_EjectCargoShipCargo";
+  private static final String keyBackFloorPickup = "Arm_BackFloorPosition";
+  private static final String keyBackLowScoring = "Arm_BackEjectPositionLow"; 
+  private static final String keyBackRocketCenterCargo = "Arm_BackEjectCenterRocket";
+  private static final String keyBackCargoShipCargo = "Arm_BackEjectCargoShipCargo";
 
   public Arm() {
     configureTalon(pivotTalon);
@@ -79,10 +87,29 @@ public class Arm extends Subsystem {
       prefs.putDouble(keyCargoShipCargo, cargoShipCargo);
     }
 
+    if (!prefs.containsKey(keyBackFloorPickup)) {
+      prefs.putDouble(keyBackFloorPickup, backFloorPickup);
+    }
+    if (!prefs.containsKey(keyBackLowScoring)) {
+      prefs.putDouble(keyBackLowScoring, backLowScoring);
+    }
+
+    if (!prefs.containsKey(keyBackRocketCenterCargo)){
+      prefs.putDouble(keyBackRocketCenterCargo, backRocketCenterCargo);
+    }
+
+    if(!prefs.containsKey(keyBackCargoShipCargo)){
+      prefs.putDouble(keyBackCargoShipCargo, backCargoShipCargo);
+    }
+
     floorPickup = prefs.getDouble(keyFloorPickup, floorPickup);
     lowScoring = prefs.getDouble(keyLowScoring, lowScoring);
     rocketCenterCargo = prefs.getDouble(keyRocketCenterCargo, rocketCenterCargo);
     cargoShipCargo = prefs.getDouble(keyCargoShipCargo, cargoShipCargo);
+    backFloorPickup = prefs.getDouble(keyBackFloorPickup, backFloorPickup);
+    backLowScoring = prefs.getDouble(keyBackLowScoring, backLowScoring);
+    backRocketCenterCargo = prefs.getDouble(keyBackRocketCenterCargo, backRocketCenterCargo);
+    backCargoShipCargo = prefs.getDouble(keyBackCargoShipCargo, backCargoShipCargo);
   }
 
   @Override
@@ -106,8 +133,24 @@ public class Arm extends Subsystem {
     pivotTalon.set(ControlMode.Position, cargoShipCargo);
   }
 
+  public void backFloor(){
+    pivotTalon.set(ControlMode.Position, backFloorPickup);
+  }
+
+  public void backLow(){
+    pivotTalon.set(ControlMode.Position, backLowScoring);
+  }
+
+  public void backRocketCenter(){
+    pivotTalon.set(ControlMode.Position, backRocketCenterCargo);
+  }
+
+  public void backCargoShipTop(){
+    pivotTalon.set(ControlMode.Position, backCargoShipCargo);
+  }
+
   public void adjustArmPosition(double position){
-    position = pivotTalon.getSelectedSensorPosition() + (position * 10.0) ;
+    pivotTalon.set(ControlMode.PercentOutput, position);
   }
 
   public void configureTalon(TalonSRX talonSRX){

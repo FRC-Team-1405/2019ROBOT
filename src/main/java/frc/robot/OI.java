@@ -54,7 +54,7 @@ public class OI {
   }
 
   public boolean armLowPressed(){
-    return (operator.getPOV() == 0);
+    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 90);
   }
 
   public boolean rocketCenter(){
@@ -62,7 +62,7 @@ public class OI {
   }
 
   public boolean cargoShipTop(){
-    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 0);
+    return (operator.getPOV() == 0);
   }
 
   public boolean backArmFloorPressed(){
@@ -70,7 +70,7 @@ public class OI {
   }
 
   public boolean backArmLowPressed(){
-    return (operator.getPOV() == 180);
+    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 270);
   }
 
   public boolean backRocketCenter(){
@@ -78,7 +78,7 @@ public class OI {
   }
 
   public boolean backCargoShipTop(){
-    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 180);
+    return (operator.getPOV() == 180);
   }
 
   public boolean isCameraSwitchPressed(){
@@ -86,7 +86,10 @@ public class OI {
   }
 
   public double moveArm(){
-    return operator.getY(Hand.kLeft);
+    if (Math.abs(operator.getY(Hand.kLeft)) < 0.20)
+      return 0;
+    else
+      return operator.getY(Hand.kLeft);
   }
 
 }

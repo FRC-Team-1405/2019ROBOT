@@ -28,19 +28,20 @@ public class ArmController extends Command {
     } else if(Robot.m_oi.cargoShipTop()){
       Robot.arm.cargoShipTop();
     } else if(Robot.m_oi.backRocketCenter()){
-      Robot.arm.rocketCenter();//change this
+      Robot.arm.backRocketCenter();
     } else if(Robot.m_oi.backCargoShipTop()){
-      Robot.arm.cargoShipTop();//change this
+      Robot.arm.backCargoShipTop();
     }else if(Robot.m_oi.armFloorPressed()) {
       Robot.arm.floor();
     } else if(Robot.m_oi.armLowPressed()){
       Robot.arm.low();
     } else if(Robot.m_oi.backArmFloorPressed()) {
-      Robot.arm.floor();//change this
+      Robot.arm.backFloor();
     } else if(Robot.m_oi.backArmLowPressed()){
-      Robot.arm.low();//change this
+      Robot.arm.backLow();
+    } else if (Robot.m_oi.moveArm() != 0) {
+     Robot.arm.adjustArmPosition(Robot.m_oi.moveArm());
     }
-      // Robot.arm.setArmPosition(Robot.m_oi.moveArm());
   }
 
   // Make this return true when this Command no longer needs to run execute()
