@@ -89,6 +89,10 @@ public class OI {
     return operator.getBButtonPressed();
   }
 
+  public boolean isLoadHatchReleased(){
+    return operator.getBButtonReleased();
+  }
+
   public boolean cancelCommand(){
     return operator.getXButtonPressed();
   }

@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.ArmController.ArmPosition;
 
 public class LoadHatch extends Command {
   public LoadHatch() {
@@ -28,14 +29,20 @@ public class LoadHatch extends Command {
   protected void execute() {
     Robot.arm.frontCargoShipTop();
     Robot.claw.intakeCargo(1.0);
+    Robot.claw.closeClawBack();
+
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    // TOD pick final arm position
-    return true;
-    // return Robot.arm.armInPosition() || Robot.m_oi.cancelCommand();
+    if (Robot.m_oi.isLoadHatchReleased() || Robot.arm.armInPosition() == ArmPosition.CARGO_SHIP_FRONT){
+      Robot.claw.intakeCargo(0.0);
+      Robot.claw.closeClawFront();
+      return true;
+    }
+
+    return false;
   }
 
   // Called once after isFinished returns true

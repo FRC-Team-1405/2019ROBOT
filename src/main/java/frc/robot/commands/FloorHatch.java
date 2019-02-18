@@ -32,16 +32,11 @@ public class FloorHatch extends Command {
   @Override
   protected boolean isFinished() {
     if(Robot.m_oi.isFloorHatchReleased()){
-      if (Robot.arm.armInPosition() == ArmPosition.FLOOR_FRONT){
-        Robot.claw.closeClawBack();
-        Robot.claw.closeClawFront();
-        Robot.arm.frontCargoShipTop();
-      } else {
         Robot.claw.closeClawFront();
         Robot.claw.closeClawBack();
         Robot.arm.backCargoShipTop();
-      }
-      return true;
+        Robot.claw.intakeCargo(0.0);
+        return true;
     }
     return false;
   }
