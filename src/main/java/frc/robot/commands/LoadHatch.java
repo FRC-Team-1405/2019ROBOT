@@ -10,9 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ArmController extends Command {
-  public ArmController() {
+public class LoadHatch extends Command {
+  public LoadHatch() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
     requires(Robot.arm);
+    requires(Robot.claw);
   }
 
   // Called just before this Command runs the first time
@@ -23,47 +26,20 @@ public class ArmController extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.m_oi.rocketCenter()){
-      Robot.arm.rocketCenter();
-    } else if(Robot.m_oi.cargoShipTop()){
-      Robot.arm.cargoShipTop();
-    } else if(Robot.m_oi.backRocketCenter()){
-      Robot.arm.backRocketCenter();
-    } else if(Robot.m_oi.backCargoShipTop()){
-      Robot.arm.backCargoShipTop();
-    }else if(Robot.m_oi.armFloorPressed()) {
-      Robot.arm.floor();
-    } else if(Robot.m_oi.armLowPressed()){
-      Robot.arm.low();
-    } else if(Robot.m_oi.backArmFloorPressed()) {
-      Robot.arm.backFloor();
-    } else if(Robot.m_oi.backArmLowPressed()){
-      Robot.arm.backLow();
-    } 
-
-    if (Robot.m_oi.manualArmControEnabled()) {
-      Robot.arm.adjustArmPosition(Robot.m_oi.manualArmControl());
-    }
-    if (Robot.m_oi.manualArmControlDisabled()) {
-      Robot.arm.adjustArmPosition(0.0);
-    }
-
-
-
-    if (Robot.m_oi.isLoadHatchPressed()){
-      Robot.loadHatch.start();
-    }
+    Robot.arm.cargoShipTop();
+    Robot.claw.intakeCargo(1.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return Robot.arm.onTarget() || Robot.m_oi.cancelCommand();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.claw.closeClawFront();
   }
 
   // Called when another command which requires one or more of the same

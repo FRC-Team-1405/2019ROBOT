@@ -34,11 +34,11 @@ public class OI {
   }
 
   public double driveY(){
-    return pilot.getY(Hand.kLeft);
-  }
+     return pilot.getY(Hand.kLeft);
+    }
 
   public double driveX(){
-    return pilot.getX(Hand.kRight);
+      return pilot.getX(Hand.kRight);
   }
 
   public boolean driveReverse(){
@@ -53,16 +53,24 @@ public class OI {
     return (operator.getPOV() == 90);
   }
 
-  public boolean armLowPressed(){
-    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 45);
+  public boolean cargoShipTop(){
+    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 45);
+  }
+
+  public boolean backCargoShipTop(){
+    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 315);
   }
 
   public boolean rocketCenter(){
-    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 0);
+    return (operator.getBumper(Hand.kRight) && operator.getAButton());
   }
 
-  public boolean cargoShipTop(){
-    return (operator.getPOV() == 0);
+  public boolean backRocketCenter(){
+    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 180);
+  }
+
+  public boolean armLowPressed(){
+    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 45);
   }
 
   public boolean backArmFloorPressed(){
@@ -73,23 +81,27 @@ public class OI {
     return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 270);
   }
 
-  public boolean backRocketCenter(){
-    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 180);
-  }
-
-  public boolean backCargoShipTop(){
-    return (operator.getPOV() == 180);
-  }
-
   public boolean isCameraSwitchPressed(){
     return pilot.getBumper(Hand.kLeft); // button tbd
   }
 
-  public double moveArm(){
-    if (!operator.getAButton()){
-      return 0;
+  public boolean isLoadHatchPressed(){
+    return operator.getBButtonPressed();
   }
 
-    return operator.getY(Hand.kLeft);
+  public boolean cancelCommand(){
+    return operator.getXButtonPressed();
+  }
+
+  public boolean manualArmControEnabled(){
+    return operator.getStickButton(Hand.kRight);
+  }
+
+  public boolean manualArmControlDisabled(){
+    return operator.getStickButtonReleased(Hand.kRight);
+  }
+
+  public double manualArmControl(){
+    return operator.getY(Hand.kRight);
   }
 }

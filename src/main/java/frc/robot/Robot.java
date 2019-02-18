@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveBaseController;
 import frc.robot.commands.DriveToVisionTarget;
+import frc.robot.commands.LoadHatch;
 import frc.robot.lib.LidarReader;
 import frc.robot.subsystems.ArcadeDrive;
 import frc.robot.subsystems.Arm;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
   Command autonomousCommand;
   Command teleopCommand;
   public static Command driveToVisionTarget;
+  public static Command loadHatch;
 
   LidarReader lidarReader;
 
@@ -80,6 +82,7 @@ public class Robot extends TimedRobot {
   autonomousCommand = new DriveBaseController();
     teleopCommand = autonomousCommand;
     driveToVisionTarget = new DriveToVisionTarget();
+    loadHatch = new LoadHatch();
   }
 
   /**
@@ -101,6 +104,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    arm.adjustArmPosition(0.0);
     // lidarReader.killThread();
   }
 
@@ -122,6 +126,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    arm.adjustArmPosition(0.0);
     autonomousCommand.start();
   }
 
@@ -130,11 +135,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    this.arm.adjustArmPosition(0.0);
     Scheduler.getInstance().run();
   }
 
   @Override
   public void teleopInit() {
+    this.arm.adjustArmPosition(0.0);
+
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
@@ -150,6 +158,11 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
   }
 
+
+  @Override
+  public void testInit() {
+    arm.adjustArmPosition(0.0);
+  }
 
   /**
    * This function is called periodically during test mode.

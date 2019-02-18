@@ -38,14 +38,15 @@ public class Arm extends Subsystem {
   // private static final String keyI = "Arm_I";
   // private static final String keyD = "Arm_D";
 
-  private static double floorPickup = 0.0;
-  private static double lowScoring = 0.0;
-  private static double rocketCenterCargo = 0.0;
-  private static double cargoShipCargo = 0.0;
-  private static double backFloorPickup = 0.0;
-  private static double backLowScoring = 0.0;
-  private static double backRocketCenterCargo = 0.0;
-  private static double backCargoShipCargo = 0.0;
+  private static double floorPickup = 36.0;
+  private static double lowScoring = 126.0;
+  private static double rocketCenterCargo = 322.0;
+  private static double cargoShipCargo = 322.0;
+  private static double backFloorPickup = 927.0;
+  private static double backLowScoring = 821.0;
+  private static double backRocketCenterCargo = 537.0;
+  private static double backCargoShipCargo = 537.0;
+  private static double maxArmError = 10.0;
   private static final String keyFloorPickup = "Arm_FloorPosition";
   private static final String keyLowScoring = "Arm_EjectPositionLow"; 
   private static final String keyRocketCenterCargo = "Arm_EjectCenterRocket";
@@ -62,15 +63,15 @@ public class Arm extends Subsystem {
 
     pivotTalon.set(ControlMode.PercentOutput, 0);
     
-    armPID =  new TalonPID(pivotTalon, ControlMode.Position);
-    armPID.disable();
     pivotTalon.setName("Pivot Arm");
     this.addChild(pivotTalon); 
     LiveWindow.add(pivotTalon);
 
-    armPID.setName("Pivot PID");
-    this.addChild(armPID);
-    LiveWindow.add(armPID);
+    // armPID =  new TalonPID(pivotTalon, ControlMode.Position);
+    // armPID.disable();
+    // armPID.setName("Pivot PID");
+    // this.addChild(armPID);
+    // LiveWindow.add(armPID);
 
     Preferences prefs = Preferences.getInstance(); 
 
@@ -158,11 +159,15 @@ public class Arm extends Subsystem {
   public void configureTalon(TalonSRX talonSRX){
     ExtendedTalon.configCurrentLimit(talonSRX);
     talonSRX.configNeutralDeadband(0.001, 10);
-    talonSRX.setSensorPhase(true);
+    talonSRX.setSensorPhase(false);
   }
 
   public double getArmPosition(){
    return pivotTalon.getSensorCollection().getAnalogInRaw();
+  }
+
+  public boolean onTarget(){
+    return Math.abs(pivotTalon.getClosedLoopError()) < maxArmError;
   }
 
   @Override
