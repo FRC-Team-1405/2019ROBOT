@@ -11,10 +11,17 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class ArmController extends Command {
+
+  public enum ArmPosition{
+    FLOOR_FRONT, FLOOR_BACK, CARGO_SHIP_FRONT, CARGO_SHIP_BACK,
+    HATCH_FRONT, HATCH_BACK, ROCKET_FRONT, ROCKET_BACK, UNKNOWN;
+  }
+
   public ArmController() {
     requires(Robot.arm);
   }
 
+  private ArmPosition armPosition = ArmPosition.UNKNOWN;
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -24,17 +31,17 @@ public class ArmController extends Command {
   @Override
   protected void execute() {
     if(Robot.m_oi.rocketCenter()){
-      Robot.arm.rocketCenter();
+      Robot.arm.frontRocketCenter();
     } else if(Robot.m_oi.cargoShipTop()){
-      Robot.arm.cargoShipTop();
+      Robot.arm.frontCargoShipTop();
     } else if(Robot.m_oi.backRocketCenter()){
       Robot.arm.backRocketCenter();
     } else if(Robot.m_oi.backCargoShipTop()){
       Robot.arm.backCargoShipTop();
     }else if(Robot.m_oi.armFloorPressed()) {
-      Robot.arm.floor();
+      Robot.arm.frontFloor();
     } else if(Robot.m_oi.armLowPressed()){
-      Robot.arm.low();
+      Robot.arm.frontLow();
     } else if(Robot.m_oi.backArmFloorPressed()) {
       Robot.arm.backFloor();
     } else if(Robot.m_oi.backArmLowPressed()){

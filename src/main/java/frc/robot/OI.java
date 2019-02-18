@@ -104,4 +104,12 @@ public class OI {
   public double manualArmControl(){
     return operator.getY(Hand.kRight);
   }
+
+  public boolean isFloorHatchPressed(){
+    return operator.getAButtonPressed();
+  }
+
+  public boolean isFloorHatchReleased(){
+    return operator.getAButtonReleased();
+  }
 }

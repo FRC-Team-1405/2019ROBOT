@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmController;
+import frc.robot.commands.ArmController.ArmPosition;
 import frc.robot.lib.ExtendedTalon;
 import frc.robot.lib.TalonPID;
 
@@ -56,6 +57,7 @@ public class Arm extends Subsystem {
   private static final String keyBackRocketCenterCargo = "Arm_BackEjectCenterRocket";
   private static final String keyBackCargoShipCargo = "Arm_BackEjectCargoShipCargo";
 
+  private ArmPosition armPosition = ArmPosition.UNKNOWN;
   public Arm() {
     configureTalon(pivotTalon);
     pivotTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 10);
@@ -120,36 +122,44 @@ public class Arm extends Subsystem {
     setDefaultCommand(new ArmController());
   }
 
-  public void floor(){
+  public void frontFloor(){
     pivotTalon.set(ControlMode.Position, floorPickup);
+    armPosition = ArmPosition.FLOOR_FRONT;
   }
 
-  public void low(){
+  public void frontLow(){
     pivotTalon.set(ControlMode.Position, lowScoring);
+    armPosition = ArmPosition.HATCH_FRONT;
   }
 
-  public void rocketCenter(){
+  public void frontRocketCenter(){
     pivotTalon.set(ControlMode.Position, rocketCenterCargo);
+    armPosition = ArmPosition.ROCKET_FRONT;
   }
 
-  public void cargoShipTop(){
+  public void frontCargoShipTop(){
     pivotTalon.set(ControlMode.Position, cargoShipCargo);
+    armPosition = ArmPosition.CARGO_SHIP_FRONT;
   }
 
   public void backFloor(){
     pivotTalon.set(ControlMode.Position, backFloorPickup);
+    armPosition = ArmPosition.FLOOR_BACK;
   }
 
   public void backLow(){
     pivotTalon.set(ControlMode.Position, backLowScoring);
+    armPosition = ArmPosition.HATCH_BACK;
   }
 
   public void backRocketCenter(){
     pivotTalon.set(ControlMode.Position, backRocketCenterCargo);
+    armPosition = ArmPosition.ROCKET_BACK;
   }
 
   public void backCargoShipTop(){
     pivotTalon.set(ControlMode.Position, backCargoShipCargo);
+    armPosition = ArmPosition.CARGO_SHIP_BACK;
   }
 
   public void adjustArmPosition(double position){
@@ -166,8 +176,10 @@ public class Arm extends Subsystem {
    return pivotTalon.getSensorCollection().getAnalogInRaw();
   }
 
-  public boolean onTarget(){
-    return Math.abs(pivotTalon.getClosedLoopError()) < maxArmError;
+  public ArmPosition armInPosition(){
+    return (Math.abs(pivotTalon.getClosedLoopError()) < maxArmError)
+                ? armPosition
+                : ArmPosition.UNKNOWN;
   }
 
   @Override

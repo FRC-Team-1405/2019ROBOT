@@ -9,13 +9,12 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.ArmController.ArmPosition;
 
-public class LoadHatch extends Command {
-  public LoadHatch() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
-    requires(Robot.arm);
+public class FloorHatch extends Command {
+  public FloorHatch(){
     requires(Robot.claw);
+    requires(Robot.arm);
   }
 
   // Called just before this Command runs the first time
@@ -26,22 +25,30 @@ public class LoadHatch extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.arm.frontCargoShipTop();
     Robot.claw.intakeCargo(1.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    // TOD pick final arm position
-    return true;
-    // return Robot.arm.armInPosition() || Robot.m_oi.cancelCommand();
+    if(Robot.m_oi.isFloorHatchReleased()){
+      if (Robot.arm.armInPosition() == ArmPosition.FLOOR_FRONT){
+        Robot.claw.closeClawBack();
+        Robot.claw.closeClawFront();
+        Robot.arm.frontCargoShipTop();
+      } else {
+        Robot.claw.closeClawFront();
+        Robot.claw.closeClawBack();
+        Robot.arm.backCargoShipTop();
+      }
+      return true;
+    }
+    return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.claw.closeClawFront();
   }
 
   // Called when another command which requires one or more of the same
