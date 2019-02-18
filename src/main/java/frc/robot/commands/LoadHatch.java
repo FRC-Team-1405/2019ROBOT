@@ -9,19 +9,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.commands.ArmController.ArmPosition;
 
-public class ArmController extends Command {
-
-  public enum ArmPosition{
-    FLOOR_FRONT, FLOOR_BACK, CARGO_SHIP_FRONT, CARGO_SHIP_BACK,
-    HATCH_FRONT, HATCH_BACK, ROCKET_FRONT, ROCKET_BACK, UNKNOWN;
-  }
-
-  public ArmController() {
+public class LoadHatch extends Command {
+  public LoadHatch() {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
     requires(Robot.arm);
+    requires(Robot.claw);
   }
 
-  private ArmPosition armPosition = ArmPosition.UNKNOWN;
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -30,47 +27,28 @@ public class ArmController extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.m_oi.rocketCenter()){
-      Robot.arm.frontRocketCenter();
-    } else if(Robot.m_oi.cargoShipTop()){
-      Robot.arm.frontCargoShipTop();
-    } else if(Robot.m_oi.backRocketCenter()){
-      Robot.arm.backRocketCenter();
-    } else if(Robot.m_oi.backCargoShipTop()){
-      Robot.arm.backCargoShipTop();
-    }else if(Robot.m_oi.armFloorPressed()) {
-      Robot.arm.frontFloor();
-    } else if(Robot.m_oi.armLowPressed()){
-      Robot.arm.frontLow();
-    } else if(Robot.m_oi.backArmFloorPressed()) {
-      Robot.arm.backFloor();
-    } else if(Robot.m_oi.backArmLowPressed()){
-      Robot.arm.backLow();
-    } 
+    Robot.arm.frontCargoShipTop();
+    Robot.claw.intakeCargo(1.0);
+    Robot.claw.closeClawBack();
 
-    if (Robot.m_oi.manualArmControEnabled()) {
-      Robot.arm.adjustArmPosition(Robot.m_oi.manualArmControl());
-    }
-    if (Robot.m_oi.manualArmControlDisabled()) {
-      Robot.arm.adjustArmPosition(0.0);
-    }
-
-
-
-    if (Robot.m_oi.isLoadHatchPressed()){
-      Robot.loadHatch.start();
-    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    if (Robot.m_oi.isLoadHatchReleased() || Robot.arm.armInPosition() == ArmPosition.CARGO_SHIP_FRONT){
+      Robot.claw.intakeCargo(0.0);
+      Robot.claw.closeClawFront();
+      return true;
+    }
+
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.claw.closeClawFront();
   }
 
   // Called when another command which requires one or more of the same

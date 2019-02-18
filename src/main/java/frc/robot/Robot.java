@@ -18,11 +18,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveBaseController;
 import frc.robot.commands.DriveToVisionTarget;
+import frc.robot.commands.LoadHatch;
 import frc.robot.lib.LidarReader;
 import frc.robot.subsystems.ArcadeDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.GyroSystem;
+import frc.robot.subsystems.SoloStilts;
 import frc.robot.subsystems.Vision;
 //import edu.wpi.first.wpilibj.livewindow.*;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -41,10 +43,12 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static Vision vision;
   public static GyroSystem gyro;
+  public static SoloStilts stilts;
 
   Command autonomousCommand;
   Command teleopCommand;
   public static Command driveToVisionTarget;
+  public static Command loadHatch;
 
   LidarReader lidarReader;
 
@@ -60,6 +64,7 @@ public class Robot extends TimedRobot {
     claw = new Claw();
     arm = new Arm();  
     gyro = new GyroSystem();
+    stilts = new SoloStilts();
 
     LiveWindow.add(new DriveToVisionTarget());
 
@@ -80,6 +85,7 @@ public class Robot extends TimedRobot {
   autonomousCommand = new DriveBaseController();
     teleopCommand = autonomousCommand;
     driveToVisionTarget = new DriveToVisionTarget();
+    loadHatch = new LoadHatch();
   }
 
   /**
@@ -101,6 +107,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    arm.adjustArmPosition(0.0);
     // lidarReader.killThread();
   }
 
@@ -122,6 +129,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    arm.adjustArmPosition(0.0);
     autonomousCommand.start();
   }
 
@@ -130,11 +138,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    this.arm.adjustArmPosition(0.0);
     Scheduler.getInstance().run();
   }
 
   @Override
   public void teleopInit() {
+    this.arm.adjustArmPosition(0.0);
+
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
@@ -150,6 +161,11 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
   }
 
+
+  @Override
+  public void testInit() {
+    arm.adjustArmPosition(0.0);
+  }
 
   /**
    * This function is called periodically during test mode.

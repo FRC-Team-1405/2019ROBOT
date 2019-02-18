@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -19,12 +20,10 @@ import frc.robot.RobotMap;
 public class SoloStilts extends Subsystem {
 
   private TalonSRX soloStiltTalon = new TalonSRX(RobotMap.soloStiltTalon); 
-  public void extend(double speed) { 
-  }   
 
-  public void retract(double speed) { 
-
-  }  
+  public void moveStilts(double speed){
+    soloStiltTalon.set(ControlMode.PercentOutput, speed);
+  }
 
   @Override
   public void initDefaultCommand() {
