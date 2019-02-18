@@ -50,8 +50,8 @@ public class ArcadeDrive extends Subsystem {
      ExtendedTalon.configCurrentLimit(talonDriveBaseRightSlave2); 
 
       // limit Talon deadband
-      talonDriveBaseLeft.configNeutralDeadband(0.001, 10);
-      talonDriveBaseRight.configNeutralDeadband(0.001, 10);
+      talonDriveBaseLeft.configNeutralDeadband(0.04, 10);
+      talonDriveBaseRight.configNeutralDeadband(0.04, 10);
 
       resetDistanceEncoder();
       
