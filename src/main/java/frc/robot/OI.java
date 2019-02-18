@@ -46,23 +46,27 @@ public class OI {
   }
 
   public boolean isDriveToLineEnabled(){
-    return operator.getBumper(Hand.kRight);
+    return false;//button tbd
   }
 
   public boolean armFloorPressed(){
     return (operator.getPOV() == 90);
   }
 
+  public boolean backArmFloorPressed(){
+    return (operator.getPOV() == 270);
+  }
+
   public boolean cargoShipTop(){
-    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 45);
+    return (operator.getPOV() == 0);
   }
 
   public boolean backCargoShipTop(){
-    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 315);
+    return (operator.getPOV() == 180);
   }
 
   public boolean rocketCenter(){
-    return (operator.getBumper(Hand.kRight) && operator.getAButton());
+    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 0);
   }
 
   public boolean backRocketCenter(){
@@ -70,11 +74,7 @@ public class OI {
   }
 
   public boolean armLowPressed(){
-    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 45);
-  }
-
-  public boolean backArmFloorPressed(){
-    return (operator.getPOV() == 315);
+    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 90);
   }
 
   public boolean backArmLowPressed(){
@@ -82,7 +82,7 @@ public class OI {
   }
 
   public boolean isCameraSwitchPressed(){
-    return pilot.getBumper(Hand.kLeft); // button tbd
+    return false; // button tbd
   }
 
   public boolean isLoadHatchPressed(){
