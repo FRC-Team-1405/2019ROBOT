@@ -116,4 +116,12 @@ public class OI {
   public boolean isFloorHatchReleased(){
     return operator.getAButtonReleased();
   }
+
+  public boolean isPlaceHatchPressed(){
+    return operator.getYButton();
+  }
+
+  public boolean isPlaceHatchReleased(){
+    return operator.getYButtonReleased();
+  }
 }
