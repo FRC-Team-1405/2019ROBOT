@@ -124,4 +124,12 @@ public class OI {
   public boolean isPlaceHatchReleased(){
     return operator.getYButtonReleased();
   }
+
+  public double extendStilts(){
+    return pilot.getTriggerAxis(Hand.kRight);
+  }
+
+  public double retractStilts(){
+    return pilot.getTriggerAxis(Hand.kLeft);
+  }
 }

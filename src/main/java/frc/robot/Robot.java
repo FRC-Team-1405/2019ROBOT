@@ -24,6 +24,7 @@ import frc.robot.subsystems.ArcadeDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.GyroSystem;
+import frc.robot.subsystems.SoloStilts;
 import frc.robot.subsystems.Vision;
 //import edu.wpi.first.wpilibj.livewindow.*;
 //import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -42,6 +43,7 @@ public class Robot extends TimedRobot {
   public static Arm arm;
   public static Vision vision;
   public static GyroSystem gyro;
+  public static SoloStilts stilts;
 
   Command autonomousCommand;
   Command teleopCommand;
@@ -62,6 +64,7 @@ public class Robot extends TimedRobot {
     claw = new Claw();
     arm = new Arm();  
     gyro = new GyroSystem();
+    stilts = new SoloStilts();
 
     LiveWindow.add(new DriveToVisionTarget());
 
