@@ -27,7 +27,6 @@ public class RobotMap {
   // public static int rangefinderModule = 1;
 
   //Talon IDs
-  //8 is not being used
   public final static int talonDriveBaseLeft = 1;
   public final static int talonDriveBaseRight = 2;
   public final static int talonDriveBaseLeftSlave1 = 3;
