@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ArmController;
 import frc.robot.commands.ArmController.ArmPosition;
@@ -123,6 +124,8 @@ public class Arm extends Subsystem {
   }
 
   public void frontFloor(){
+    Robot.claw.openClawFront();
+    Robot.claw.openClawBack();
     pivotTalon.set(ControlMode.Position, floorPickup);
     armPosition = ArmPosition.FLOOR_FRONT;
   }
@@ -143,6 +146,8 @@ public class Arm extends Subsystem {
   }
 
   public void backFloor(){
+    Robot.claw.openClawFront();
+    Robot.claw.openClawBack();
     pivotTalon.set(ControlMode.Position, backFloorPickup);
     armPosition = ArmPosition.FLOOR_BACK;
   }

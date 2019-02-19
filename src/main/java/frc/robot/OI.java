@@ -66,19 +66,19 @@ public class OI {
   }
 
   public boolean rocketCenter(){
-    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 0);
+    return (operator.getBumper(Hand.kRight) && (operator.getPOV() > 270 || operator.getPOV() < 90));
   }
 
   public boolean backRocketCenter(){
-    return (operator.getBumper(Hand.kRight) && operator.getPOV() == 180);
+    return (operator.getBumper(Hand.kRight) && operator.getPOV() < 270 && operator.getPOV() > 90);
   }
 
   public boolean armLowPressed(){
-    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 90);
+    return (operator.getBumper(Hand.kLeft) && operator.getPOV() < 180 && operator.getPOV() > 0);
   }
 
   public boolean backArmLowPressed(){
-    return (operator.getBumper(Hand.kLeft) && operator.getPOV() == 270);
+    return (operator.getBumper(Hand.kLeft) && operator.getPOV() > 180);
   }
 
   public boolean isCameraSwitchPressed(){

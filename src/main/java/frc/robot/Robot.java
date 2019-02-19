@@ -18,7 +18,9 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.DriveBaseController;
 import frc.robot.commands.DriveToVisionTarget;
+import frc.robot.commands.FloorHatch;
 import frc.robot.commands.LoadHatch;
+import frc.robot.commands.PlaceHatch;
 import frc.robot.lib.LidarReader;
 import frc.robot.subsystems.ArcadeDrive;
 import frc.robot.subsystems.Arm;
@@ -49,6 +51,8 @@ public class Robot extends TimedRobot {
   Command teleopCommand;
   public static Command driveToVisionTarget;
   public static Command loadHatch;
+  public static Command floorHatch;
+  public static Command placeHatch;
 
   LidarReader lidarReader;
 
@@ -86,6 +90,8 @@ public class Robot extends TimedRobot {
     teleopCommand = autonomousCommand;
     driveToVisionTarget = new DriveToVisionTarget();
     loadHatch = new LoadHatch();
+    floorHatch = new FloorHatch();
+    placeHatch = new PlaceHatch();
   }
 
   /**

@@ -30,6 +30,16 @@ public class ArmController extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    if(Robot.m_oi.isFloorHatchPressed()){
+      Robot.floorHatch.start();
+    }
+    if(Robot.m_oi.isLoadHatchPressed()){
+      Robot.loadHatch.start();
+    }
+    if(Robot.m_oi.isPlaceHatchPressed()){
+      Robot.placeHatch.start();
+    }
+
     if(Robot.m_oi.rocketCenter()){
       Robot.arm.frontRocketCenter();
     } else if(Robot.m_oi.cargoShipTop()){
@@ -53,12 +63,6 @@ public class ArmController extends Command {
     }
     if (Robot.m_oi.manualArmControlDisabled()) {
       Robot.arm.adjustArmPosition(0.0);
-    }
-
-
-
-    if (Robot.m_oi.isLoadHatchPressed()){
-      Robot.loadHatch.start();
     }
   }
 

@@ -26,7 +26,7 @@ public class Claw extends Subsystem {
   
   private WPI_TalonSRX intakeTalonA = new WPI_TalonSRX(RobotMap.clawTalonA);
   private WPI_TalonSRX intakeTalonB = new WPI_TalonSRX(RobotMap.clawTalonB);
-  private DoubleSolenoid solenoidFront = new DoubleSolenoid(2, 1);
+  private DoubleSolenoid solenoidFront = new DoubleSolenoid(1, 2);
   private DoubleSolenoid solenoidBack = new DoubleSolenoid(3, 4);
   
   private static double intakeSpeed = 1.0;
