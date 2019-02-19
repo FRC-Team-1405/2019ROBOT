@@ -94,7 +94,7 @@ public class OI {
   }
 
   public boolean cancelCommand(){
-    return operator.getXButtonPressed();
+    return operator.getBackButtonPressed();
   }
 
   public boolean manualArmControEnabled(){
