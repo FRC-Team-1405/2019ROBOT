@@ -21,9 +21,17 @@ import frc.robot.commands.SoloStiltsController;
 public class SoloStilts extends Subsystem {
 
   private TalonSRX soloStiltTalon = new TalonSRX(RobotMap.soloStiltTalon); 
+  private TalonSRX soloStiltTalon2 = new TalonSRX(RobotMap.soloStiltTalon2);
+  private TalonSRX soloStiltTalon3 = new TalonSRX(RobotMap.soloStiltTalon3);
+  private TalonSRX soloStiltTalon4 = new TalonSRX(RobotMap.soloStiltTalon4);
+
 
   public void moveStilts(double speed){
     soloStiltTalon.set(ControlMode.PercentOutput, speed);
+    soloStiltTalon2.set(ControlMode.PercentOutput, speed);
+    soloStiltTalon3.set(ControlMode.PercentOutput, speed);
+    soloStiltTalon4.set(ControlMode.PercentOutput, speed);
+
   }
 
   @Override
