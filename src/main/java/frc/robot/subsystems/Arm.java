@@ -187,6 +187,10 @@ public class Arm extends Subsystem {
                 : ArmPosition.UNKNOWN;
   }
 
+  public double getCargoShipCargoPos(boolean inBack) {
+    return inBack ? backCargoShipCargo : cargoShipCargo;
+  }
+
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);

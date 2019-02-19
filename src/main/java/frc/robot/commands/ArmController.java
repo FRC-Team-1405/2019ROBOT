@@ -12,7 +12,7 @@ import frc.robot.Robot;
 
 public class ArmController extends Command {
 
-  public enum ArmPosition{
+  public enum ArmPosition {
     FLOOR_FRONT, FLOOR_BACK, CARGO_SHIP_FRONT, CARGO_SHIP_BACK,
     HATCH_FRONT, HATCH_BACK, ROCKET_FRONT, ROCKET_BACK, UNKNOWN;
   }

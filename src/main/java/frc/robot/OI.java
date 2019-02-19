@@ -132,4 +132,11 @@ public class OI {
   public double retractStilts(){
     return pilot.getTriggerAxis(Hand.kLeft);
   }
+
+  public boolean isLoadCargoPressed() {
+    return false;
+  }
+  public boolean isLoadCargoReleased() {
+    return false;
+  }
 }
