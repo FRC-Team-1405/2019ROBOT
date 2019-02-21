@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
   public XboxController pilot = new XboxController(RobotMap.pilot);
   public XboxController operator = new XboxController(RobotMap.operator);
+  public XboxController testJoystick = new XboxController(RobotMap.testJoystick);
+  
   public boolean cargoIntakePressed() {
     return pilot.getBumper(Hand.kLeft);
   }

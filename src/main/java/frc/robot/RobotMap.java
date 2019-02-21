@@ -40,6 +40,7 @@ public class RobotMap {
   //Joystick IDs
   public final static int pilot = 0; 
   public final static int operator = 1;
+  public final static int testJoystick = 2;
   // Serial/LidarReader config info
   public static final int BAUD_RATE = 2400;
   public static final SerialPort.Port PORT = SerialPort.Port.kUSB1;

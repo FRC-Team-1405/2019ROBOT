@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 
 //import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -144,13 +145,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    this.arm.adjustArmPosition(0.0);
+    arm.adjustArmPosition(0.0);
     Scheduler.getInstance().run();
   }
 
   @Override
   public void teleopInit() {
-    this.arm.adjustArmPosition(0.0);
+    if(DriverStation.getInstance().isFMSAttached() == false){
+      arm.adjustArmPosition(0.0);
+    }
 
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
