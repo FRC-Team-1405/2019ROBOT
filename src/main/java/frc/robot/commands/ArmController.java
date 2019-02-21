@@ -9,6 +9,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
+import frc.robot.OI;
 
 public class ArmController extends Command {
 
@@ -63,6 +64,14 @@ public class ArmController extends Command {
     }
     if (Robot.m_oi.manualArmControlDisabled()) {
       Robot.arm.adjustArmPosition(0.0);
+    }
+
+    if (Robot.m_oi.switchPieceType()) {
+      if (Robot.m_oi.getCurrentManipulatedPiece() == OI.Piece.CARGO) {
+        Robot.m_oi.setCurrentManipulatedPiece(OI.Piece.HATCH);
+      } else {
+        Robot.m_oi.setCurrentManipulatedPiece(OI.Piece.CARGO);
+      }
     }
   }
 

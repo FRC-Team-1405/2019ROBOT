@@ -9,7 +9,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+//import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,6 +18,9 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
   public XboxController pilot = new XboxController(RobotMap.pilot);
   public XboxController operator = new XboxController(RobotMap.operator);
+  public enum Piece {CARGO, HATCH};
+  private Piece currentManipulatedPiece = Piece.HATCH;
+
   public boolean cargoIntakePressed() {
     return pilot.getBumper(Hand.kLeft);
   }
@@ -85,13 +88,39 @@ public class OI {
     return false; // button tbd
   }
 
+
+
   public boolean isLoadHatchPressed(){
-    return operator.getBButtonPressed();
+    if(currentManipulatedPiece == Piece.HATCH) {
+      return operator.getBButtonPressed();
+    } else { return false; }
   }
 
   public boolean isLoadHatchReleased(){
-    return operator.getBButtonReleased();
+    if(currentManipulatedPiece == Piece.HATCH) {
+      return operator.getBButtonReleased();
+    } else { return false; }
   }
+
+
+  public boolean isLoadCargoPressed() {
+    if(currentManipulatedPiece == Piece.CARGO) {
+      return operator.getBButtonPressed();
+    } else { return false; }
+  }
+
+  public boolean isLoadCargoReleased() {
+    if(currentManipulatedPiece == Piece.CARGO) {
+      return operator.getBButtonReleased();
+    } else { return false; }
+  }
+
+
+  public boolean switchPieceType() {
+    return operator.getXButtonPressed();
+  }
+
+
 
   public boolean cancelCommand(){
     return operator.getBackButtonPressed();
@@ -133,10 +162,10 @@ public class OI {
     return pilot.getTriggerAxis(Hand.kLeft);
   }
 
-  public boolean isLoadCargoPressed() {
-    return false;
+  public Piece getCurrentManipulatedPiece() {
+    return currentManipulatedPiece;
   }
-  public boolean isLoadCargoReleased() {
-    return false;
+  public void setCurrentManipulatedPiece(Piece newPiece) {
+    currentManipulatedPiece = newPiece;
   }
 }
