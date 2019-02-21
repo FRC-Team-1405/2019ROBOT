@@ -13,7 +13,6 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.Preferences;
-//import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
@@ -22,7 +21,6 @@ import frc.robot.RobotMap;
 import frc.robot.commands.ArmController;
 import frc.robot.commands.ArmController.ArmPosition;
 import frc.robot.lib.ExtendedTalon;
-import frc.robot.lib.TalonPID;
 
 /**
  * Add your docs here.
@@ -30,15 +28,6 @@ import frc.robot.lib.TalonPID;
 public class Arm extends Subsystem {
   
   private WPI_TalonSRX pivotTalon = new WPI_TalonSRX(RobotMap.pivotTalon);
-  private TalonPID armPID;
-
-  // private static double kP = 0.0;
-  // private static double kI = 0.0;
-  // private static double kD = 0.0;
-  // moving Talon prefs to talon
-  // private static final String keyP = "Arm_P";
-  // private static final String keyI = "Arm_I";
-  // private static final String keyD = "Arm_D";
 
   private static double floorPickup = 36.0;
   private static double lowScoring = 126.0;
@@ -69,12 +58,6 @@ public class Arm extends Subsystem {
     pivotTalon.setName("Pivot Arm");
     this.addChild(pivotTalon); 
     LiveWindow.add(pivotTalon);
-
-    // armPID =  new TalonPID(pivotTalon, ControlMode.Position);
-    // armPID.disable();
-    // armPID.setName("Pivot PID");
-    // this.addChild(armPID);
-    // LiveWindow.add(armPID);
 
     Preferences prefs = Preferences.getInstance(); 
 
