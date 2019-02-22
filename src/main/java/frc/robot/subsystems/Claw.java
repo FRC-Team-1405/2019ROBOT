@@ -131,6 +131,7 @@ public class Claw extends Subsystem {
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
+    builder.addDoubleProperty("Intake Current", () -> {return currentFilter.get();}, null);
   }
 
 }
