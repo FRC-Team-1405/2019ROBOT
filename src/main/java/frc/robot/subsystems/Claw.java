@@ -10,9 +10,12 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PIDSource;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.filters.LinearDigitalFilter;
 //import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.RobotMap;
@@ -28,10 +31,22 @@ public class Claw extends Subsystem {
   private WPI_TalonSRX intakeTalonB = new WPI_TalonSRX(RobotMap.clawTalonB);
   private DoubleSolenoid solenoidFront = new DoubleSolenoid(1, 2);
   private DoubleSolenoid solenoidBack = new DoubleSolenoid(3, 4);
-  
+  private PIDSource currentSource = new PIDSource(){
+    @Override
+    public void setPIDSourceType(PIDSourceType pidSource) {}
+    @Override
+    public double pidGet() {
+      return ((intakeTalonA.getOutputCurrent()+intakeTalonB.getOutputCurrent())/2);
+    }
+    @Override
+    public PIDSourceType getPIDSourceType() { return PIDSourceType.kDisplacement; }
+  };
+  private LinearDigitalFilter currentFilter = LinearDigitalFilter.movingAverage(currentSource, 10);
+
   private static double intakeSpeed = 1.0;
   private static double outputSpeed = 1.0;
   private static final double cargoAcquiredCurrent = 1.0; //TBD
+  private static final double hatchAcquiredCurrent = 1.0; //TBD
   private static final String keyIntake = "Claw_Intake_Speed";
   private static final String keyOutput = "Claw_Output_Speed";
 
@@ -106,7 +121,11 @@ public class Claw extends Subsystem {
   }
 
   public boolean isCargoAcquired(){
-    return ((intakeTalonA.getOutputCurrent()+intakeTalonB.getOutputCurrent())/2>cargoAcquiredCurrent);
+    return (currentFilter.get() > cargoAcquiredCurrent);
+  }
+
+  public boolean isHatchAcquired(){
+    return (currentFilter.get() > hatchAcquiredCurrent);
   }
   
   @Override
