@@ -46,7 +46,10 @@ public class GyroSystem extends Subsystem {
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
     builder.addBooleanProperty("Ready", this::isReady, null);
-  }
 
+    builder.addDoubleProperty("Pitch", gyro::getPitch, null);
+    builder.addDoubleProperty("Roll",  gyro::getRoll,  null);
+    builder.addDoubleProperty("Yaw",   gyro::getYaw,   null);
+  }
 
 }
