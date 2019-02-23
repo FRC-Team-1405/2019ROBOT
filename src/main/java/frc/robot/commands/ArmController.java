@@ -21,7 +21,7 @@ public class ArmController extends Command {
     requires(Robot.arm);
   }
 
-  private ArmPosition armPosition = ArmPosition.UNKNOWN;
+  //private ArmPosition armPosition = ArmPosition.UNKNOWN; // UNCOMMENT THIS WHEN IT'S USED
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {

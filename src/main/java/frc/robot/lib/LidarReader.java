@@ -29,7 +29,7 @@ public class LidarReader extends Thread {
 
     public LidarReader() {
         map = new RobotMap();
-        serialPort = new SerialPort(map.BAUD_RATE, map.PORT, map.DATA_BITS, map.PARITY, map.STOP_BITS);
+        serialPort = new SerialPort(RobotMap.BAUD_RATE, RobotMap.PORT, RobotMap.DATA_BITS, RobotMap.PARITY, RobotMap.STOP_BITS);
         keepRunning = true;
     }
 
@@ -42,7 +42,7 @@ public class LidarReader extends Thread {
         double[] doubleArray = new double[4];
         serialPort.enableTermination('\n');
         serialPort.setReadBufferSize(64);
-        SmartDashboard.putNumberArray(map.LIDAR_KEY, doubleArray);   
+        SmartDashboard.putNumberArray(RobotMap.LIDAR_KEY, doubleArray);   
         while(true) {
             // Read String from serial port
             String buffer = serialPort.readString();
@@ -54,7 +54,7 @@ public class LidarReader extends Thread {
                 for(int i = 0; i < stringArray.length; i++)
                     doubleArray[i] = Double.parseDouble(stringArray[i]);
                 // Put array into smart dashboard
-                SmartDashboard.putNumberArray(map.LIDAR_KEY, doubleArray);      
+                SmartDashboard.putNumberArray(RobotMap.LIDAR_KEY, doubleArray);      
             }
         }
     }
