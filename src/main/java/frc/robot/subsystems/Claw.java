@@ -16,7 +16,6 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.filters.LinearDigitalFilter;
-//import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import frc.robot.RobotMap;
 import frc.robot.commands.ClawController;
@@ -128,6 +127,11 @@ public class Claw extends Subsystem {
     return (currentFilter.get() > hatchAcquiredCurrent);
   }
   
+  @Override
+  public void periodic() {
+    currentFilter.pidGet();
+  }
+
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
