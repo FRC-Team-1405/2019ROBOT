@@ -26,7 +26,10 @@ public class DriveToVisionTarget extends Command {
   private static final String keyD = "DriveToVisionTarget_D"; 
 
   private PIDController pidController; 
-  public DriveToVisionTarget() {
+  public DriveToVisionTarget(){
+    this(0.0);
+  }
+  public DriveToVisionTarget(double targetAngle) {
     requires(Robot.driveBase); 
     requires(Robot.vision);  
 
@@ -82,7 +85,7 @@ public class DriveToVisionTarget extends Command {
   pidController.setInputRange(-27.0, 27.0); 
   pidController.setOutputRange(-1.0, 1.0); 
   pidController.setAbsoluteTolerance(1.0);
-  pidController.setSetpoint(0.0);
+  pidController.setSetpoint(targetAngle);
   pidController.setEnabled(false);
   LiveWindow.add(pidController);
 }
