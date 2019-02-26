@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
   public static Command floorHatch;
   public static Command placeHatch;
 
-  LidarReader lidarReader;
+  public static LidarReader lidarReader;
 
   /**
    * This function is run when the robot is first started up and should be

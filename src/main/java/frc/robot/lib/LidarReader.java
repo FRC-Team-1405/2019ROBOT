@@ -65,6 +65,18 @@ public class LidarReader extends Thread {
     //     this.keepRunning = true;
     // }
     
+    public double[] getLidarValues() {
+        return SmartDashboard.getNumberArray(RobotMap.LIDAR_KEY, new double[0]);
+    }
+
+    public double getLidarValue(int lidar) {
+        double values[] = SmartDashboard.getNumberArray(RobotMap.LIDAR_KEY, new double[lidar+1]);
+        if(lidar >= values.length){
+            return 0;
+        }
+        return values[lidar];
+    }
+
     public boolean isRunning() {
         return keepRunning;
     }

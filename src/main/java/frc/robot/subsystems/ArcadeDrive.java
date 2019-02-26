@@ -106,6 +106,18 @@ public class ArcadeDrive extends Subsystem {
     }
   }
 
+  public void tankDriveRobot(double leftSpeed, double rightSpeed){
+    if(driveForward){
+      driveBase.tankDrive(leftSpeed*speedLimit, rightSpeed*speedLimit);
+    } else{
+      driveBase.tankDrive(-leftSpeed*speedLimit, -rightSpeed*speedLimit);
+    }
+  }
+
+  public boolean getDirection(){
+    return driveForward;
+  }
+
   // public void setTargetPosition(double pos) {
   //   leftTalonPID.setSetpoint(pos);
   //   rightTalonPID.setSetpoint(pos);

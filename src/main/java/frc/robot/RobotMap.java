@@ -48,5 +48,9 @@ public class RobotMap {
   public static final SerialPort.Parity PARITY = SerialPort.Parity.kNone;
   public static final SerialPort.StopBits STOP_BITS = SerialPort.StopBits.kOne;
   public static final String LIDAR_KEY = "LIDAR VALUES";
+  public static final int FRONT_LEFT = 0;
+  public static final int FRONT_RIGHT = 1;
+  public static final int BACK_LEFT = 2;
+  public static final int BACK_RIGHT = 3;
 
 }

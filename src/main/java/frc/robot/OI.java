@@ -50,6 +50,10 @@ public class OI {
   public boolean isDriveToLineEnabled(){
     return false;//button tbd
   }
+  
+  public boolean isDriveToDistanceEnabled(){
+    return false;//button tbd
+  }
 
   public boolean armFloorPressed(){
     return (operator.getPOV() == 90);
