@@ -32,8 +32,8 @@ public class FloorHatch extends Command {
   @Override
   protected boolean isFinished() {
     if(Robot.m_oi.isFloorHatchReleased()){
-        Robot.claw.closeClawFront();
-        Robot.claw.closeClawBack();
+        Robot.claw.closeClawTop();
+        Robot.claw.closeClawBottom();
         Robot.arm.backCargoShipTop();
         Robot.claw.intakeCargo(0.0);
         return true;
