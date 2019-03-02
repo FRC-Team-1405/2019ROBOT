@@ -157,7 +157,7 @@ public class Arm extends Subsystem {
   public void configureTalon(TalonSRX talonSRX){
     ExtendedTalon.configCurrentLimit(talonSRX);
     talonSRX.configNeutralDeadband(0.001, 10);
-    talonSRX.setSensorPhase(false);
+    talonSRX.setSensorPhase(true);
   }
 
   public double getArmPosition(){

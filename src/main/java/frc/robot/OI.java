@@ -72,7 +72,7 @@ public class OI {
   }
 
   public boolean rocketCenter(){
-    return (operator.getBumper(Hand.kRight) && (operator.getPOV() > 270 || operator.getPOV() < 90));
+    return (operator.getBumper(Hand.kRight) && operator.getPOV() != -1 && (operator.getPOV() > 270 || operator.getPOV() < 90));
   }
 
   public boolean backRocketCenter(){

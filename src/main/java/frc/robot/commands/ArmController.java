@@ -42,20 +42,28 @@ public class ArmController extends Command {
 
     if(Robot.m_oi.rocketCenter()){
       Robot.arm.frontRocketCenter();
-    } else if(Robot.m_oi.cargoShipTop()){
-      Robot.arm.frontCargoShipTop();
+      System.out.println("Front Rocket");
     } else if(Robot.m_oi.backRocketCenter()){
       Robot.arm.backRocketCenter();
-    } else if(Robot.m_oi.backCargoShipTop()){
-      Robot.arm.backCargoShipTop();
-    }else if(Robot.m_oi.armFloorPressed()) {
-      Robot.arm.frontFloor();
+      System.out.println("Back Rocket");
     } else if(Robot.m_oi.armLowPressed()){
       Robot.arm.frontLow();
-    } else if(Robot.m_oi.backArmFloorPressed()) {
-      Robot.arm.backFloor();
+      System.out.println("Front Hatch");
     } else if(Robot.m_oi.backArmLowPressed()){
       Robot.arm.backLow();
+      System.out.println("Back Hatch");
+    } else if(Robot.m_oi.cargoShipTop()){
+      Robot.arm.frontCargoShipTop();
+      System.out.println("Front Cargo");
+    } else if(Robot.m_oi.backCargoShipTop()){
+      Robot.arm.backCargoShipTop();
+      System.out.println("Back Cargo");
+    }else if(Robot.m_oi.armFloorPressed()) {
+      Robot.arm.frontFloor();
+      System.out.println("Front Floor");
+    } else if(Robot.m_oi.backArmFloorPressed()) {
+      Robot.arm.backFloor();
+      System.out.println("Back Floor");
     } 
 
     if (Robot.m_oi.manualArmControEnabled()) {
