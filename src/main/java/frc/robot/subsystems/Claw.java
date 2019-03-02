@@ -29,7 +29,8 @@ public class Claw extends Subsystem {
   private WPI_TalonSRX intakeTalonA = new WPI_TalonSRX(RobotMap.clawTalonA);
   private WPI_TalonSRX intakeTalonB = new WPI_TalonSRX(RobotMap.clawTalonB);
   private DoubleSolenoid solenoidFront = new DoubleSolenoid(1, 2);
-  private DoubleSolenoid solenoidBack = new DoubleSolenoid(3, 4);
+  private DoubleSolenoid 
+  solenoidBack = new DoubleSolenoid(3, 4);
   private PIDSource currentSource = new PIDSource(){
     @Override
     public void setPIDSourceType(PIDSourceType pidSource) {}

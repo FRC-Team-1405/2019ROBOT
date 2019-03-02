@@ -37,7 +37,7 @@ public class Arm extends Subsystem {
   private static double backLowScoring = 821.0;
   private static double backRocketCenterCargo = 537.0;
   private static double backCargoShipCargo = 537.0;
-  private static double maxArmError = 10.0;
+  private static double maxArmError = 25.0;
   
   private static final String keyFloorPickup = "Arm_FloorPosition";
   private static final String keyLowScoring = "Arm_EjectPositionLow"; 
@@ -153,6 +153,7 @@ public class Arm extends Subsystem {
 
   public void adjustArmPosition(double position){
     pivotTalon.set(position);
+    armPosition = ArmPosition.UNKNOWN;
   }
 
   public void configureTalon(TalonSRX talonSRX){
@@ -162,7 +163,7 @@ public class Arm extends Subsystem {
   }
 
   public double getArmPosition(){
-   return pivotTalon.getSensorCollection().getAnalogInRaw();
+   return pivotTalon.getSelectedSensorPosition(0);
   }
 
   public ArmPosition armInPosition(){
