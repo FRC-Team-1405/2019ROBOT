@@ -75,8 +75,8 @@ public class Claw extends Subsystem {
 
     System.out.printf("%s %f %s %f\n", keyIntake, intakeSpeed, keyOutput, outputSpeed);
 
-    this.openClawFront();
-    this.openClawBack();
+    this.openClawTop();
+    this.openClawBottom();
   }
 
   @Override
@@ -84,22 +84,22 @@ public class Claw extends Subsystem {
     setDefaultCommand(new ClawController());
   }
 
-  public void openClawFront() {
+  public void openClawTop() {
     solenoidFront.set(Value.kForward);
     System.err.println("Open Claw Front");
   }
 
-  public void closeClawFront() {
+  public void closeClawTop() {
     solenoidFront.set(Value.kReverse);
     System.err.println("Close Claw Front");
   }
 
-  public void openClawBack(){
+  public void openClawBottom(){
     solenoidBack.set(Value.kForward);
     System.err.println("Open Claw Back");
   }
 
-  public void closeClawBack(){
+  public void closeClawBottom(){
     solenoidBack.set(Value.kReverse);
     System.err.println("Close Claw Back");
   }

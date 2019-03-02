@@ -38,6 +38,7 @@ public class Arm extends Subsystem {
   private static double backRocketCenterCargo = 537.0;
   private static double backCargoShipCargo = 537.0;
   private static double maxArmError = 10.0;
+  
   private static final String keyFloorPickup = "Arm_FloorPosition";
   private static final String keyLowScoring = "Arm_EjectPositionLow"; 
   private static final String keyRocketCenterCargo = "Arm_EjectCenterRocket";
@@ -107,8 +108,8 @@ public class Arm extends Subsystem {
   }
 
   public void frontFloor(){
-    Robot.claw.openClawFront();
-    Robot.claw.openClawBack();
+    Robot.claw.openClawTop();
+    Robot.claw.openClawBottom();
     pivotTalon.set(ControlMode.Position, floorPickup);
     armPosition = ArmPosition.FLOOR_FRONT;
   }
@@ -129,8 +130,8 @@ public class Arm extends Subsystem {
   }
 
   public void backFloor(){
-    Robot.claw.openClawFront();
-    Robot.claw.openClawBack();
+    Robot.claw.openClawTop();
+    Robot.claw.openClawBottom();
     pivotTalon.set(ControlMode.Position, backFloorPickup);
     armPosition = ArmPosition.FLOOR_BACK;
   }

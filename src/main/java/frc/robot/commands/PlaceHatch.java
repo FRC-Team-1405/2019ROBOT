@@ -26,12 +26,12 @@ public class PlaceHatch extends Command {
   @Override
   protected void execute() {
     if(Robot.arm.armInPosition() == ArmPosition.HATCH_FRONT){
-      Robot.claw.openClawFront();
-      Robot.claw.openClawBack();
+      Robot.claw.openClawTop();
+      Robot.claw.openClawBottom();
       Robot.arm.frontFloor();
     } else{
-      Robot.claw.openClawBack();
-      Robot.claw.openClawFront();
+      Robot.claw.openClawBottom();
+      Robot.claw.openClawTop();
       Robot.arm.backFloor();
     }
   

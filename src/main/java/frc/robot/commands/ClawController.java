@@ -30,21 +30,21 @@ public class ClawController extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (Robot.m_oi.frontClawOpenPressed()){
+    if (Robot.m_oi.topClawOpenPressed()){
       if (isFrontClawOpen) {
-        Robot.claw.closeClawFront();
+        Robot.claw.closeClawTop();
         isFrontClawOpen = false;
       } else {
-        Robot.claw.openClawFront();
+        Robot.claw.openClawTop();
         isFrontClawOpen = true;
       } 
     }
-    if(Robot.m_oi.backClawOpenPressed()){
+    if(Robot.m_oi.bottomClawOpenPressed()){
       if(isBackClawOpen){
-        Robot.claw.closeClawBack();
+        Robot.claw.closeClawBottom();
         isBackClawOpen = false;
       } else{
-        Robot.claw.openClawBack();
+        Robot.claw.openClawBottom();
         isBackClawOpen = true;
       }
     }
