@@ -96,7 +96,7 @@ public class OI {
   }
 
   public boolean isLoadHatchReleased(){
-    return operator.getBButtonReleased();
+    return !operator.getBButton();
   }
 
   public boolean cancelCommand(){
@@ -120,15 +120,15 @@ public class OI {
   }
 
   public boolean isFloorHatchReleased(){
-    return operator.getAButtonReleased();
+    return !operator.getAButton();
   }
 
   public boolean isPlaceHatchPressed(){
-    return operator.getYButton();
+    return operator.getYButtonPressed();
   }
 
   public boolean isPlaceHatchReleased(){
-    return operator.getYButtonReleased();
+    return !operator.getYButton();
   }
 
   public double extendStilts(){

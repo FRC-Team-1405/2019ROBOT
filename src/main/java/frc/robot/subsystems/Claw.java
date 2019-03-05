@@ -28,9 +28,9 @@ public class Claw extends Subsystem {
   
   private WPI_TalonSRX intakeTalonA = new WPI_TalonSRX(RobotMap.clawTalonA);
   private WPI_TalonSRX intakeTalonB = new WPI_TalonSRX(RobotMap.clawTalonB);
-  private DoubleSolenoid solenoidFront = new DoubleSolenoid(1, 2);
+  private DoubleSolenoid solenoidTop = new DoubleSolenoid(1, 2);
   private DoubleSolenoid 
-  solenoidBack = new DoubleSolenoid(3, 4);
+  solenoidBottom = new DoubleSolenoid(3, 4);
   private PIDSource currentSource = new PIDSource(){
     @Override
     public void setPIDSourceType(PIDSourceType pidSource) {}
@@ -57,12 +57,11 @@ public class Claw extends Subsystem {
     ExtendedTalon.configCurrentLimit(intakeTalonB);
     intakeTalonB.setName("Intake B"); 
     this.addChild(intakeTalonB); 
-    solenoidFront.setName("Solenoid Front");
-    this.addChild(solenoidFront);
-    solenoidBack.setName("Solenoid Back");
-    this.addChild(solenoidBack);
+    solenoidTop.setName("Solenoid Front");
+    this.addChild(solenoidTop);
+    solenoidBottom.setName("Solenoid Back");
+    this.addChild(solenoidBottom);
 
-    
     Preferences prefs = Preferences.getInstance(); 
     if (!prefs.containsKey(keyIntake)) {
         prefs.putDouble("Intake Speed", intakeSpeed);
@@ -86,23 +85,19 @@ public class Claw extends Subsystem {
   }
 
   public void openClawTop() {
-    solenoidFront.set(Value.kForward);
-    System.err.println("Open Claw Front");
+    solenoidTop.set(Value.kForward);
   }
 
   public void closeClawTop() {
-    solenoidFront.set(Value.kReverse);
-    System.err.println("Close Claw Front");
+    solenoidTop.set(Value.kReverse);
   }
 
   public void openClawBottom(){
-    solenoidBack.set(Value.kForward);
-    System.err.println("Open Claw Back");
+    solenoidBottom.set(Value.kForward);
   }
 
   public void closeClawBottom(){
-    solenoidBack.set(Value.kReverse);
-    System.err.println("Close Claw Back");
+    solenoidBottom.set(Value.kReverse);
   }
 
   public void intakeCargo(double speed) { 
@@ -137,6 +132,8 @@ public class Claw extends Subsystem {
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
     builder.addDoubleProperty("Intake Current", () -> {return currentFilter.get();}, null);
+    builder.addBooleanProperty("Top Claw", () -> {return solenoidTop.get() ==  Value.kForward;}, null);
+    builder.addBooleanProperty("Bottom Claw", () -> {return solenoidBottom.get() ==  Value.kForward;}, null);
   }
 
 }

@@ -37,7 +37,7 @@ public class Arm extends Subsystem {
   private static double backLowScoring = 821.0;
   private static double backRocketCenterCargo = 537.0;
   private static double backCargoShipCargo = 537.0;
-  private static double maxArmError = 25.0;
+  private static double maxArmError = 5.0;
   
   private static final String keyFloorPickup = "Arm_FloorPosition";
   private static final String keyLowScoring = "Arm_EjectPositionLow"; 
@@ -48,7 +48,11 @@ public class Arm extends Subsystem {
   private static final String keyBackRocketCenterCargo = "Arm_BackEjectCenterRocket";
   private static final String keyBackCargoShipCargo = "Arm_BackEjectCargoShipCargo";
 
+  private static final int ARM_MOVE_DELAY_MS = 100; 
+
   private ArmPosition armPosition = ArmPosition.UNKNOWN;
+  private long armPositionSetTime = 0;
+
   public Arm() {
     configureTalon(pivotTalon);
     pivotTalon.configSelectedFeedbackSensor(FeedbackDevice.Analog, 0, 10);
@@ -108,52 +112,71 @@ public class Arm extends Subsystem {
   }
 
   public void frontFloor(){
-    Robot.claw.openClawTop();
-    Robot.claw.openClawBottom();
+    frontFloor(true);
+  }
+  public void frontFloor(boolean openClaws){
+    if (openClaws){
+      Robot.claw.openClawTop();
+      Robot.claw.openClawBottom();
+    }
     pivotTalon.set(ControlMode.Position, floorPickup);
     armPosition = ArmPosition.FLOOR_FRONT;
+    armPositionSetTime = System.currentTimeMillis();
   }
 
   public void frontLow(){
     pivotTalon.set(ControlMode.Position, lowScoring);
     armPosition = ArmPosition.HATCH_FRONT;
+    armPositionSetTime = System.currentTimeMillis();
   }
 
   public void frontRocketCenter(){
     pivotTalon.set(ControlMode.Position, rocketCenterCargo);
     armPosition = ArmPosition.ROCKET_FRONT;
+    armPositionSetTime = System.currentTimeMillis();
   }
 
   public void frontCargoShipTop(){
     pivotTalon.set(ControlMode.Position, cargoShipCargo);
     armPosition = ArmPosition.CARGO_SHIP_FRONT;
+    armPositionSetTime = System.currentTimeMillis();
   }
 
   public void backFloor(){
-    Robot.claw.openClawTop();
-    Robot.claw.openClawBottom();
+    backFloor(true);
+  }
+  public void backFloor(boolean openClaws){
+    if (openClaws){
+      Robot.claw.openClawTop();
+      Robot.claw.openClawBottom();
+    }
     pivotTalon.set(ControlMode.Position, backFloorPickup);
     armPosition = ArmPosition.FLOOR_BACK;
+    armPositionSetTime = System.currentTimeMillis();
   }
 
   public void backLow(){
     pivotTalon.set(ControlMode.Position, backLowScoring);
     armPosition = ArmPosition.HATCH_BACK;
+    armPositionSetTime = System.currentTimeMillis();
   }
 
   public void backRocketCenter(){
     pivotTalon.set(ControlMode.Position, backRocketCenterCargo);
     armPosition = ArmPosition.ROCKET_BACK;
+    armPositionSetTime = System.currentTimeMillis();
   }
 
   public void backCargoShipTop(){
     pivotTalon.set(ControlMode.Position, backCargoShipCargo);
     armPosition = ArmPosition.CARGO_SHIP_BACK;
+    armPositionSetTime = System.currentTimeMillis();
   }
 
   public void adjustArmPosition(double position){
     pivotTalon.set(position);
     armPosition = ArmPosition.UNKNOWN;
+    armPositionSetTime = System.currentTimeMillis();
   }
 
   public void configureTalon(TalonSRX talonSRX){
@@ -167,7 +190,7 @@ public class Arm extends Subsystem {
   }
 
   public ArmPosition armInPosition(){
-    return (Math.abs(pivotTalon.getClosedLoopError()) < maxArmError)
+    return (Math.abs(pivotTalon.getClosedLoopError()) < maxArmError) && (System.currentTimeMillis() > armPositionSetTime+ARM_MOVE_DELAY_MS) 
                 ? armPosition
                 : ArmPosition.UNKNOWN;
   }

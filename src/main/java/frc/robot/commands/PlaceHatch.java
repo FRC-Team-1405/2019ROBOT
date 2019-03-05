@@ -20,21 +20,22 @@ public class PlaceHatch extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.claw.intakeCargo(0.0);  
+    if(Robot.arm.armInPosition() == ArmPosition.HATCH_FRONT){
+      Robot.claw.closeClawTop();
+      Robot.claw.openClawBottom();
+      Robot.arm.frontFloor(false); 
+      
+    } else{
+      Robot.claw.closeClawBottom();
+      Robot.claw.openClawTop();
+      Robot.arm.backFloor(false); 
+    }
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if(Robot.arm.armInPosition() == ArmPosition.HATCH_FRONT){
-      Robot.claw.openClawTop();
-      Robot.claw.openClawBottom();
-      Robot.arm.frontFloor();
-    } else{
-      Robot.claw.openClawBottom();
-      Robot.claw.openClawTop();
-      Robot.arm.backFloor();
-    }
-  
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -51,6 +52,8 @@ public class PlaceHatch extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    Robot.claw.openClawBottom();
+    Robot.claw.openClawTop();
   }
 
   // Called when another command which requires one or more of the same

@@ -36,6 +36,7 @@ public class LoadHatch extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    //System.err.printf("LoadHatch %b %b\n", Robot.m_oi.isLoadHatchReleased(), (Robot.arm.armInPosition() == ArmPosition.CARGO_SHIP_FRONT) );
     return (Robot.m_oi.isLoadHatchReleased() || Robot.arm.armInPosition() == ArmPosition.CARGO_SHIP_FRONT);
   }
 
@@ -43,7 +44,8 @@ public class LoadHatch extends Command {
   @Override
   protected void end() {
     Robot.claw.intakeCargo(0.0);
-    Robot.claw.closeClawBottom();
+    Robot.claw.closeClawBottom(); 
+    Robot.claw.intakeCargo(.1); 
   }
 
   // Called when another command which requires one or more of the same
