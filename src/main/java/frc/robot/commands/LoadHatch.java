@@ -28,7 +28,7 @@ public class LoadHatch extends Command {
   @Override
   protected void execute() {
     Robot.arm.frontCargoShipTop();
-    Robot.claw.intakeCargo(1.0);
+    Robot.claw.intakeHatch(1.0);
     Robot.claw.closeClawTop();
 
   }
@@ -43,15 +43,15 @@ public class LoadHatch extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.claw.intakeCargo(0.0);
+    Robot.claw.stopHatch();
     Robot.claw.closeClawBottom(); 
-    Robot.claw.intakeCargo(.1); 
+    Robot.claw.intakeHatch(.1);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    Robot.claw.intakeCargo(0.0);
+    Robot.claw.stopHatch();
   }
 }

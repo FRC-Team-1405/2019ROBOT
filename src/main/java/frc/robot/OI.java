@@ -20,10 +20,10 @@ public class OI {
   public XboxController operator = new XboxController(RobotMap.operator);
   public XboxController testJoystick = new XboxController(RobotMap.testJoystick);
   
-  public boolean cargoIntakePressed() {
+  public boolean cargoOutputPressed() {
     return pilot.getBumper(Hand.kLeft);
   }
-  public boolean cargoOutputPressed() {
+  public boolean cargoIntakePressed() {
     return pilot.getBumper(Hand.kRight);
   }
 

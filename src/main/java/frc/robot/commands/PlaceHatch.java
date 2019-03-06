@@ -20,7 +20,7 @@ public class PlaceHatch extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.claw.intakeCargo(0.0);  
+    Robot.claw.stopHatch();
     if(Robot.arm.armInPosition() == ArmPosition.HATCH_FRONT){
       Robot.claw.closeClawTop();
       Robot.claw.openClawBottom();

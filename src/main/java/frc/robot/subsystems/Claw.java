@@ -115,6 +115,21 @@ public class Claw extends Subsystem {
     intakeTalonB.set(0);
   }
 
+
+  public void intakeHatch(double speed) {
+    intakeTalonA.set(speed);
+    intakeTalonB.set(speed);
+  }
+  public void releaseHatch(double speed) {
+    intakeTalonA.set(-speed);
+    intakeTalonB.set(-speed);
+  }
+  public void stopHatch() {
+    intakeTalonA.set(0);
+    intakeTalonB.set(0);
+  }
+
+
   public boolean isCargoAcquired(){
     return (currentFilter.get() > cargoAcquiredCurrent);
   }
