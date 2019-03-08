@@ -94,10 +94,12 @@ public class Claw extends Subsystem {
 
   public void openClawBottom(){
     solenoidBottom.set(Value.kForward);
+    stopHatch();
   }
 
   public void closeClawBottom(){
     solenoidBottom.set(Value.kReverse);
+    stopHatch();
   }
 
   public void intakeCargo(double speed) { 
@@ -128,7 +130,10 @@ public class Claw extends Subsystem {
     intakeTalonA.set(0);
     intakeTalonB.set(0);
   }
-
+  public void holdHatch(){
+    intakeTalonA.set(0.25);
+    intakeTalonB.set(0.25);
+  }
 
   public boolean isCargoAcquired(){
     return (currentFilter.get() > cargoAcquiredCurrent);

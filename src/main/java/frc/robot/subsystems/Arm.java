@@ -37,7 +37,7 @@ public class Arm extends Subsystem {
   private static double backLowScoring = 821.0;
   private static double backRocketCenterCargo = 537.0;
   private static double backCargoShipCargo = 537.0;
-  private static double maxArmError = 5.0;
+  private static double maxArmError = 25.0;
   
   private static final String keyFloorPickup = "Arm_FloorPosition";
   private static final String keyLowScoring = "Arm_EjectPositionLow"; 
@@ -124,7 +124,7 @@ public class Arm extends Subsystem {
     armPositionSetTime = System.currentTimeMillis();
   }
 
-  public void frontLow(){
+  public void frontHatch(){
     pivotTalon.set(ControlMode.Position, lowScoring);
     armPosition = ArmPosition.HATCH_FRONT;
     armPositionSetTime = System.currentTimeMillis();
@@ -155,7 +155,7 @@ public class Arm extends Subsystem {
     armPositionSetTime = System.currentTimeMillis();
   }
 
-  public void backLow(){
+  public void backHatch(){
     pivotTalon.set(ControlMode.Position, backLowScoring);
     armPosition = ArmPosition.HATCH_BACK;
     armPositionSetTime = System.currentTimeMillis();
@@ -176,6 +176,15 @@ public class Arm extends Subsystem {
   public void adjustArmPosition(double position){
     pivotTalon.set(position);
     armPosition = ArmPosition.UNKNOWN;
+    armPositionSetTime = System.currentTimeMillis();
+  }
+
+  public void adjustSetPoint(double delta){
+    if (pivotTalon.getControlMode() != ControlMode.Position) {
+      return ;
+    }
+    
+    pivotTalon.set(ControlMode.Position, pivotTalon.getClosedLoopTarget()+delta);
     armPositionSetTime = System.currentTimeMillis();
   }
 

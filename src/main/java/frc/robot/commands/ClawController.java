@@ -14,7 +14,9 @@ public class ClawController extends Command {
   boolean isBackClawOpen = false;
   final double intakeSpeed =  1.0;
   final double outputSpeed =  1.0;
-  
+
+  boolean isIntakeActive = false;
+    
   public ClawController() {
     requires(Robot.claw);
   }
@@ -48,12 +50,14 @@ public class ClawController extends Command {
         isBackClawOpen = true;
       }
     }
-
     if (Robot.m_oi.cargoOutputPressed()) {
+      isIntakeActive = true;
       Robot.claw.intakeCargo(intakeSpeed);
     } else if (Robot.m_oi.cargoIntakePressed()) {
+      isIntakeActive = true;
       Robot.claw.releaseCargo(outputSpeed);
-    } else{
+    } else if (isIntakeActive){
+      isIntakeActive = false;
       Robot.claw.stopCargo();
     }
   }

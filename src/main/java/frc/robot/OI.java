@@ -79,11 +79,11 @@ public class OI {
     return (operator.getBumper(Hand.kRight) && operator.getPOV() < 270 && operator.getPOV() > 90);
   }
 
-  public boolean armLowPressed(){
+  public boolean armHatchPressed(){
     return (operator.getBumper(Hand.kLeft) && operator.getPOV() < 180 && operator.getPOV() > 0);
   }
 
-  public boolean backArmLowPressed(){
+  public boolean backArmHatchPressed(){
     return (operator.getBumper(Hand.kLeft) && operator.getPOV() > 180);
   }
 

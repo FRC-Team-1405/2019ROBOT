@@ -24,8 +24,7 @@ public class PlaceHatch extends Command {
     if(Robot.arm.armInPosition() == ArmPosition.HATCH_FRONT){
       Robot.claw.closeClawTop();
       Robot.claw.openClawBottom();
-      Robot.arm.frontFloor(false); 
-      
+      Robot.arm.frontFloor(false);
     } else{
       Robot.claw.closeClawBottom();
       Robot.claw.openClawTop();

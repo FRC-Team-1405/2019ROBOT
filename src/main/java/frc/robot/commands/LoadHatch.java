@@ -45,7 +45,7 @@ public class LoadHatch extends Command {
   protected void end() {
     Robot.claw.stopHatch();
     Robot.claw.closeClawBottom(); 
-    Robot.claw.intakeHatch(.1);
+    Robot.claw.holdHatch();
   }
 
   // Called when another command which requires one or more of the same
