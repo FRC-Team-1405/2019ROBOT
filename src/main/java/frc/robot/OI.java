@@ -55,10 +55,14 @@ public class OI {
     return pilot.getTriggerAxis(Hand.kLeft);
   }
 
-  public boolean isDriveToLineEnabled(){
+  public boolean isDriveToVisionTargetPressed(){
     return pilot.getStickButton(Hand.kRight);//button tbd
   }
   
+  public boolean isDriveToVisionTargetReleased(){
+    return pilot.getStickButtonReleased(Hand.kRight);//button tbd
+  }
+
   public boolean isDriveToDistanceEnabled(){
     return false;//button tbd
   }

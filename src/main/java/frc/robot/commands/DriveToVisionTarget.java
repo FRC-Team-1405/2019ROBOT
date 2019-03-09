@@ -105,12 +105,8 @@ public class DriveToVisionTarget extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if(!Robot.m_oi.isDriveToLineEnabled()){
-      return true;
-    }else {
-      System.out.println("DRIVE TO LINE IS DISABLED!!!");
-      return false;
-    }
+    System.out.printf("DRIVE TO LINE IS %s!!!!!!\n", Robot.m_oi.isDriveToVisionTargetReleased() ? "Finished" : "Running" );
+    return Robot.m_oi.isDriveToVisionTargetReleased();
   }
 
   // Called once after isFinished returns true
