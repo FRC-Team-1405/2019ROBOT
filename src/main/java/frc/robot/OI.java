@@ -100,7 +100,7 @@ public class OI {
   }
 
   public boolean isCameraSwitchPressed(){
-    return false; // button tbd
+    return pilot.getYButton();
   }
 
   public boolean isLoadHatchPressed(){
@@ -116,7 +116,7 @@ public class OI {
   }
 
   public boolean manualArmControEnabled(){
-    return operator.getStickButton(Hand.kRight);
+    return operator.getStickButtonPressed(Hand.kRight);
   }
 
   public boolean manualArmControlDisabled(){

@@ -93,8 +93,8 @@ public class DriveToVisionTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    pidController.reset();
     pidController.enable();
-    System.out.println("DRIVE TO LINE IS STARTING!!!!");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -105,7 +105,6 @@ public class DriveToVisionTarget extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    System.out.printf("DRIVE TO LINE IS %s!!!!!!\n", Robot.m_oi.isDriveToVisionTargetReleased() ? "Finished" : "Running" );
     return Robot.m_oi.isDriveToVisionTargetReleased();
   }
 
@@ -119,6 +118,5 @@ public class DriveToVisionTarget extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    System.out.println("DRIVE TO LINE IS INTERRUPTED!!!!!!");
   }
 }

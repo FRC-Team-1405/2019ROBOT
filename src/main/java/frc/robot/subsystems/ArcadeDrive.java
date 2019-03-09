@@ -65,7 +65,7 @@ public class ArcadeDrive extends Subsystem {
       talonDriveBaseLeft.setName("Left");
       talonDriveBaseRight.setName("Right");
 
-      driveBase.setDeadband(0.2);
+      driveBase.setDeadband(0.0);
       this.addChild(driveBase);
 
       Preferences prefs = Preferences.getInstance();

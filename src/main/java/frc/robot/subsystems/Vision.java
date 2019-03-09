@@ -15,6 +15,7 @@ package frc.robot.subsystems;
 //import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.lib.Limelight;
 
 /**
@@ -30,7 +31,7 @@ public class Vision extends Subsystem {
   */
   Limelight front = new Limelight("front"); 
   Limelight back = new Limelight("back");
-  Limelight selected = front;
+  Limelight selected = back;
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
@@ -43,17 +44,16 @@ public class Vision extends Subsystem {
 
   public void setLineTarget(){
     // setup Limelight pipeline
-  front.setPipeline((byte)0);  
+    selected.setPipeline((byte)0);  
   }
 
   public double getLineTarget(){
-    // return the x offset of the target 
-  return front.getTX(); 
+  return selected.getTX(); 
      
   }
 
   public boolean isTargetAcquired(){
-    return front.hasTarget();
+    return selected.hasTarget();
   }
 
   public void setFront(){
@@ -66,6 +66,6 @@ public class Vision extends Subsystem {
 
   public void toggleCamera(){
     selected = (selected == front) ? back : front;
+    SmartDashboard.putBoolean("Camera Switch", selected == front);
   }
-
 }

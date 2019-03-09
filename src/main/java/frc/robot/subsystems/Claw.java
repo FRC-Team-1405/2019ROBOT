@@ -99,7 +99,7 @@ public class Claw extends Subsystem {
 
   public void closeClawBottom(){
     solenoidBottom.set(Value.kReverse);
-    stopHatch();
+    stopHatch();  
   }
 
   public void intakeCargo(double speed) { 
