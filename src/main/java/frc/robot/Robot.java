@@ -69,28 +69,28 @@ public class Robot extends TimedRobot {
     gyro = new GyroSystem();
     stilts = new SoloStilts();
 
-    LiveWindow.add(new DriveToVisionTarget());
-
     // removed until lidar is finished
     // lidarReader = new LidarReader();
     // lidarReader.start();
 
     //claw = new Claw();
     // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Drive Base", driveBase);
-    SmartDashboard.putData("DriveToVisionTarget", new DriveToVisionTarget());
-    SmartDashboard.putData("Gyro System", gyro);
-    SmartDashboard.putData("Vision System", vision);
 //    LiveWindow.add(claw);
 
     // SmartDashboard.putData( new PowerDistributionPanel() );
 
-  autonomousCommand = new DriveBaseController();
+    autonomousCommand = new DriveBaseController();
     teleopCommand = autonomousCommand;
     driveToVisionTarget = new DriveToVisionTarget();
     loadHatch = new LoadHatch();
     floorHatch = new FloorHatch();
     placeHatch = new PlaceHatch();
+
+    SmartDashboard.putData("Drive Base", driveBase);
+    SmartDashboard.putData("DriveToVisionTarget", driveToVisionTarget);
+    SmartDashboard.putData("Gyro System", gyro);
+    SmartDashboard.putData("Vision System", vision);
+
   }
 
   /**

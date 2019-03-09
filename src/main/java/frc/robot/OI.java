@@ -46,9 +46,17 @@ public class OI {
   public boolean driveReverse(){
     return pilot.getBButtonPressed();
   }
+  
+  public double extendStilts(){
+    return pilot.getTriggerAxis(Hand.kRight);
+  }
+
+  public double retractStilts(){
+    return pilot.getTriggerAxis(Hand.kLeft);
+  }
 
   public boolean isDriveToLineEnabled(){
-    return false;//button tbd
+    return pilot.getStickButton(Hand.kRight);//button tbd
   }
   
   public boolean isDriveToDistanceEnabled(){
@@ -129,14 +137,6 @@ public class OI {
 
   public boolean isPlaceHatchReleased(){
     return !operator.getYButton();
-  }
-
-  public double extendStilts(){
-    return pilot.getTriggerAxis(Hand.kRight);
-  }
-
-  public double retractStilts(){
-    return pilot.getTriggerAxis(Hand.kLeft);
   }
 
   public boolean isLoadCargoPressed() {

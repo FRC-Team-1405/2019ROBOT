@@ -94,6 +94,7 @@ public class DriveToVisionTarget extends Command {
   @Override
   protected void initialize() {
     pidController.enable();
+    System.out.println("DRIVE TO LINE IS STARTING!!!!");
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -107,6 +108,7 @@ public class DriveToVisionTarget extends Command {
     if(!Robot.m_oi.isDriveToLineEnabled()){
       return true;
     }else {
+      System.out.println("DRIVE TO LINE IS DISABLED!!!");
       return false;
     }
   }
@@ -121,5 +123,6 @@ public class DriveToVisionTarget extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    System.out.println("DRIVE TO LINE IS INTERRUPTED!!!!!!");
   }
 }
