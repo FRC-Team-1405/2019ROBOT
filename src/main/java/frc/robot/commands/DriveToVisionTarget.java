@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.Robot;
+import frc.robot.lib.MedianFilter;
+
 
 public class DriveToVisionTarget extends Command { 
 
@@ -24,6 +26,8 @@ public class DriveToVisionTarget extends Command {
   private static final String keyP = "DriveToVisionTarget_P"; 
   private static final String keyI = "DriveToVisionTarget_I"; 
   private static final String keyD = "DriveToVisionTarget_D"; 
+
+  private MedianFilter median = new MedianFilter(7);
 
   private PIDController pidController; 
   public DriveToVisionTarget(){
@@ -60,7 +64,7 @@ public class DriveToVisionTarget extends Command {
                                     
                                       @Override
                                       public double pidGet() {
-                                        return Robot.vision.getLineTarget();
+                                        return median.filter(Robot.vision.getLineTarget());
                                       }
                                     
                                       @Override
@@ -93,6 +97,7 @@ public class DriveToVisionTarget extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    median.reset();
     pidController.reset();
     pidController.enable();
   }
