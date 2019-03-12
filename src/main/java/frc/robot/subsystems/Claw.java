@@ -133,7 +133,15 @@ public class Claw extends Subsystem {
   public void holdHatch(){
     intakeTalonA.set(0.25);
     intakeTalonB.set(0.25);
+  } 
+  public void climberIntake() {
+    intakeTalonB.set(1.0);
+  } 
+
+  public void climberIntakeStop() {
+    intakeTalonB.set(0.0);
   }
+
 
   public boolean isCargoAcquired(){
     return (currentFilter.get() > cargoAcquiredCurrent);

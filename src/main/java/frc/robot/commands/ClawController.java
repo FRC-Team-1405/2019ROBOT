@@ -59,7 +59,12 @@ public class ClawController extends Command {
     } else if (isIntakeActive){
       isIntakeActive = false;
       Robot.claw.stopCargo();
+    } 
+    if ((Robot.m_oi.extendStilts()>0) || (Robot.m_oi.retractStilts()>0)) { 
+      Robot.claw.climberIntake();  
     }
+      
+  
   }
 
   // Make this return true when this Command no longer needs to run execute()
