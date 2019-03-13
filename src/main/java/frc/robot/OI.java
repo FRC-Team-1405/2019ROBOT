@@ -100,7 +100,7 @@ public class OI {
   }
 
   public boolean isCameraSwitchPressed(){
-    return pilot.getYButton();
+    return pilot.getYButtonPressed();
   }
 
   public boolean isLoadHatchPressed(){
