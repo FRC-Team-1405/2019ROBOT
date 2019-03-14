@@ -136,6 +136,8 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     arm.adjustArmPosition(0.0);
     autonomousCommand.start();
+  
+  
   }
 
   /**
@@ -152,10 +154,13 @@ public class Robot extends TimedRobot {
     if(DriverStation.getInstance().isFMSAttached() == false){
       arm.adjustArmPosition(0.0);
     }
-
+    
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
+
+    claw.closeClawTop();
+    claw.closeClawBottom();
 
     teleopCommand.start();
   }
