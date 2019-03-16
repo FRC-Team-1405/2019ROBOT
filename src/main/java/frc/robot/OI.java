@@ -149,4 +149,32 @@ public class OI {
   public boolean isLoadCargoReleased() {
     return false;
   }
+
+  boolean lastDecreasePOV = false;
+  public boolean decreaseClawPower(){
+    if (pilot.getPOV() == -1){
+      lastDecreasePOV = false;
+      return false;
+    }
+    boolean decrease = (pilot.getPOV() < 270 && pilot.getPOV() > 90);
+    if (decrease == lastDecreasePOV){
+      return false;
+    }
+    lastDecreasePOV = decrease;
+    return lastDecreasePOV;
+  }
+
+  boolean lastIncreasePOV = false;
+  public boolean increaseClawPower(){
+    if (pilot.getPOV() == -1){
+      lastIncreasePOV = false;
+      return false;
+    }
+    boolean increase = (pilot.getPOV() > 270 || pilot.getPOV() < 90);
+    if (increase == lastIncreasePOV){
+      return false;
+    }
+    lastIncreasePOV = increase;
+    return lastIncreasePOV;
+  }
 }

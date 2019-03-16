@@ -158,6 +158,17 @@
               "_source0": "network_table:///SmartDashboard/Limelight_Stream",
               "_title": "Limelight_Stream"
             }
+          },
+          "6,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Output",
+              "_title": "Output"
+            }
           }
         }
       }
@@ -434,6 +445,30 @@
               "_type": "Text View",
               "_source0": "network_table:///LiveWindow/Claw/Intake Current",
               "_title": "Claw/Intake Current"
+            }
+          },
+          "6,5": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///LiveWindow/ArcadeDrive/Drive Forward",
+              "_title": "ArcadeDrive/Drive Forward",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "7,5": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/Claw/Output Speed",
+              "_title": "Claw/Output Speed"
             }
           }
         }
@@ -725,6 +760,28 @@
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
             }
+          },
+          "8,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///limelight-back/camMode",
+              "_title": "limelight-back/camMode"
+            }
+          },
+          "8,2": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///limelight-front/camMode",
+              "_title": "limelight-front/camMode"
+            }
           }
         }
       }
@@ -739,7 +796,20 @@
         "hgap": 16.0,
         "vgap": 16.0,
         "tiles": {
-          "0,1": {
+          "8,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Drive Base/Drive Forward",
+              "_title": "SmartDashboard/Drive Base/Drive Forward",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "8,2": {
             "size": [
               1,
               1
@@ -752,7 +822,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "0,0": {
+          "8,1": {
             "size": [
               1,
               1
@@ -765,48 +835,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "1,0": {
-            "size": [
-              4,
-              4
-            ],
-            "content": {
-              "_type": "Camera Stream",
-              "_source0": "camera_server://Camera Stream",
-              "_title": "Camera Stream",
-              "Crosshair/Show crosshair": false,
-              "Crosshair/Crosshair color": "#FFFFFFFF",
-              "Controls/Show controls": false,
-              "Controls/Rotation": "NONE",
-              "compression": -1.0,
-              "fps": -1,
-              "imageWidth": 0,
-              "imageHeight": 0
-            }
-          },
-          "0,2": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///limelight-back/camMode",
-              "_title": "/limelight-back/camMode"
-            }
-          },
-          "0,3": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///limelight-front/camMode",
-              "_title": "/limelight-front/camMode"
-            }
-          },
-          "5,0": {
+          "0,0": {
             "size": [
               4,
               4
@@ -821,15 +850,48 @@
               "Controls/Rotation": "NONE",
               "compression": -1.0,
               "fps": -1,
+              "imageWidth": 0,
+              "imageHeight": 0
+            }
+          },
+          "4,0": {
+            "size": [
+              4,
+              4
+            ],
+            "content": {
+              "_type": "Camera Stream",
+              "_source0": "camera_server://limelight-front",
+              "_title": "limelight-front",
+              "Crosshair/Show crosshair": false,
+              "Crosshair/Crosshair color": "#FFFFFFFF",
+              "Controls/Show controls": false,
+              "Controls/Rotation": "NONE",
+              "compression": -1.0,
+              "fps": -1,
               "imageWidth": -1,
               "imageHeight": -1
+            }
+          },
+          "8,3": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///SmartDashboard/Output",
+              "_title": "SmartDashboard/Output",
+              "Range/Min": 0.7,
+              "Range/Max": 1.0,
+              "Visuals/Show value": false
             }
           }
         }
       }
     },
     {
-      "title": "Tab 9",
+      "title": "Tab 10",
       "autoPopulate": false,
       "autoPopulatePrefix": "",
       "widgetPane": {
@@ -837,14 +899,77 @@
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
-        "tiles": {}
+        "tiles": {
+          "0,0": {
+            "size": [
+              3,
+              2
+            ],
+            "content": {
+              "_type": "PDP",
+              "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistributionPanel[0]",
+              "_title": "LiveWindow/Ungrouped/PowerDistributionPanel[0]",
+              "Visuals/Show voltage and current values": true
+            }
+          },
+          "0,2": {
+            "size": [
+              5,
+              2
+            ],
+            "content": {
+              "_type": "Graph",
+              "_source0": "network_table:///LiveWindow/Ungrouped/PowerDistributionPanel[0]/Voltage",
+              "_title": "LiveWindow/Ungrouped/PowerDistributionPanel[0]/Voltage",
+              "Graph/Visible time": 30.0,
+              "Visible data/LiveWindow/Ungrouped/PowerDistributionPanel[0]/Voltage": true
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Tab 10",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "tiles": {
+          "4,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///LiveWindow/Claw/Output Speed",
+              "_title": "LiveWindow/Claw/Output Speed"
+            }
+          },
+          "5,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Drive Base/Drive Forward",
+              "_title": "SmartDashboard/Drive Base/Drive Forward",
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          }
+        }
       }
     }
   ],
   "windowGeometry": {
-    "x": -7.0,
-    "y": 0.0,
-    "width": 1296.0,
-    "height": 735.0
+    "x": -8.0,
+    "y": -8.0,
+    "width": 1382.0,
+    "height": 744.0
   }
 }

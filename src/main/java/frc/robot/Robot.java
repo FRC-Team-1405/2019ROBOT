@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 //import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -77,7 +78,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
 //    LiveWindow.add(claw);
 
-    // SmartDashboard.putData( new PowerDistributionPanel() );
+    SmartDashboard.putData( new PowerDistributionPanel() );
 
     autonomousCommand = new DriveBaseController();
     teleopCommand = autonomousCommand;
@@ -159,8 +160,8 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
 
-    claw.closeClawTop();
-    claw.closeClawBottom();
+    // claw.closeClawTop();
+    // claw.closeClawBottom();
 
     teleopCommand.start();
   }
