@@ -42,9 +42,14 @@ public class Vision extends Subsystem {
     CameraServer.getInstance().startAutomaticCapture();
   }
 
-  public void setLineTarget(){
-    // setup Limelight pipeline
-    selected.setPipeline((byte)0);  
+  public void setLineTargetMode(){
+    selected.setLED((byte)3);
+    selected.setCameraMode((byte)0);
+  }
+
+  public void setCameraMode(){
+    selected.setLED((byte)1);
+    selected.setCameraMode((byte)1);
   }
 
   public double getLineTarget(){

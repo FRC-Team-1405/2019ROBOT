@@ -20,8 +20,8 @@ import frc.robot.lib.MedianFilter;
 
 public class DriveToVisionTarget extends Command { 
 
-  private static double kP = 0.0; 
-  private static double kI = 0.0; 
+  private static double kP = 0.03; 
+  private static double kI = 0.00075; 
   private static double kD = 0.0; 
   private static final String keyP = "DriveToVisionTarget_P"; 
   private static final String keyI = "DriveToVisionTarget_I"; 
@@ -40,20 +40,20 @@ public class DriveToVisionTarget extends Command {
  
     Preferences prefs = Preferences.getInstance();  
     if(!prefs.containsKey(keyP)) { 
-      prefs.putDouble(keyP, 0.0); 
+      prefs.putDouble(keyP, kP); 
     } 
     if(!prefs.containsKey(keyI)) { 
-      prefs.putDouble(keyI, 0.0); 
+      prefs.putDouble(keyI, kI); 
     }  
     if(!prefs.containsKey(keyD)){ 
-      prefs.putDouble(keyD, 0.0);        
+      prefs.putDouble(keyD, kD);        
     }
     
     kP = prefs.getDouble(keyP, kP); 
     kI = prefs.getDouble(keyI, kI); 
     kD = prefs.getDouble(keyD, kD);  
 
-    Robot.vision.setLineTarget();
+    Robot.vision.setLineTargetMode();
     pidController=new PIDController( kP,  kI,  kD,  0.0, 
                                     new PIDSource(){
                                       private PIDSourceType pidSourceType = PIDSourceType.kDisplacement;
@@ -87,7 +87,7 @@ public class DriveToVisionTarget extends Command {
 
   pidController.setName("Vision Target PID"); 
   pidController.setInputRange(-27.0, 27.0); 
-  pidController.setOutputRange(-1.0, 1.0); 
+  pidController.setOutputRange(-0.6 , 0.6); 
   pidController.setAbsoluteTolerance(1.0);
   pidController.setSetpoint(targetAngle);
   pidController.setEnabled(false);
@@ -100,6 +100,7 @@ public class DriveToVisionTarget extends Command {
     median.reset();
     pidController.reset();
     pidController.enable();
+    Robot.vision.setLineTargetMode();
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -117,11 +118,13 @@ public class DriveToVisionTarget extends Command {
   @Override
   protected void end() {
     pidController.disable();
+    Robot.vision.setCameraMode();
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    Robot.vision.setCameraMode();
   }
 }

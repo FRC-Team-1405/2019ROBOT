@@ -65,7 +65,13 @@
           3: On */
        table.getEntry("ledMode").setNumber(mode);
        }
-       public void setStream(byte mode) {
+
+       public void setCameraMode(byte mode) {
+        /* 0: Vision Detection
+           1: Camera Mode */
+        table.getEntry("camMode").setNumber(mode);
+        }
+        public void setStream(byte mode) {
        /* 0: Standard - Side-by-side streams if a webcam is attached to Limelight
           1: The secondary camera stream is placed in the lower-right corner of the primary camera stream
           2: The primary camera stream is placed in the lower-right corner of the secondary camera stream */
