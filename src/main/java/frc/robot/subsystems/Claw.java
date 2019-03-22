@@ -135,11 +135,11 @@ public class Claw extends Subsystem {
     intakeTalonB.set(0.25);
   } 
   public void climberIntake() {
-    intakeTalonB.set(1.0);
+    intakeTalonA.set(1.0);
   } 
 
   public void climberIntakeStop() {
-    intakeTalonB.set(0.0);
+    intakeTalonA.set(0.0);
   }
 
 

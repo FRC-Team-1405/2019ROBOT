@@ -199,6 +199,10 @@ public class Arm extends Subsystem {
   }
 
   public ArmPosition armInPosition(){
+    if (pivotTalon.getControlMode() != ControlMode.Position) {
+      return armPosition ;
+    }
+
     return (Math.abs(pivotTalon.getClosedLoopError()) < maxArmError) && (System.currentTimeMillis() > armPositionSetTime+ARM_MOVE_DELAY_MS) 
                 ? armPosition
                 : ArmPosition.UNKNOWN;
@@ -213,8 +217,18 @@ public class Arm extends Subsystem {
     super.initSendable(builder);
     builder.addDoubleProperty("Current A", () -> { return pivotTalon.getOutputCurrent(); }, null );
     builder.addDoubleProperty("Arm Position", this::getArmPosition, null);
-    builder.addDoubleProperty("PID Target", () -> { return pivotTalon.getClosedLoopTarget(0);}, null);
-    builder.addDoubleProperty("PID Error", () -> { return pivotTalon.getClosedLoopError(0);}, null);
+    builder.addDoubleProperty("PID Target", () -> {
+      if (pivotTalon.getControlMode() != ControlMode.Position) {
+        return 0 ;
+      }
+      return pivotTalon.getClosedLoopTarget(0);
+      }, null);
+    builder.addDoubleProperty("PID Error", () -> {
+      if (pivotTalon.getControlMode() != ControlMode.Position) {
+        return 0 ;
+      }
+      return pivotTalon.getClosedLoopError(0);
+    }, null);
     builder.addDoubleProperty("PID Position", () -> { return pivotTalon.getSelectedSensorPosition(0);}, null);
   }
 }

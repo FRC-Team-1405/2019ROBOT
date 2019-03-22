@@ -7,13 +7,14 @@
 
 package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
 public class ClawController extends Command {
   boolean isFrontClawOpen = false;
   boolean isBackClawOpen = false;
-  final double intakeSpeed =  1.0;
-  final double outputSpeed =  1.0;
+ double intakeSpeed =  0.8;
+  double outputSpeed =  1.0;
 
   boolean isIntakeActive = false;
     
@@ -22,7 +23,7 @@ public class ClawController extends Command {
   }
 
   public void intake() {
-    
+    SmartDashboard.putNumber("Output", intakeSpeed);
   } 
   // Called just before this Command runs the first time
   @Override
@@ -62,6 +63,22 @@ public class ClawController extends Command {
     } 
     if ((Robot.m_oi.extendStilts()>0) || (Robot.m_oi.retractStilts()>0)) { 
       Robot.claw.climberIntake();  
+    }
+
+    if(Robot.m_oi.increaseClawPower()){
+      intakeSpeed += 0.05;
+      if(intakeSpeed > 1.0){
+        intakeSpeed = 1.0;
+      }
+      SmartDashboard.putNumber("Output", intakeSpeed);
+    }
+
+    if(Robot.m_oi.decreaseClawPower()){
+      intakeSpeed -= 0.05;
+      if(intakeSpeed < 0.7){
+        intakeSpeed = 0.7;
+      }
+      SmartDashboard.putNumber("Output", intakeSpeed);
     }
       
   
