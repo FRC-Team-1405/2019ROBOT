@@ -13,8 +13,8 @@ import frc.robot.Robot;
 public class ClawController extends Command {
   boolean isFrontClawOpen = false;
   boolean isBackClawOpen = false;
- double intakeSpeed =  0.8;
-  double outputSpeed =  1.0;
+  double outputSpeed =  0.8;
+  double inputSpeed =  1.0;
 
   boolean isIntakeActive = false;
     
@@ -22,9 +22,6 @@ public class ClawController extends Command {
     requires(Robot.claw);
   }
 
-  public void intake() {
-    SmartDashboard.putNumber("Output", intakeSpeed);
-  } 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
@@ -53,10 +50,10 @@ public class ClawController extends Command {
     }
     if (Robot.m_oi.cargoOutputPressed()) {
       isIntakeActive = true;
-      Robot.claw.intakeCargo(intakeSpeed);
+      Robot.claw.releaseCargo(outputSpeed);
     } else if (Robot.m_oi.cargoIntakePressed()) {
       isIntakeActive = true;
-      Robot.claw.releaseCargo(outputSpeed);
+      Robot.claw.inputCargo(inputSpeed);
     } else if (isIntakeActive){
       isIntakeActive = false;
       Robot.claw.stopCargo();
@@ -66,19 +63,19 @@ public class ClawController extends Command {
     }
 
     if(Robot.m_oi.increaseClawPower()){
-      intakeSpeed += 0.05;
-      if(intakeSpeed > 1.0){
-        intakeSpeed = 1.0;
+      outputSpeed += 0.05;
+      if(outputSpeed > 1.0){
+        outputSpeed = 1.0;
       }
-      SmartDashboard.putNumber("Output", intakeSpeed);
+      SmartDashboard.putNumber("Output", outputSpeed);
     }
 
     if(Robot.m_oi.decreaseClawPower()){
-      intakeSpeed -= 0.05;
-      if(intakeSpeed < 0.7){
-        intakeSpeed = 0.7;
+      outputSpeed -= 0.05;
+      if(outputSpeed < 0.7){
+        outputSpeed = 0.7;
       }
-      SmartDashboard.putNumber("Output", intakeSpeed);
+      SmartDashboard.putNumber("Output", outputSpeed);
     }
       
   

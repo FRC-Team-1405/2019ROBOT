@@ -102,12 +102,12 @@ public class Claw extends Subsystem {
     stopHatch();  
   }
 
-  public void intakeCargo(double speed) { 
+  public void releaseCargo(double speed) { 
     intakeTalonA.set(speed); 
     intakeTalonB.set(speed); 
   }
 
-  public void releaseCargo(double speed){
+  public void inputCargo(double speed){
     intakeTalonA.set(-speed);
     intakeTalonB.set(-speed);
   }
@@ -116,7 +116,6 @@ public class Claw extends Subsystem {
     intakeTalonA.set(0);
     intakeTalonB.set(0);
   }
-
 
   public void intakeHatch(double speed) {
     intakeTalonA.set(speed);

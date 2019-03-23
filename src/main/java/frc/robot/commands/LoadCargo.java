@@ -27,7 +27,7 @@ public class LoadCargo extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.claw.intakeCargo(1.0);
+    Robot.claw.releaseCargo(1.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -44,7 +44,7 @@ public class LoadCargo extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.claw.intakeCargo(0.0);
+    Robot.claw.releaseCargo(0.0);
     // if front cargo ship position is closer than farther cargo ship position,
     if (Math.abs(Robot.arm.getArmPosition()-Robot.arm.getCargoShipCargoPos(false)) <
         Math.abs(Robot.arm.getArmPosition()-Robot.arm.getCargoShipCargoPos(true))) {

@@ -25,7 +25,7 @@ public class FloorHatch extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.claw.intakeCargo(1.0);
+    Robot.claw.intakeHatch(1.0);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -35,7 +35,7 @@ public class FloorHatch extends Command {
         Robot.claw.closeClawTop();
         Robot.claw.closeClawBottom();
         Robot.arm.backCargoShipTop();
-        Robot.claw.intakeCargo(0.0);
+        Robot.claw.stopHatch();
         return true;
     }
     return false;
