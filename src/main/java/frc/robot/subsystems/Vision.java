@@ -16,6 +16,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.lib.Limelight;
 
 /**
@@ -72,5 +73,20 @@ public class Vision extends Subsystem {
   public void toggleCamera(){
     selected = (selected == front) ? back : front;
     SmartDashboard.putBoolean("Camera Switch", selected == front);
+  }
+
+  @Override
+  public void periodic() {
+    if(selected.hasTarget()){
+      double angle = selected.getTX();
+        if(Math.abs(angle) < 1.0){
+          Robot.m_oi.rumbleVision(true, true);
+        } else if(angle < 0.0) {
+          Robot.m_oi.rumbleVision(true, false);
+        } else if(angle > 0.0){
+          Robot.m_oi.rumbleVision(false, true);
+        }
+    }
+    
   }
 }

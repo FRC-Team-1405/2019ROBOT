@@ -101,6 +101,7 @@ public class DriveToVisionTarget extends Command {
     pidController.reset();
     pidController.enable();
     Robot.vision.setLineTargetMode();
+    
   }
 
   // Called repeatedly when this Command is scheduled to run

@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 //import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -176,5 +177,10 @@ public class OI {
     }
     lastIncreasePOV = increase;
     return lastIncreasePOV;
+  }
+
+  public void rumbleVision(boolean left, boolean right){
+    pilot.setRumble(RumbleType.kRightRumble , right ? 1.0 : 0.0);
+    pilot.setRumble(RumbleType.kLeftRumble , left ? 1.0 : 0.0);
   }
 }

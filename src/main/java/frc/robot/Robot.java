@@ -136,6 +136,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     arm.adjustArmPosition(0.0);
+    vision.setCameraMode();
     autonomousCommand.start();
   
   
