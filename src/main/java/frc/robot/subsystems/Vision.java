@@ -41,16 +41,17 @@ public class Vision extends Subsystem {
 
   public void initCamera(){
     CameraServer.getInstance().startAutomaticCapture();
+    setCameraMode();
   }
 
   public void setLineTargetMode(){
     selected.setLED((byte)3);
-    selected.setCameraMode((byte)0);
+    selected.setCameraMode(false);
   }
 
   public void setCameraMode(){
     selected.setLED((byte)1);
-    selected.setCameraMode((byte)1);
+    selected.setCameraMode(true);
   }
 
   public double getLineTarget(){
@@ -77,16 +78,18 @@ public class Vision extends Subsystem {
 
   @Override
   public void periodic() {
-    if(selected.hasTarget()){
-      double angle = selected.getTX();
-        if(Math.abs(angle) < 1.0){
-          Robot.m_oi.rumbleVision(true, true);
-        } else if(angle < 0.0) {
-          Robot.m_oi.rumbleVision(true, false);
-        } else if(angle > 0.0){
-          Robot.m_oi.rumbleVision(false, true);
-        }
-    }
-    
+    // Currently not turning off
+    // if (selected.getCameraMode() || !selected.hasTarget()){
+    //   Robot.m_oi.rumbleVision(false, false);
+    // } else if (selected.hasTarget()){
+    //     double angle = selected.getTX();
+    //     if(Math.abs(angle) < 1.0){
+    //       Robot.m_oi.rumbleVision(true, true);
+    //     } else if(angle < 0.0) {
+    //       Robot.m_oi.rumbleVision(true, false);
+    //     } else if(angle > 0.0){
+    //       Robot.m_oi.rumbleVision(false, true);
+    //     }
+    // } 
   }
 }

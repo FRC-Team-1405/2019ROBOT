@@ -22,6 +22,8 @@
        private NetworkTableEntry thoriz;
        private NetworkTableEntry tvert;
        private NetworkTableEntry getpipe;
+       private NetworkTableEntry getCamMode;
+
        //public byte pipeline;
        /* public enum pipe {
        PIPE1, PIPE2, PIPE3, PIPE4, PIPE5,
@@ -51,6 +53,7 @@
        thoriz = table.getEntry("thoriz");
        tvert  = table.getEntry("tvert");
        getpipe= table.getEntry("getpipe");
+       getCamMode = table.getEntry("camMode");
        }
 
 
@@ -66,11 +69,15 @@
        table.getEntry("ledMode").setNumber(mode);
        }
 
-       public void setCameraMode(byte mode) {
-        /* 0: Vision Detection
-           1: Camera Mode */
-        table.getEntry("camMode").setNumber(mode);
+       public void setCameraMode(boolean turnOn) {
+        getCamMode.setNumber(turnOn ? 1 : 0);
         }
+
+        public boolean getCameraMode() {
+            //camMode should be 0 or 1
+            return (getCamMode.getDouble(0) > 0.9);
+        }
+        
         public void setStream(byte mode) {
        /* 0: Standard - Side-by-side streams if a webcam is attached to Limelight
           1: The secondary camera stream is placed in the lower-right corner of the primary camera stream
