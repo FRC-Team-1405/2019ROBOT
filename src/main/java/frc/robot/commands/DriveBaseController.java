@@ -38,6 +38,7 @@ public class DriveBaseController extends Command {
 
     if(Robot.m_oi.driveReverse()){
       Robot.driveBase.toggleDriveDirection();
+      Robot.vision.toggleCamera();
     }
   }
 
