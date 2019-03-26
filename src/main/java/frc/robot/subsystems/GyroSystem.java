@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 
 /**
  * Add your docs here.
@@ -45,6 +46,11 @@ public class GyroSystem extends Subsystem {
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
+    if(Robot.limitDebug)
+      return;
+
+  // Shuffleboard Debug
+
     builder.addBooleanProperty("Ready", this::isReady, null);
 
     builder.addDoubleProperty("Pitch", gyro::getPitch, null);

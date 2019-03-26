@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.filters.LinearDigitalFilter;
 import edu.wpi.first.wpilibj.smartdashboard.SendableBuilder;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.ClawController;
 import frc.robot.lib.ExtendedTalon;
@@ -29,8 +30,7 @@ public class Claw extends Subsystem {
   private WPI_TalonSRX intakeTalonA = new WPI_TalonSRX(RobotMap.clawTalonA);
   private WPI_TalonSRX intakeTalonB = new WPI_TalonSRX(RobotMap.clawTalonB);
   private DoubleSolenoid solenoidTop = new DoubleSolenoid(1, 2);
-  private DoubleSolenoid 
-  solenoidBottom = new DoubleSolenoid(3, 4);
+  private DoubleSolenoid  solenoidBottom = new DoubleSolenoid(3, 4);
   private PIDSource currentSource = new PIDSource(){
     @Override
     public void setPIDSourceType(PIDSourceType pidSource) {}
@@ -158,9 +158,15 @@ public class Claw extends Subsystem {
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
-    builder.addDoubleProperty("Intake Current", () -> {return currentFilter.get();}, null);
     builder.addBooleanProperty("Top Claw", () -> {return solenoidTop.get() ==  Value.kForward;}, null);
     builder.addBooleanProperty("Bottom Claw", () -> {return solenoidBottom.get() ==  Value.kForward;}, null);
+    
+    if(Robot.limitDebug)
+      return;
+
+  // Shuffleboard Debug
+    builder.addDoubleProperty("Intake Current", () -> {return currentFilter.get();}, null);
+
   }
 
 }

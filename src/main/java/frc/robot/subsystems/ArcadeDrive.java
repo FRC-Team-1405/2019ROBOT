@@ -127,8 +127,5 @@ public class ArcadeDrive extends Subsystem {
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
     builder.addBooleanProperty("Drive Forward", () -> {return this.driveForward;}, null);
-    // builder.addDoubleProperty("Left Pos", () -> { return talonDriveBaseLeft.getSelectedSensorPosition(); }, null );
-    // builder.addDoubleProperty("Right Pos", () -> { return talonDriveBaseRight.getSelectedSensorPosition(); }, null );
-    // builder.addDoubleProperty("Target Pos", null, this::setTargetPosition);
   }
 }

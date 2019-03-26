@@ -215,6 +215,10 @@ public class Arm extends Subsystem {
   @Override
   public void initSendable(SendableBuilder builder) {
     super.initSendable(builder);
+    if(Robot.limitDebug)
+       return;
+
+    // Shuffleboard Debug
     builder.addDoubleProperty("Current A", () -> { return pivotTalon.getOutputCurrent(); }, null );
     builder.addDoubleProperty("Arm Position", this::getArmPosition, null);
     builder.addDoubleProperty("PID Target", () -> {

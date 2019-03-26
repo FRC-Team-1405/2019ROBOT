@@ -55,7 +55,11 @@ public class Robot extends TimedRobot {
   public static Command placeHatch;
 
   public static LidarReader lidarReader;
+  public static boolean limitDebug = false;
 
+  private void initDebugFlag(){
+    limitDebug = !"DEBUG".equals( DriverStation.getInstance().getGameSpecificMessage() );
+  }
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -69,6 +73,7 @@ public class Robot extends TimedRobot {
     arm = new Arm();  
     gyro = new GyroSystem();
     stilts = new SoloStilts();
+
 
     // removed until lidar is finished
     // lidarReader = new LidarReader();
@@ -138,8 +143,7 @@ public class Robot extends TimedRobot {
     arm.adjustArmPosition(0.0);
     vision.setCameraMode();
     autonomousCommand.start();
-  
-  
+    initDebugFlag();  
   }
 
   /**
@@ -153,6 +157,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    initDebugFlag();
+
     if(DriverStation.getInstance().isFMSAttached() == false){
       arm.adjustArmPosition(0.0);
     }
@@ -178,6 +184,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
+    initDebugFlag();
     arm.adjustArmPosition(0.0);
   }
 
