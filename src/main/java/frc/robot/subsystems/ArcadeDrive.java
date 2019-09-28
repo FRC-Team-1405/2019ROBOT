@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 //import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.RobotMap;
 import frc.robot.commands.DriveBaseController;
@@ -27,7 +28,9 @@ import com.ctre.phoenix.motorcontrol.can.*;
 public class ArcadeDrive extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  private static double speedLimit = 1.0;
+  private static boolean speedLimitOn = false;
+  double speedLimit = 1.0;
+  private static final String keySpeedLimitOn = "ArcadeDrive_SpeedLimitOn";
   private static final String keySpeedLimit = "ArcadeDrive_SpeedLimit";
 
   WPI_TalonSRX talonDriveBaseLeft = new WPI_TalonSRX(RobotMap.talonDriveBaseLeft);
@@ -70,11 +73,13 @@ public class ArcadeDrive extends Subsystem {
 
       Preferences prefs = Preferences.getInstance();
 
-      if(!prefs.containsKey(keySpeedLimit)) {
-        prefs.putDouble(keySpeedLimit, speedLimit);
+      if(!prefs.containsKey(keySpeedLimitOn)) {
+        prefs.putBoolean(keySpeedLimitOn, speedLimitOn);
       }
+      
+      speedLimitOn = prefs.getBoolean(keySpeedLimitOn, speedLimitOn);
 
-      speedLimit = prefs.getDouble(keySpeedLimit, speedLimit);
+      SmartDashboard.putNumber(keySpeedLimit, speedLimit);
 
       // leftTalonPID = new TalonPID(talonDriveBaseLeft, ControlMode.Position);
       // leftTalonPID.setName("Left PID");
@@ -99,6 +104,10 @@ public class ArcadeDrive extends Subsystem {
   }
 
   public void driveRobot(double xSpeed, double zRotation){
+    if(speedLimitOn){
+      speedLimit = SmartDashboard.getNumber(keySpeedLimit, 1.0);
+    }
+
     if(driveForward){
       driveBase.arcadeDrive(xSpeed*speedLimit, zRotation*speedLimit);
     } else{
@@ -107,6 +116,11 @@ public class ArcadeDrive extends Subsystem {
   }
 
   public void tankDriveRobot(double leftSpeed, double rightSpeed){
+    double speedLimit = 1.0;
+    if(speedLimitOn){
+      speedLimit = SmartDashboard.getNumber(keySpeedLimit, 1.0);
+    }
+
     if(driveForward){
       driveBase.tankDrive(leftSpeed*speedLimit, rightSpeed*speedLimit);
     } else{
