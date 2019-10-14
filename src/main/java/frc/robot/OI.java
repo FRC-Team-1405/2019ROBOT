@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 //import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,6 +21,16 @@ public class OI {
   public XboxController pilot = new XboxController(RobotMap.pilot);
   public XboxController operator = new XboxController(RobotMap.operator);
   public XboxController testJoystick = new XboxController(RobotMap.testJoystick);
+  boolean guitarMode = false;
+  private static final String keyGuitarMode = "OI_GuitarMode";
+
+  public OI(){
+    SmartDashboard.putBoolean(keyGuitarMode, guitarMode);
+  }
+
+  public void OnRobotEnable(){
+    guitarMode = SmartDashboard.getBoolean(keyGuitarMode, guitarMode);
+  }
   
   public boolean cargoOutputPressed() {
     return pilot.getBumper(Hand.kLeft);
@@ -69,34 +80,58 @@ public class OI {
   }
 
   public boolean armFloorPressed(){
+    if(guitarMode){
+      return(operator.getAButton() && operator.getPOV() == 0);
+    }
     return (operator.getPOV() == 90);
   }
 
   public boolean backArmFloorPressed(){
+    if(guitarMode){
+      return(operator.getAButton() && operator.getPOV() == 180);
+    }
     return (operator.getPOV() == 270);
   }
 
   public boolean cargoShipTop(){
+    if(guitarMode){
+      return(operator.getYButton() && operator.getPOV() == 0);
+    }
     return (operator.getPOV() == 0);
   }
 
   public boolean backCargoShipTop(){
+    if(guitarMode){
+      return(operator.getYButton() && operator.getPOV() == 180);
+    }
     return (operator.getPOV() == 180);
   }
 
   public boolean rocketCenter(){
+    if(guitarMode){
+      return(operator.getXButton() && operator.getPOV() == 0);
+    }
     return (operator.getBumper(Hand.kRight) && operator.getPOV() != -1 && (operator.getPOV() > 270 || operator.getPOV() < 90));
   }
 
   public boolean backRocketCenter(){
+    if(guitarMode){
+      return(operator.getXButton() && operator.getPOV() == 180);
+    }
     return (operator.getBumper(Hand.kRight) && operator.getPOV() < 270 && operator.getPOV() > 90);
   }
 
   public boolean armHatchPressed(){
+    if(guitarMode){
+      return(operator.getBButton() && operator.getPOV() == 0);
+    }
     return (operator.getBumper(Hand.kLeft) && operator.getPOV() < 180 && operator.getPOV() > 0);
   }
 
   public boolean backArmHatchPressed(){
+    if(guitarMode){
+      return(operator.getBButton() && operator.getPOV() == 180);
+    }
     return (operator.getBumper(Hand.kLeft) && operator.getPOV() > 180);
   }
 
@@ -105,10 +140,16 @@ public class OI {
   }
 
   public boolean isLoadHatchPressed(){
+    if(guitarMode){
+      operator.getBumper(Hand.kLeft);
+    }
     return operator.getBButtonPressed();
   }
 
   public boolean isLoadHatchReleased(){
+    if(guitarMode){
+      return !operator.getBumper(Hand.kLeft);
+    }
     return !operator.getBButton();
   }
 
@@ -125,6 +166,18 @@ public class OI {
   }
 
   public double manualArmControl(){
+    if(guitarMode){
+      if(operator.getPOV() > 180 && operator.getPOV() < 360){
+        return 0.75;
+      }else if(operator.getPOV() > 0 && operator.getPOV() < 180){
+        return -0.75;
+      }else if(operator.getBackButton()){
+        return 0.3;
+      }else if(operator.getStartButton()){
+        return -0.3;
+      }
+      return 0;
+    }
     return operator.getY(Hand.kRight);
   }
 

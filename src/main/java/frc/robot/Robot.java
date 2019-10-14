@@ -147,6 +147,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     arm.adjustArmPosition(0.0);
     vision.setCameraMode();
+    m_oi.OnRobotEnable();
     autonomousCommand.start();
     initDebugFlag();  
   }
@@ -174,6 +175,7 @@ public class Robot extends TimedRobot {
 
     // claw.closeClawTop();
     // claw.closeClawBottom();
+    m_oi.OnRobotEnable();
 
     teleopCommand.start();
   }
