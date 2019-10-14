@@ -26,11 +26,12 @@ public class LoadHatch extends Command {
     if(Robot.arm.armInPosition() == ArmPosition.FLOOR_FRONT){
       Robot.arm.frontCargoShipTop();
       Robot.claw.intakeHatch(1.0);
-      Robot.claw.closeClawTop();
+      //Robot.claw.closeClawTop();
     } else{
         Robot.arm.backCargoShipTop();
         Robot.claw.intakeHatch(1.0);
-        Robot.claw.closeClawBottom();
+        System.out.println("Arm up");
+        //Robot.claw.closeClawBottom();
     }
   }
 

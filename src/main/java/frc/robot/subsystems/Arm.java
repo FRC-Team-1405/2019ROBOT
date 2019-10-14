@@ -48,7 +48,7 @@ public class Arm extends Subsystem {
   private static final String keyBackRocketCenterCargo = "Arm_BackEjectCenterRocket";
   private static final String keyBackCargoShipCargo = "Arm_BackEjectCargoShipCargo";
 
-  private static final int ARM_MOVE_DELAY_MS = 100; 
+  private static final int ARM_MOVE_DELAY_MS = 150; 
 
   private ArmPosition armPosition = ArmPosition.UNKNOWN;
   private long armPositionSetTime = 0;
