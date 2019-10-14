@@ -8,7 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.PowerDistributionPanel; 
+import edu.wpi.first.wpilibj.CameraServer; 
 //import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -72,7 +73,9 @@ public class Robot extends TimedRobot {
     claw = new Claw();
     arm = new Arm();  
     gyro = new GyroSystem();
-    stilts = new SoloStilts();
+    stilts = new SoloStilts(); 
+
+    CameraServer.getInstance().startAutomaticCapture(); 
 
 
     // removed until lidar is finished
