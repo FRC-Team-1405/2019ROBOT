@@ -33,7 +33,7 @@ public class Arm extends Subsystem {
   private static double lowScoring = 126.0;
   private static double rocketCenterCargo = 322.0;
   private static double cargoShipCargo = 322.0;
-  private static double backFloorPickup = 927.0;
+  private static double backFloorPickup = 927.0;  
   private static double backLowScoring = 821.0;
   private static double backRocketCenterCargo = 537.0;
   private static double backCargoShipCargo = 537.0;

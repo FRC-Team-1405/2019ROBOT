@@ -75,8 +75,8 @@ public class Claw extends Subsystem {
 
     System.out.printf("%s %f %s %f\n", keyIntake, intakeSpeed, keyOutput, outputSpeed);
 
-    this.openClawTop();
-    this.openClawBottom();
+//    this.openClawTop();
+//    this.openClawBottom();
   }
 
   @Override

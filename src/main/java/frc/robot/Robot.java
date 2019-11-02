@@ -75,9 +75,6 @@ public class Robot extends TimedRobot {
     gyro = new GyroSystem();
     stilts = new SoloStilts(); 
 
-    CameraServer.getInstance().startAutomaticCapture(); 
-
-
     // removed until lidar is finished
     // lidarReader = new LidarReader();
     // lidarReader.start();
@@ -157,7 +154,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    arm.adjustArmPosition(0.0);
+//    arm.adjustArmPosition(0.0);
     Scheduler.getInstance().run();
   }
 
@@ -173,8 +170,8 @@ public class Robot extends TimedRobot {
       autonomousCommand.cancel();
     }
 
-    // claw.closeClawTop();
-    // claw.closeClawBottom();
+    //claw.closeClawTop();
+    //claw.closeClawBottom();
     m_oi.OnRobotEnable();
 
     teleopCommand.start();

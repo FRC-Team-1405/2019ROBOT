@@ -142,7 +142,7 @@ rightPIDController.setName("Vision Target PID");
 rightPIDController.setInputRange(-27.0, 27.0); 
 rightPIDController.setOutputRange(-1.0, 1.0); 
 rightPIDController.setAbsoluteTolerance(1.0);
-rightPIDController.setSetpoint(distance);
+rightPIDController.setSetpoint(distance);    
 rightPIDController.setEnabled(false);
 LiveWindow.add(rightPIDController);
   }
